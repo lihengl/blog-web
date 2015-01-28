@@ -1,3 +1,3 @@
 Blog Web Application
 ===
-Web Client for Blog API
+Isomerphic with ReactJS/NodeJS 
