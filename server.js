@@ -15,8 +15,9 @@ server.use(morgan("combined"));
 
 server.get("/", function (req, res) {
     "use strict";
-    console.log(req.query);
-    return res.send(React.renderToString(new Page()));
+    return res.send(React.renderToString(new Page({
+        title: req.query.title
+    })));
 });
 
 

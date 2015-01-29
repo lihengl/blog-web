@@ -6,11 +6,12 @@ var Page = React.createClass({
         return (
             <html lang="en-US">
                 <head>
-                    <meta charset="utf-8"/>
-                    <title>World</title>
+                    <meta charSet="utf-8"/>
+                    <title>Hello</title>
                 </head>
                 <body>
-                    <h1>Hello</h1>
+                    <h1>Hello, {this.props.title}</h1>
+                    <script src="http://fb.me/react-0.12.2.min.js"></script>
                 </body>
             </html>
         );
