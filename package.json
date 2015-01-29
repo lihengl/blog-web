@@ -19,6 +19,7 @@
     "version": "0.1.0",
     "license": "MIT",
     "scripts": {
+        "compile": "jsx -x jsx component component",
         "test": "istanbul cover test.js"
     },
     "bugs": {

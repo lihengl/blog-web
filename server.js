@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 var express = require("express");
 var morgan  = require("morgan");
+var React   = require("react");
 
+var Page = React.createFactory(require("./component/Page"));
 
 var port = process.env.PORT || "3000";
 var mode = process.env.MODE || "test";
@@ -14,7 +16,7 @@ server.use(morgan("combined"));
 server.get("/", function (req, res) {
     "use strict";
     console.log(req.query);
-    return res.send("hiya");
+    return res.send(React.renderToString(new Page()));
 });
 
 

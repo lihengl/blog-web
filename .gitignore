@@ -1,2 +1,7 @@
+npm-debug.log
+
+component/.module-cache/
+component/*.js
+
 node_modules
 coverage
