@@ -1,0 +1,15 @@
+{
+    "description": "Isomerphic Blog Application with ReactJS",
+    "dependencies": {
+        "react": "0.12.2"
+    },
+    "homepage": "https://github.com/lihengl/blog-web",
+    "authors": [
+      "LIHENG <admin@lihengl.com>"
+    ],
+    "version": "0.1.0",
+    "license": "MIT",
+    "private": true,
+    "main": "server.js",
+    "name": "blog-web"
+}

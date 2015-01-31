@@ -3,5 +3,7 @@ npm-debug.log
 component/.module-cache/
 component/*.js
 
+bower_components
 node_modules
 coverage
+static
