@@ -11,7 +11,7 @@ var Page = React.createClass({
             <head>
                 <meta charSet="utf-8"/>
                 <title>Hello | Li-Heng Liang</title>
-                <link rel="stylesheet" href={reference.style}/>
+                <link rel="stylesheet" href={reference.style + this.props.version + ".min.css"}/>
             </head>
             <body>
                 <h1>Blog Web Application</h1>
