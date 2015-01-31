@@ -6,6 +6,8 @@
         "webpack": "1.5.3"
     },
     "dependencies": {
+        "serve-favicon": "2.2.0",
+        "robots.txt": "1.1.0",
         "express": "4.11.1",
         "morgan": "1.5.1",
         "react" : "0.12.2"
