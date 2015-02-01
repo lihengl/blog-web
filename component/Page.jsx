@@ -10,8 +10,14 @@ var Page = React.createClass({
         return <html lang="en-US">
             <head>
                 <meta charSet="utf-8"/>
+                <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
+                <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+                <meta name="format-detection" content="telephone=no"/>
+                <meta name="google" value="notranslate"/>
+                <link href={reference.style + this.props.version + ".min.css"} type="text/css" rel="stylesheet"/>
+                <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+                <link href="/favicon.ico" type="image/x-icon" rel="icon"/>
                 <title>{this.props.title}</title>
-                <link rel="stylesheet" href={reference.style + this.props.version + ".min.css"}/>
             </head>
             <body>
                 <h1>{this.props.title}</h1>
