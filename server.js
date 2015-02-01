@@ -30,6 +30,7 @@ server.get("/", function (req, res) {
     res.send("<!DOCTYPE html>" + React.renderToString(new Page({
         paragraph: req.query.paragraph,
         version: version,
+        title: "Blog Web Application",
         local: true
     })));
     return;

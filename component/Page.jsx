@@ -10,11 +10,11 @@ var Page = React.createClass({
         return <html lang="en-US">
             <head>
                 <meta charSet="utf-8"/>
-                <title>Hello | Li-Heng Liang</title>
+                <title>{this.props.title}</title>
                 <link rel="stylesheet" href={reference.style + this.props.version + ".min.css"}/>
             </head>
             <body>
-                <h1>Blog Web Application</h1>
+                <h1>{this.props.title}</h1>
                 <input type="text" value="Hello, world!"/>
                 <script src={reference.react}></script>
             </body>
