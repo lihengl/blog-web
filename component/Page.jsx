@@ -20,9 +20,9 @@ var Page = React.createClass({
                 <title>{this.props.title}</title>
             </head>
             <body>
-                <div id="bd"></div>
                 <h1>{this.props.title}</h1>
                 <input type="text" value="Hello, world!"/>
+                <div id="bd"></div>
                 <script src={external.lib}></script>
                 <script src={external.src + this.props.version + ".min.js"}></script>
             </body>

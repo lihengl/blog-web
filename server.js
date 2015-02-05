@@ -5,7 +5,7 @@ var robots  = require("robots.txt");
 var morgan  = require("morgan");
 var React   = require("react");
 
-var version = require("./package.json").version;
+var manifest = require("./package.json");
 
 var Page = React.createFactory(require("./component/Page"));
 
@@ -29,9 +29,9 @@ server.get("/", function (req, res) {
     res.status(200).type("text/html");
     res.send("<!DOCTYPE html>" + React.renderToString(new Page({
         paragraph: req.query.paragraph,
-        version: version,
+        version: manifest.version,
         title: "Blog Web Application",
-        local: true
+        local: (mode === "local")
     })));
     return;
 });
