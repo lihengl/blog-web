@@ -27,8 +27,8 @@ server.use(morgan("combined"));
 
 server.get("/", function (req, res) {
     "use strict";
-    res.status(200).type("text/html");
-    res.send("<!DOCTYPE html>" + React.renderToString(new Page({
+    res.status(200).type("text/html").
+        send("<!DOCTYPE html>" + React.renderToString(new Page({
         paragraph: req.query.paragraph,
         version: manifest.version,
         title: "Blog Web Application",

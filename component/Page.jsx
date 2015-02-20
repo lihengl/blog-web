@@ -1,6 +1,14 @@
 var React = require("react");
 
 var Page = React.createClass({
+    getInitialState: function () {
+        "use strict";
+        return {content: "Hi, there?"};
+    },
+    handleChange: function () {
+        "use strict";
+        return;
+    },
     render: function () {
         "use strict";
         var ref = {
@@ -21,7 +29,7 @@ var Page = React.createClass({
             </head>
             <body>
                 <h1>{this.props.title}</h1>
-                <input type="text" value="Hello, world!"/>
+                <input type="text" value={this.state.content}/>
                 <div id="bd"></div>
                 <script src={ref.lib}></script>
                 <script src={ref.src + this.props.version + ".min.js"}></script>
