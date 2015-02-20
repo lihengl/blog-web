@@ -16,12 +16,13 @@ var mode = process.env.MODE || "test";
 var server = express().disable("x-powered-by").enable("strict routing");
 
 server.use(favicon(__dirname + "/favicon.ico"));
-server.use(robots(__dirname + "/robots.txt"));
+server.use(robots( __dirname + "/robots.txt"));
 server.use(morgan("combined"));
 
 ["/bower_components", "/static"].forEach(function (folder) {
     "use strict";
     server.use(folder, express.static(__dirname + folder));
+    return;
 });
 
 server.get("/", function (req, res) {
