@@ -15,8 +15,9 @@ gulp.task("lint", function () {
 });
 
 gulp.task("bundle:css", function () {
+    var version = require("./package.json").version;
     return gulp.src("stylesheet/*.css").
-        pipe(csscon("blog.0.1.0.min.css")).
+        pipe(csscon("blog." + version + "min.css")).
         pipe(cssmin()).
         pipe(gulp.dest("static"));
 });
@@ -30,8 +31,9 @@ gulp.task("transform", function () {
 });
 
 gulp.task("bundle:js", ["transform"], function () {
+    var config = require("./webpack.config.js");
     return gulp.src("./client.js").
-        pipe(webpack(require("./webpack.config.js"))).
+        pipe(webpack(config)).
         pipe(gulp.dest("static"));
 });
 
