@@ -3,9 +3,13 @@ var webpack = require("gulp-webpack");
 var cssmin  = require("gulp-minify-css");
 var csscon  = require("gulp-concat-css");
 var jshint  = require("gulp-jshint");
+var uglify  = require("gulp-uglify");
 var watch   = require("gulp-watch");
 var react   = require("gulp-react");
 var gulp    = require("gulp");
+
+var pkg     = require("./package.json");
+var out     = [pkg.name, pkg.version, "min"].join(".");
 
 
 gulp.task("lint", function () {
@@ -15,9 +19,8 @@ gulp.task("lint", function () {
 });
 
 gulp.task("bundle:css", function () {
-    var version = require("./package.json").version;
     return gulp.src("stylesheet/*.css").
-        pipe(csscon("blog." + version + "min.css")).
+        pipe(csscon(out + ".css")).
         pipe(cssmin()).
         pipe(gulp.dest("static"));
 });
@@ -31,9 +34,12 @@ gulp.task("transform", function () {
 });
 
 gulp.task("bundle:js", ["transform"], function () {
-    var config = require("./webpack.config.js");
     return gulp.src("./client.js").
-        pipe(webpack(config)).
+        pipe(webpack({
+            externals: {"react": "React"},
+            output: {filename: out + ".js"}
+        })).
+        pipe(uglify()).
         pipe(gulp.dest("static"));
 });
 

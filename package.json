@@ -10,6 +10,7 @@
         "gulp-plumber": "0.6.6",
         "gulp-webpack": "1.2.0",
         "gulp-jshint": "1.9.2",
+        "gulp-uglify": "1.1.0",
         "gulp-react": "2.0.0",
         "gulp-watch": "4.1.1",
         "gulp": "3.8.11"
@@ -21,25 +22,23 @@
         "morgan": "1.5.1",
         "react" : "0.12.2"
     },
-    "description": "ReactJS Isomerphic Web Application",
+    "description": "ReactJS Isomerphic Web Application for Blogging",
     "repository": {
         "type": "git",
         "url": "https://github.com/lihengl/blog-web.git"
     },
-    "precommit": ["compile", "lint", "bundle", "test"],
+    "precommit": ["compile", "test"],
     "homepage": "https://github.com/lihengl/blog-web",
     "version": "0.1.0",
     "license": "MIT",
     "scripts": {
-        "compile": "jsx --extension jsx component build",
-        "bundle": "webpack --progress --colors",
-        "test": "istanbul cover test.js",
-        "lint": "gulp lint"
+        "compile": "gulp bundle:css bundle:js lint",
+        "test": "istanbul cover test.js"
     },
     "bugs": {
         "url": "https://github.com/lihengl/blog-web/issues"
     },
     "author": "LIHENG <admin@lihengl.com>",
     "main": "server.js",
-    "name": "blog-web"
+    "name": "blog"
 }
