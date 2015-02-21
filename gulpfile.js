@@ -8,7 +8,13 @@ var react   = require("gulp-react");
 var gulp    = require("gulp");
 
 
-gulp.task("css", function () {
+gulp.task("lint", function () {
+    return gulp.src(["server.js", "client.js", "test.js", "./build/*.js"]).
+        pipe(jshint()).
+        pipe(jshint.reporter("default"));
+});
+
+gulp.task("bundle:css", function () {
     return gulp.src("stylesheet/*.css").
         pipe(csscon("blog.0.1.0.min.css")).
         pipe(cssmin()).
@@ -23,21 +29,15 @@ gulp.task("transform", function () {
         pipe(gulp.dest("build"));
 });
 
-gulp.task("bundle", function () {
+gulp.task("bundle:js", ["transform"], function () {
     return gulp.src("./client.js").
         pipe(webpack(require("./webpack.config.js"))).
         pipe(gulp.dest("static"));
 });
 
 gulp.task("default", function () {
-    gulp.watch("stylesheet/*.css", ["css"]);
-    gulp.watch("component/*.jsx",  ["transform", "bundle"]);
+    gulp.watch("stylesheet/*.css", ["bundle:css"]);
+    gulp.watch("component/*.jsx",  ["bundle:js"]);
     return;
-});
-
-gulp.task("lint", function () {
-    return gulp.src(["server.js", "client.js", "test.js", "./build/*.js"]).
-        pipe(jshint()).
-        pipe(jshint.reporter("default"));
 });
 
