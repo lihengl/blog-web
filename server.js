@@ -7,7 +7,8 @@ var React   = require("react");
 
 var manifest = require("./package.json");
 
-var Page = React.createFactory(require("./component/Page"));
+var Page = React.createFactory(require("./build/Page"));
+var Blog = React.createFactory(require("./build/Blog"));
 
 var port = process.env.PORT || "3000";
 var mode = process.env.MODE || "test";
@@ -27,12 +28,13 @@ server.use(morgan("combined"));
 
 server.get("/", function (req, res) {
     "use strict";
+    var title = "Blog Web Application";
     res.status(200).type("text/html").
-        send("<!DOCTYPE html>" + React.renderToString(new Page({
-        paragraph: req.query.paragraph,
+        send("<!DOCTYPE html>" + React.renderToStaticMarkup(new Page({
+        content: React.renderToString(new Blog({title: title})),
         version: manifest.version,
-        title: "Blog Web Application",
-        local: (mode === "local")
+        local: (mode === "local"),
+        title: title
     })));
     return;
 });

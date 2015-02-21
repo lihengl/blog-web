@@ -1,9 +1,11 @@
 {
     "devDependencies": {
         "precommit-hook": "1.0.7",
+        "gulp-jshint": "1.9.2",
         "supertest": "0.15.0",
         "istanbul": "0.3.5",
-        "webpack": "1.5.3"
+        "webpack": "1.5.3",
+        "gulp": "3.8.11"
     },
     "dependencies": {
         "serve-favicon": "2.2.0",
@@ -17,12 +19,15 @@
         "type": "git",
         "url": "https://github.com/lihengl/blog-web.git"
     },
+    "precommit": ["compile", "lint", "bundle", "test"],
     "homepage": "https://github.com/lihengl/blog-web",
     "version": "0.1.0",
     "license": "MIT",
     "scripts": {
-        "compile": "jsx -x jsx component component",
-        "test": "istanbul cover test.js"
+        "compile": "jsx --extension jsx component build",
+        "bundle": "webpack --progress --colors",
+        "test": "istanbul cover test.js",
+        "lint": "gulp lint"
     },
     "bugs": {
         "url": "https://github.com/lihengl/blog-web/issues"
