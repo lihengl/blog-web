@@ -3,7 +3,7 @@ var React = require("react");
 var Blog = React.createClass({
     getInitialState: function () {
         "use strict";
-        return {content: "Hi, world?"};
+        return {content: "Hello, world?"};
     },
     render: function () {
         "use strict";

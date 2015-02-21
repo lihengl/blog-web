@@ -1,9 +1,7 @@
 npm-debug.log
 
-build/.module-cache/
-build/*.js
-
 bower_components
 node_modules
 coverage
 static
+build

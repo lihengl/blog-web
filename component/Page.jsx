@@ -5,7 +5,7 @@ var Page = React.createClass({
         "use strict";
         var reference = {
             lib: this.props.local ? "/bower_components/react/react.js" : "http://fb.me/react-0.12.2.min.js",
-            app: this.props.local ? "/static/blog." : "http://cdn.lihengl.com/blog/"
+            app: this.props.local ? "/static/blog." : "cdn.lihengl.com/blog/"
         };
         reference.app += this.props.version + ".min.";
         return <html lang="en-US">
