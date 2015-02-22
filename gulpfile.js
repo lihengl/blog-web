@@ -5,7 +5,6 @@ var cssmin  = require("gulp-minify-css");
 var csscon  = require("gulp-concat-css");
 var jshint  = require("gulp-jshint");
 var uglify  = require("gulp-uglify");
-var watch   = require("gulp-watch");
 var react   = require("gulp-react");
 var gulp    = require("gulp");
 
@@ -53,8 +52,5 @@ gulp.task("develop", function () {
         env: {"MODE": "local"},
         ext: "css js"
     }).
-        on("change", ["lint"]).
-        on("restart", function () {
-            console.log("restarted!")
-        });
+        on("change", ["lint"]);
 });

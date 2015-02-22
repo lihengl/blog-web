@@ -3,7 +3,6 @@
         "precommit-hook": "1.0.7",
         "supertest": "0.15.0",
         "istanbul": "0.3.5",
-        "webpack-dev-server": "1.7.0",
         "webpack": "1.5.3",
         "gulp-minify-css": "0.4.6",
         "gulp-concat-css": "2.1.0",
@@ -13,7 +12,6 @@
         "gulp-jshint": "1.9.2",
         "gulp-uglify": "1.1.0",
         "gulp-react": "2.0.0",
-        "gulp-watch": "4.1.1",
         "gulp": "3.8.11"
     },
     "dependencies": {
@@ -23,23 +21,27 @@
         "morgan": "1.5.1",
         "react" : "0.12.2"
     },
-    "description": "ReactJS Isomerphic Web Application for Blogging",
+    "description": "Isomerphic web client for Blog API",
     "repository": {
         "type": "git",
         "url": "https://github.com/lihengl/blog-web.git"
     },
-    "precommit": ["compile", "test"],
+    "precommit": [
+        "compile",
+        "test"
+    ],
     "homepage": "https://github.com/lihengl/blog-web",
     "version": "0.1.0",
     "license": "MIT",
     "scripts": {
-        "compile": "gulp bundle:css bundle:js lint",
-        "test": "istanbul cover test.js"
-    },
-    "bugs": {
-        "url": "https://github.com/lihengl/blog-web/issues"
+        "compile": "gulp bundle:css bundle:js",
+        "start": "gulp develop",
+        "test": "gulp lint && istanbul cover test.js"
     },
     "author": "LIHENG <admin@lihengl.com>",
     "main": "server.js",
-    "name": "blog"
+    "name": "blog",
+    "bugs": {
+        "url": "https://github.com/lihengl/blog-web/issues"
+    }
 }
