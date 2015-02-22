@@ -28,13 +28,13 @@ server.use(morgan("combined"));
 
 server.get("/", function (req, res) {
     "use strict";
-    var title = "Blog Web Application";
+    var content = {title: "A Blog's Title"};
     res.status(200).type("text/html").
         send("<!DOCTYPE html>" + React.renderToStaticMarkup(new Page({
-        content: React.renderToString(new Blog({title: title})),
         version: manifest.version,
+        content: content,
         local: (mode === "local"),
-        title: title
+        blog: React.renderToString(new Blog(content))
     })));
     return;
 });

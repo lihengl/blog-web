@@ -3,11 +3,12 @@ var React = require("react");
 var Page = React.createClass({
     render: function () {
         "use strict";
-        var reference = {
+        var content = JSON.stringify(this.props.content), reference = {
             lib: this.props.local ? "/bower_components/react/react.js" : "http://fb.me/react-0.12.2.min.js",
             app: this.props.local ? "/static/blog." : "cdn.lihengl.com/blog/"
         };
         reference.app += this.props.version + ".min.";
+        content = content.replace(/<\/script/g, '<\\/script').replace(/<!--/g, '<\\!--');
         return <html lang="en-US">
             <head>
                 <meta charSet="utf-8"/>
@@ -18,12 +19,13 @@ var Page = React.createClass({
                 <link href={reference.app + "css"} type="text/css" rel="stylesheet"/>
                 <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
                 <link href="/favicon.ico" type="image/x-icon" rel="icon"/>
-                <title>{this.props.title}</title>
+                <title>{this.props.content.title}</title>
             </head>
             <body>
-                <div id="blog" dangerouslySetInnerHTML={{__html: this.props.content}} />
-                <script src={reference.lib}></script>
-                <script src={reference.app + "js"}></script>
+                <div id="blog" dangerouslySetInnerHTML={{__html: this.props.blog}}></div>
+                <script type="application/json" id="content" dangerouslySetInnerHTML={{__html: content}}></script>
+                <script type="text/javascript" src={reference.lib}></script>
+                <script type="text/javascript" src={reference.app + "js"}></script>
             </body>
         </html>;
     }

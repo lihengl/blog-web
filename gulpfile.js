@@ -45,8 +45,8 @@ gulp.task("bundle:js", ["transform"], function () {
 });
 
 gulp.task("develop", function () {
+    gulp.watch(["component/*.jsx", "client.js"], ["bundle:js"]);
     gulp.watch("stylesheet/*.css", ["bundle:css"]);
-    gulp.watch("component/*.jsx",  ["bundle:js"]);
     return nodemon({
         ignore: ["./stylesheet/*", "./build/*", "gulpfile.js"],
         script: "server.js",
