@@ -1,5 +1,6 @@
 var plumber = require("gulp-plumber");
 var webpack = require("gulp-webpack");
+var nodemon = require("gulp-nodemon");
 var cssmin  = require("gulp-minify-css");
 var csscon  = require("gulp-concat-css");
 var jshint  = require("gulp-jshint");
@@ -13,7 +14,7 @@ var out     = [pkg.name, pkg.version, "min"].join(".");
 
 
 gulp.task("lint", function () {
-    return gulp.src(["server.js", "client.js", "test.js", "./build/*.js"]).
+    return gulp.src(["server.js", "client.js", "test.js"]).
         pipe(jshint()).
         pipe(jshint.reporter("default"));
 });
@@ -29,7 +30,7 @@ gulp.task("transform", function () {
     return gulp.src("component/*.jsx").
         pipe(react()).
         pipe(jshint()).
-        pipe(jshint.reporter("default", { verbose: true })).
+        pipe(jshint.reporter("default", {verbose: true})).
         pipe(gulp.dest("build"));
 });
 
@@ -43,9 +44,17 @@ gulp.task("bundle:js", ["transform"], function () {
         pipe(gulp.dest("static"));
 });
 
-gulp.task("default", function () {
+gulp.task("develop", function () {
     gulp.watch("stylesheet/*.css", ["bundle:css"]);
     gulp.watch("component/*.jsx",  ["bundle:js"]);
-    return;
+    return nodemon({
+        ignore: ["./stylesheet/*", "./build/*", "gulpfile.js"],
+        script: "server.js",
+        env: {"MODE": "local"},
+        ext: "css js"
+    }).
+        on("change", ["lint"]).
+        on("restart", function () {
+            console.log("restarted!")
+        });
 });
-
