@@ -2,6 +2,7 @@
     "devDependencies": {
         "precommit-hook": "1.0.7",
         "supertest": "0.15.0",
+        "coveralls": "2.11.2",
         "istanbul": "0.3.5",
         "webpack": "1.5.3",
         "gulp-minify-css": "0.4.6",
