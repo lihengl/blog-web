@@ -1,5 +1,14 @@
-language: node_js
+sudo:
+    - false
+language:
+    - node_js
 node_js:
     - "0.12"
+branches:
+    only:
+        - release
+cache:
+    directories:
+        - node_modules
 after_success:
     - cat coverage/lcov.info | coveralls
