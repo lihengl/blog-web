@@ -6,6 +6,9 @@ node_js:
     - "0.12"
 branches:
     only:
-    - release
+        - release
+cache:
+    directories:
+        - node_modules
 after_success:
     - cat coverage/lcov.info | coveralls
