@@ -31,7 +31,7 @@ gulp.task("transform", function () {
         pipe(react()).
         pipe(jshint()).
         pipe(jshint.reporter("default", {verbose: true})).
-        pipe(gulp.dest("build"));
+        pipe(gulp.dest("component"));
 });
 
 gulp.task("bundle:js", ["transform"], function () {
@@ -48,10 +48,9 @@ gulp.task("develop", function () {
     gulp.watch(["component/*.jsx", "client.js"], ["bundle:js"]);
     gulp.watch("stylesheet/*.css", ["bundle:css"]);
     return nodemon({
-        ignore: ["./stylesheet/*", "./build/*", "gulpfile.js"],
+        ignore: ["./stylesheet/*", "./component/*", "gulpfile.js"],
         script: "server.js",
         env: {"MODE": "local"},
         ext: "css js"
-    }).
-        on("change", ["lint"]);
+    }).on("change", ["lint"]);
 });
