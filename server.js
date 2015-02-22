@@ -5,7 +5,7 @@ var robots  = require("robots.txt");
 var morgan  = require("morgan");
 var React   = require("react");
 
-var manifest = require("./package.json");
+var pkg = require("./package.json");
 
 var Page = React.createFactory(require("./build/Page"));
 var Blog = React.createFactory(require("./build/Blog"));
@@ -31,7 +31,7 @@ server.get("/", function (req, res) {
     var content = {title: "A Blog's Title"};
     res.status(200).type("text/html").
         send("<!DOCTYPE html>" + React.renderToStaticMarkup(new Page({
-        version: manifest.version,
+        version: pkg.version,
         content: content,
         local: (mode === "local"),
         blog: React.renderToString(new Blog(content))
