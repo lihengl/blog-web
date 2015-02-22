@@ -1,4 +1,5 @@
-var plumber = require("gulp-plumber");
+"use strict";
+
 var webpack = require("gulp-webpack");
 var nodemon = require("gulp-nodemon");
 var cssmin  = require("gulp-minify-css");
@@ -13,7 +14,7 @@ var out     = [pkg.name, pkg.version, "min"].join(".");
 
 
 gulp.task("lint", function () {
-    return gulp.src(["server.js", "client.js", "test.js"]).
+    return gulp.src(["gulpfile.js", "server.js", "client.js", "test.js"]).
         pipe(jshint()).
         pipe(jshint.reporter("default"));
 });
