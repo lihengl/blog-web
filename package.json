@@ -25,17 +25,12 @@
         "type": "git",
         "url": "https://github.com/lihengl/blog-web.git"
     },
-    "precommit": [
-        "compile",
-        "test"
-    ],
     "homepage": "https://github.com/lihengl/blog-web",
     "version": "0.1.0",
     "license": "MIT",
     "scripts": {
-        "compile": "gulp bundle:css bundle:js",
         "start": "gulp develop",
-        "test": "gulp lint && istanbul cover test.js"
+        "test": "gulp bundle:css bundle:js lint && istanbul cover test.js"
     },
     "author": "LIHENG <admin@lihengl.com>",
     "main": "server.js",

@@ -8,7 +8,7 @@ var Page = React.createClass({
             app: this.props.local ? "/static/blog." : "cdn.lihengl.com/blog/"
         };
         reference.app += this.props.version + ".min.";
-        content = content.replace(/<\/script/g, '<\\/script').replace(/<!--/g, '<\\!--');
+        content = content.replace(/<\/script/g, "<\\/script").replace(/<!--/g, "<\\!--");
         return <html lang="en-US">
             <head>
                 <meta charSet="utf-8"/>
