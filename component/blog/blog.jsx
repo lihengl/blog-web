@@ -4,14 +4,13 @@ var Cover = require("./cover");
 var Blog = React.createClass({
     getInitialState: function () {
         "use strict";
-        return {content: "Hello, world!"};
+        return {content: "Hello, world?"};
     },
     render: function () {
         "use strict";
-        return <div>
-            <h1>{this.props.title}</h1>
+        return <div className="blog">
+            <Cover>{this.props.title}</Cover>
             <p>{this.state.content}</p>
-            <Cover></Cover>
         </div>;
     }
 });

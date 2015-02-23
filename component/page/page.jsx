@@ -3,12 +3,15 @@ var React = require("react");
 var Page = React.createClass({
     render: function () {
         "use strict";
-        var prop = JSON.stringify(this.props.prop), url = {
-            lib: this.props.local ? "/bower_components/react/react.js" : "http://fb.me/react-0.12.2.min.js",
-            app: this.props.local ? "/static_assets/blog." : "cdn.lihengl.com/blog/"
-        };
-        url.app += this.props.version + ".min.";
-        prop = prop.replace(/<\/script/g, "<\\/script").replace(/<!--/g, "<\\!--");
+        var reference = {}, prop = "";
+
+        reference.lib = this.props.local ? "/bower_components/react/react.js" : "http://fb.me/react-0.12.2.min.js";
+        reference.app = this.props.local ? "/static_assets/blog." : "cdn.lihengl.com/blog/";
+
+        prop = JSON.stringify(this.props.prop).
+            replace(/<\/script/g, "<\\/script").
+            replace(/<!--/g, "<\\!--");
+
         return <html lang="en-US">
             <head>
                 <meta charSet="utf-8"/>
@@ -16,16 +19,16 @@ var Page = React.createClass({
                 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
                 <meta name="format-detection" content="telephone=no"/>
                 <meta name="google" value="notranslate"/>
-                <link href={url.app + "css"} type="text/css" rel="stylesheet"/>
+                <link href={reference.app + this.props.version + ".min.css"} type="text/css" rel="stylesheet"/>
                 <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
                 <link href="/favicon.ico" type="image/x-icon" rel="icon"/>
                 <title>{this.props.prop.title}</title>
             </head>
             <body>
-                <div id="root" dangerouslySetInnerHTML={{__html: this.props.blog}}></div>
+                <div id="root" dangerouslySetInnerHTML={{__html: this.props.component}}></div>
                 <script type="application/json" id="prop" dangerouslySetInnerHTML={{__html: prop}}></script>
-                <script type="text/javascript" src={url.lib}></script>
-                <script type="text/javascript" src={url.app + "js"}></script>
+                <script type="text/javascript" src={reference.lib}></script>
+                <script type="text/javascript" src={reference.app + this.props.version + ".min.js"}></script>
             </body>
         </html>;
     }
