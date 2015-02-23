@@ -1,4 +1,5 @@
-var Blog = window.React.createFactory(require("./build/Blog"));
-var content = JSON.parse(window.document.getElementById("content").innerHTML);
+var component = window.React.createFactory(require("./component/Blog"));
+var container = window.document.getElementById("blog");
+var content   = window.document.getElementById("content").innerHTML;
 
-window.React.render(Blog(content), window.document.getElementById("blog"));
+window.React.render(component(JSON.parse(content)), container);
