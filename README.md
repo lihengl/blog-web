@@ -11,7 +11,7 @@ This is an isomerphic Javascript project using [React](http://facebook.github.io
 ```sh
 $ npm install
 ```
-This will install all of the project's dependencies into a newly-created `node_modules` folder. This step can sometimes take up to a minute depend on network connection and processing power. When done, start the development server by typing:
+This will install all of the project's dependencies into a newly-created `node_modules` folder. This step can sometimes take up to a minute depending on network connection and processing power. When done, start the development server by typing:
 ```sh
 $ npm start
 ```
