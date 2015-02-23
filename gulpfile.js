@@ -19,13 +19,6 @@ gulp.task("lint", function () {
         pipe(jshint.reporter("default"));
 });
 
-gulp.task("bundle:css", function () {
-    return gulp.src("stylesheet/*.css").
-        pipe(csscon(out + ".css")).
-        pipe(cssmin()).
-        pipe(gulp.dest("static"));
-});
-
 gulp.task("transform", function () {
     return gulp.src("component/*.jsx").
         pipe(react()).
@@ -41,7 +34,14 @@ gulp.task("bundle:js", ["transform"], function () {
             output: {filename: out + ".js"}
         })).
         pipe(uglify()).
-        pipe(gulp.dest("static"));
+        pipe(gulp.dest("static_assets"));
+});
+
+gulp.task("bundle:css", function () {
+    return gulp.src("stylesheet/*.css").
+        pipe(csscon(out + ".css")).
+        pipe(cssmin()).
+        pipe(gulp.dest("static_assets"));
 });
 
 gulp.task("develop", function () {

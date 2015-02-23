@@ -3,6 +3,6 @@ npm-debug.log
 component/*.js
 
 bower_components
+static_assets
 node_modules
 coverage
-static

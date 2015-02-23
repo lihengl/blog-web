@@ -5,7 +5,7 @@ var Page = React.createClass({
         "use strict";
         var content = JSON.stringify(this.props.content), url = {
             lib: this.props.local ? "/bower_components/react/react.js" : "http://fb.me/react-0.12.2.min.js",
-            app: this.props.local ? "/static/blog." : "cdn.lihengl.com/blog/"
+            app: this.props.local ? "/static_assets/blog." : "cdn.lihengl.com/blog/"
         };
         url.app += this.props.version + ".min.";
         content = content.replace(/<\/script/g, "<\\/script").replace(/<!--/g, "<\\!--");

@@ -20,7 +20,7 @@ server.use(favicon(__dirname + "/favicon.ico"));
 server.use(robots( __dirname + "/robots.txt"));
 server.use(morgan("combined"));
 
-["/bower_components", "/static"].forEach(function (folder) {
+["/bower_components", "/static_assets"].forEach(function (folder) {
     "use strict";
     server.use(folder, express.static(__dirname + folder));
     return;

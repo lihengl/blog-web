@@ -1,6 +1,6 @@
 {
-    "trailing": true,
-    "quotmark": true,
+    "camelcase": true,
+    "quotmark": "double",
     "latedef": true,
     "browser": true,
     "strict": true,
