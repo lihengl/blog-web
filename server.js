@@ -7,8 +7,8 @@ var React   = require("react");
 
 var pkg = require("./package.json");
 
-var Page = React.createFactory(require("./component/page"));
-var Blog = React.createFactory(require("./component/blog"));
+var Page = React.createFactory(require("./react_components/page"));
+var Blog = React.createFactory(require("./react_components/blog"));
 
 var port = process.env.PORT || "3000";
 var mode = process.env.MODE || "test";
