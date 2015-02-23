@@ -7,8 +7,8 @@ var React   = require("react");
 
 var pkg = require("./package.json");
 
-var Page = React.createFactory(require("./component/Page"));
-var Blog = React.createFactory(require("./component/Blog"));
+var Page = React.createFactory(require("./component/page"));
+var Blog = React.createFactory(require("./component/blog"));
 
 var port = process.env.PORT || "3000";
 var mode = process.env.MODE || "test";
@@ -28,13 +28,13 @@ server.use(morgan("combined"));
 
 server.get("/", function (req, res) {
     "use strict";
-    var content = {title: "A Blog's Title"};
+    var prop = {title: "A Blog's Title"};
     res.status(200).type("text/html").
         send("<!DOCTYPE html>" + React.renderToStaticMarkup(new Page({
         version: pkg.version,
-        content: content,
         local: (mode === "local"),
-        blog: React.renderToString(new Blog(content))
+        blog: React.renderToString(new Blog(prop)),
+        prop: prop
     })));
     return;
 });

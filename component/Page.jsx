@@ -3,12 +3,12 @@ var React = require("react");
 var Page = React.createClass({
     render: function () {
         "use strict";
-        var content = JSON.stringify(this.props.content), url = {
+        var prop = JSON.stringify(this.props.prop), url = {
             lib: this.props.local ? "/bower_components/react/react.js" : "http://fb.me/react-0.12.2.min.js",
             app: this.props.local ? "/static_assets/blog." : "cdn.lihengl.com/blog/"
         };
         url.app += this.props.version + ".min.";
-        content = content.replace(/<\/script/g, "<\\/script").replace(/<!--/g, "<\\!--");
+        prop = prop.replace(/<\/script/g, "<\\/script").replace(/<!--/g, "<\\!--");
         return <html lang="en-US">
             <head>
                 <meta charSet="utf-8"/>
@@ -19,11 +19,11 @@ var Page = React.createClass({
                 <link href={url.app + "css"} type="text/css" rel="stylesheet"/>
                 <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
                 <link href="/favicon.ico" type="image/x-icon" rel="icon"/>
-                <title>{this.props.content.title}</title>
+                <title>{this.props.prop.title}</title>
             </head>
             <body>
                 <div id="root" dangerouslySetInnerHTML={{__html: this.props.blog}}></div>
-                <script type="application/json" id="prop" dangerouslySetInnerHTML={{__html: content}}></script>
+                <script type="application/json" id="prop" dangerouslySetInnerHTML={{__html: prop}}></script>
                 <script type="text/javascript" src={url.lib}></script>
                 <script type="text/javascript" src={url.app + "js"}></script>
             </body>
