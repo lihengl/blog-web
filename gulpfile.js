@@ -1,5 +1,6 @@
 var webpack = require("gulp-webpack");
 var nodemon = require("gulp-nodemon");
+var flatten = require("gulp-flatten");
 var cssmin  = require("gulp-minify-css");
 var csscon  = require("gulp-concat-css");
 var jshint  = require("gulp-jshint");
@@ -20,10 +21,11 @@ gulp.task("lint", function () {
 
 gulp.task("transform", function () {
     "use strict";
-    return gulp.src("component/*.jsx").
+    return gulp.src("component/*/*.jsx").
         pipe(react()).
         pipe(jshint()).
         pipe(jshint.reporter("default", {verbose: true})).
+        pipe(flatten()).
         pipe(gulp.dest("react_components"));
 });
 
@@ -40,7 +42,7 @@ gulp.task("bundle:js", ["transform"], function () {
 
 gulp.task("bundle:css", function () {
     "use strict";
-    return gulp.src("stylesheet/*.css").
+    return gulp.src("component/*/*.css").
         pipe(csscon(out + ".css")).
         pipe(cssmin()).
         pipe(gulp.dest("static_assets"));
@@ -48,10 +50,10 @@ gulp.task("bundle:css", function () {
 
 gulp.task("develop", ["bundle:css", "bundle:js", "lint"], function () {
     "use strict";
-    gulp.watch(["component/*.jsx", "client.js"], ["bundle:js"]);
-    gulp.watch("stylesheet/*.css", ["bundle:css"]);
+    gulp.watch(["component/*/*.jsx", "client.js"], ["bundle:js"]);
+    gulp.watch(["component/*/*.css"], ["bundle:css"]);
     return nodemon({
-        ignore: ["./stylesheet/*", "./react_components/*", "gulpfile.js"],
+        ignore: ["./component/*", "./react_components/*", "gulpfile.js"],
         script: "server.js",
         env: {"MODE": "local"},
         ext: "css js"

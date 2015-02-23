@@ -4,7 +4,7 @@ var Cover = require("./cover");
 var Blog = React.createClass({
     getInitialState: function () {
         "use strict";
-        return {content: "Hello, world!"};
+        return {content: "Hello, world?"};
     },
     render: function () {
         "use strict";
