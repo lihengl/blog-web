@@ -22,8 +22,8 @@ var Page = React.createClass({
                 <title>{this.props.content.title}</title>
             </head>
             <body>
-                <div id="blog" dangerouslySetInnerHTML={{__html: this.props.blog}}></div>
-                <script type="application/json" id="content" dangerouslySetInnerHTML={{__html: content}}></script>
+                <div id="root" dangerouslySetInnerHTML={{__html: this.props.blog}}></div>
+                <script type="application/json" id="prop" dangerouslySetInnerHTML={{__html: content}}></script>
                 <script type="text/javascript" src={url.lib}></script>
                 <script type="text/javascript" src={url.app + "js"}></script>
             </body>
