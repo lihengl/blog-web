@@ -5,14 +5,13 @@ var robots  = require("robots.txt");
 var morgan  = require("morgan");
 var React   = require("react");
 
-var pkg = require("./package.json");
+var version = require("./package.json").version;
 
 var Page = React.createFactory(require("./react_components/page"));
 var Blog = React.createFactory(require("./react_components/blog"));
 
 var port = process.env.PORT || "3000";
 var mode = process.env.MODE || "test";
-
 
 var server = express().disable("x-powered-by").enable("strict routing");
 
@@ -30,15 +29,14 @@ server.get("/", function (req, res) {
     "use strict";
     var prop = {title: "A Blog's Title"};
     res.status(200).type("text/html").
-        send("<!DOCTYPE html>" + React.renderToStaticMarkup(new Page({
-        version: pkg.version,
+        send("<!DOCTYPE html>" + React.renderToStaticMarkup(Page({
+        component: React.renderToString(Blog(prop)),
+        version: version,
         local: (mode === "local"),
-        blog: React.renderToString(new Blog(prop)),
         prop: prop
     })));
     return;
 });
-
 
 if (mode === "test") {
     module.exports = server;

@@ -8,10 +8,9 @@ var Blog = React.createClass({
     },
     render: function () {
         "use strict";
-        return <div>
-            <h1>{this.props.title}</h1>
+        return <div className="blog">
+            <Cover>{this.props.title}</Cover>
             <p>{this.state.content}</p>
-            <Cover></Cover>
         </div>;
     }
 });

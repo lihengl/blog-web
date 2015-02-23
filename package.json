@@ -30,7 +30,7 @@
     "version": "0.1.0",
     "license": "MIT",
     "scripts": {
-        "start": "gulp bundle:css bundle:js lint develop",
+        "start": "gulp develop",
         "test": "gulp bundle:css bundle:js lint && istanbul cover test.js"
     },
     "author": "LIHENG <admin@lihengl.com>",

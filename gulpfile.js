@@ -1,5 +1,3 @@
-"use strict";
-
 var webpack = require("gulp-webpack");
 var nodemon = require("gulp-nodemon");
 var cssmin  = require("gulp-minify-css");
@@ -14,12 +12,14 @@ var out     = [pkg.name, pkg.version, "min"].join(".");
 
 
 gulp.task("lint", function () {
+    "use strict";
     return gulp.src(["gulpfile.js", "server.js", "client.js", "test.js"]).
         pipe(jshint()).
         pipe(jshint.reporter("default"));
 });
 
 gulp.task("transform", function () {
+    "use strict";
     return gulp.src("component/*.jsx").
         pipe(react()).
         pipe(jshint()).
@@ -28,6 +28,7 @@ gulp.task("transform", function () {
 });
 
 gulp.task("bundle:js", ["transform"], function () {
+    "use strict";
     return gulp.src("./client.js").
         pipe(webpack({
             externals: {"react": "React"},
@@ -38,13 +39,15 @@ gulp.task("bundle:js", ["transform"], function () {
 });
 
 gulp.task("bundle:css", function () {
+    "use strict";
     return gulp.src("stylesheet/*.css").
         pipe(csscon(out + ".css")).
         pipe(cssmin()).
         pipe(gulp.dest("static_assets"));
 });
 
-gulp.task("develop", function () {
+gulp.task("develop", ["bundle:css", "bundle:js", "lint"], function () {
+    "use strict";
     gulp.watch(["component/*.jsx", "client.js"], ["bundle:js"]);
     gulp.watch("stylesheet/*.css", ["bundle:css"]);
     return nodemon({

@@ -4,6 +4,7 @@
     "latedef": true,
     "browser": true,
     "strict": true,
+    "newcap": false,
     "unused": true,
     "curly": true,
     "undef": true,
