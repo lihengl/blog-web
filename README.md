@@ -6,7 +6,7 @@ Blog Web Application
 [![Coverage Status](https://coveralls.io/repos/lihengl/blog-web/badge.svg?branch=release)](https://coveralls.io/r/lihengl/blog-web?branch=release)
 [![Build Status](https://travis-ci.org/lihengl/blog-web.svg?branch=release)](https://travis-ci.org/lihengl/blog-web)
 
-This is an isomerphic Javascript project using [React](http://facebook.github.io/react/) and [Express](http://expressjs.com/). It is being designed to use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) all the way down from `<html>`, which means no Handlebars, Jade, or Dust. The mindset for writing templates should be kept consistent and pure. It also makes stylesheets part of each component in hope to achieve a higher level of modularity. Goal for the project is to become an elegant and intuitive blogging platform which used to only be living in the author's own imagination.
+This is an Isomerphic&trade; Javascript project using [React](http://facebook.github.io/react/) and [Express](http://expressjs.com/). It is being designed to use [JSX](http://facebook.github.io/react/docs/jsx-in-depth.html) all the way down from `<html></html>` which means no Handlebars, Jade, or Dust. This way the mindset for writing templates could be kept consistent and pure. It also makes stylesheets part of each component in hope to achieve a higher level of modularity. Goal for the project is to become an elegant and intuitive blogging platform which used to only be living in the author's own imagination.
 
 Getting Started
 ---
