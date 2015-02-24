@@ -1,5 +1,5 @@
-var Root = window.React.createFactory(require("./react_components/root"));
+var Application = window.React.createFactory(require("./react_components/application"));
 var prop = window.document.getElementById("prop").innerHTML;
-var node = window.document.getElementById("root");
+var root = window.document.getElementById("application");
 
-window.React.render(Root(JSON.parse(prop)), node);
+window.React.render(Application(JSON.parse(prop)), root);
