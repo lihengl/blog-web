@@ -9,7 +9,6 @@ var react   = require("gulp-react");
 var gulp    = require("gulp");
 
 var pkg     = require("./package.json");
-var out     = [pkg.name, pkg.version, "min"].join(".");
 
 
 gulp.task("lint", function () {
@@ -34,7 +33,7 @@ gulp.task("bundle:js", ["transform"], function () {
     return gulp.src("./client.js").
         pipe(webpack({
             externals: {"react": "React"},
-            output: {filename: out + ".js"}
+            output: {filename: [pkg.name, pkg.version, "min", "js"].join(".")}
         })).
         pipe(uglify()).
         pipe(gulp.dest("static_assets"));
@@ -43,7 +42,7 @@ gulp.task("bundle:js", ["transform"], function () {
 gulp.task("bundle:css", function () {
     "use strict";
     return gulp.src("component/*/*.css").
-        pipe(csscon(out + ".css")).
+        pipe(csscon([pkg.name, pkg.version, "min", "css"].join("."))).
         pipe(cssmin()).
         pipe(gulp.dest("static_assets"));
 });

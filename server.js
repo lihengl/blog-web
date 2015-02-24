@@ -7,8 +7,8 @@ var React   = require("react");
 
 var version = require("./package.json").version;
 
+var Root = React.createFactory(require("./react_components/root"));
 var Page = React.createFactory(require("./react_components/page"));
-var Blog = React.createFactory(require("./react_components/blog"));
 
 var port = process.env.PORT || "3000";
 var mode = process.env.MODE || "test";
@@ -30,7 +30,7 @@ server.get("/", function (req, res) {
     var prop = {title: "A Blog's Title"};
     res.status(200).type("text/html").
         send("<!DOCTYPE html>" + React.renderToStaticMarkup(Page({
-        component: React.renderToString(Blog(prop)),
+        root: React.renderToString(Root(prop)),
         version: version,
         local: (mode === "local"),
         prop: prop
