@@ -1,9 +1,10 @@
 {
     "devDependencies": {
         "precommit-hook": "1.0.7",
+        "react-tools": "0.12.2",
         "supertest": "0.15.0",
         "coveralls": "2.11.2",
-        "istanbul": "0.3.5",
+        "jest-cli": "0.4.0",
         "webpack": "1.5.3",
         "gulp-minify-css": "0.4.6",
         "gulp-concat-css": "2.1.0",
@@ -32,12 +33,19 @@
     "license": "MIT",
     "scripts": {
         "start": "gulp develop",
-        "test": "gulp bundle:css bundle:js lint && istanbul cover test.js"
+        "test": "gulp lint && jest"
     },
     "author": "LIHENG <admin@lihengl.com>",
     "main": "server.js",
     "name": "blog",
     "bugs": {
         "url": "https://github.com/lihengl/blog-web/issues"
+    },
+    "jest": {
+        "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"],
+        "moduleFileExtensions": ["jsx", "js"],
+        "testFileExtensions": ["js"],
+        "scriptPreprocessor": "<rootDir>/preprocessor.js",
+        "collectCoverage": true
     }
 }

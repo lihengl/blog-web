@@ -13,17 +13,19 @@ var pkg     = require("./package.json");
 
 gulp.task("lint", function () {
     "use strict";
-    return gulp.src(["gulpfile.js", "server.js", "client.js", "test.js"]).
+    return gulp.src([
+        "component/__tests__/*.js",
+        "react_components/*.js",
+        "./*.js",
+    ]).
         pipe(jshint()).
         pipe(jshint.reporter("default"));
 });
 
 gulp.task("transform", function () {
     "use strict";
-    return gulp.src("component/*/*.jsx").
+    return gulp.src("component/*.jsx").
         pipe(react()).
-        pipe(jshint()).
-        pipe(jshint.reporter("default", {verbose: true})).
         pipe(flatten()).
         pipe(gulp.dest("react_components"));
 });
@@ -41,7 +43,7 @@ gulp.task("bundle:js", ["transform"], function () {
 
 gulp.task("bundle:css", function () {
     "use strict";
-    return gulp.src("component/*/*.css").
+    return gulp.src("style/*.css").
         pipe(csscon([pkg.name, pkg.version, "min", "css"].join("."))).
         pipe(cssmin()).
         pipe(gulp.dest("static_assets"));
@@ -49,8 +51,8 @@ gulp.task("bundle:css", function () {
 
 gulp.task("develop", ["bundle:css", "bundle:js", "lint"], function () {
     "use strict";
-    gulp.watch(["component/*/*.jsx", "client.js"], ["bundle:js"]);
-    gulp.watch(["component/*/*.css"], ["bundle:css"]);
+    gulp.watch(["component/*.jsx", "client.js"], ["bundle:js"]);
+    gulp.watch(["style/*.css"], ["bundle:css"]);
     return nodemon({
         ignore: ["./component/*", "./react_components/*", "gulpfile.js"],
         script: "server.js",
