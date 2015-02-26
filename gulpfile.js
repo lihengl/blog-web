@@ -43,7 +43,7 @@ gulp.task("bundle:js", ["transform"], function () {
 
 gulp.task("bundle:css", function () {
     "use strict";
-    return gulp.src("style/*.css").
+    return gulp.src("stylesheet/*.css").
         pipe(csscon([pkg.name, pkg.version, "min", "css"].join("."))).
         pipe(cssmin()).
         pipe(gulp.dest("static_assets"));
@@ -52,7 +52,7 @@ gulp.task("bundle:css", function () {
 gulp.task("develop", ["bundle:css", "bundle:js", "lint"], function () {
     "use strict";
     gulp.watch(["component/*.jsx", "client.js"], ["bundle:js"]);
-    gulp.watch(["style/*.css"], ["bundle:css"]);
+    gulp.watch(["stylesheet/*.css"], ["bundle:css"]);
     return nodemon({
         ignore: ["./component/*", "./react_components/*", "gulpfile.js"],
         script: "server.js",
