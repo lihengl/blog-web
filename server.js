@@ -7,7 +7,6 @@ var React   = require("react");
 
 var version = require("./package.json").version;
 
-var Application  = React.createFactory(require("./react_components/application"));
 var Root = React.createFactory(require("./react_components/root"));
 
 var port = process.env.PORT || "3000";
@@ -27,20 +26,19 @@ server.use(morgan("combined"));
 
 server.get("/", function (req, res) {
     "use strict";
-    var prop = {title: "A Blog's Title"};
+    var source = {title: "A Blog's Title"};
     res.status(200).type("text/html").
         send("<!DOCTYPE html>" + React.renderToStaticMarkup(Root({
-        application: React.renderToString(Application(prop)),
         version: version,
-        local: (mode === "local"),
-        prop: prop
+        local: (mode === "development"),
+        data: source
     })));
     return;
 });
 
 if (mode === "test") {
     module.exports = server;
-} else if (mode === "local") {
+} else if (mode === "development") {
     console.log("server running on http://localhost:%d ...", port);
     server.listen(port);
 } else {
