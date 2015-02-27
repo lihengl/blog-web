@@ -1,4 +1,5 @@
 var React = require("react");
+
 var Cover = require("./cover");
 
 var Application = React.createClass({

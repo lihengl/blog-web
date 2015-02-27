@@ -1,60 +1,70 @@
+"use strict";
 var webpack = require("gulp-webpack");
 var nodemon = require("gulp-nodemon");
 var flatten = require("gulp-flatten");
-var cssmin  = require("gulp-minify-css");
+var csspre  = require("gulp-autoprefixer");
 var csscon  = require("gulp-concat-css");
+var cssmin  = require("gulp-minify-css");
 var jshint  = require("gulp-jshint");
 var uglify  = require("gulp-uglify");
 var react   = require("gulp-react");
+var less    = require("gulp-less");
 var gulp    = require("gulp");
 
 var pkg     = require("./package.json");
 
 
 gulp.task("lint", function () {
-    "use strict";
-    return gulp.src(["gulpfile.js", "server.js", "client.js", "test.js"]).
+    return gulp.src([
+        "component/__tests__/*.js",
+        "react_components/*.js",
+        "./*.js",
+    ]).
         pipe(jshint()).
         pipe(jshint.reporter("default"));
 });
 
+
 gulp.task("transform", function () {
-    "use strict";
-    return gulp.src("component/*/*.jsx").
+    return gulp.src("component/*.jsx").
         pipe(react()).
-        pipe(jshint()).
-        pipe(jshint.reporter("default", {verbose: true})).
         pipe(flatten()).
         pipe(gulp.dest("react_components"));
 });
 
-gulp.task("bundle:js", ["transform"], function () {
-    "use strict";
+gulp.task("bundle", ["transform"], function () {
+    var outname = [pkg.name, pkg.version, "min", "js"].join(".");
     return gulp.src("./client.js").
         pipe(webpack({
             externals: {"react": "React"},
-            output: {filename: [pkg.name, pkg.version, "min", "js"].join(".")}
+            output: {filename: outname}
         })).
         pipe(uglify()).
         pipe(gulp.dest("static_assets"));
 });
 
-gulp.task("bundle:css", function () {
-    "use strict";
-    return gulp.src("component/*/*.css").
-        pipe(csscon([pkg.name, pkg.version, "min", "css"].join("."))).
+gulp.task("compile", function () {
+    var outname = [pkg.name, pkg.version, "min", "css"].join(".");
+    return gulp.src("stylesheet/*.less").
+        pipe(less()).
+        pipe(csspre()).
+        pipe(csscon(outname)).
         pipe(cssmin()).
         pipe(gulp.dest("static_assets"));
 });
 
-gulp.task("develop", ["bundle:css", "bundle:js", "lint"], function () {
-    "use strict";
-    gulp.watch(["component/*/*.jsx", "client.js"], ["bundle:js"]);
-    gulp.watch(["component/*/*.css"], ["bundle:css"]);
+gulp.task("develop", ["compile", "bundle", "lint"], function () {
+    gulp.watch(["component/*.jsx", "client.js"], ["bundle"]);
+    gulp.watch(["stylesheet/*.less"], ["compile"]);
     return nodemon({
-        ignore: ["./component/*", "./react_components/*", "gulpfile.js"],
+        ignore: [
+            "react_components/*",
+            "stylesheet/*",
+            "component/*",
+            "gulpfile.js"
+        ],
         script: "server.js",
-        env: {"MODE": "local"},
+        env: {"MODE": "development"},
         ext: "css js"
     }).on("change", ["lint"]);
 });
