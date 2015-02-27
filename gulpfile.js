@@ -15,11 +15,7 @@ var pkg     = require("./package.json");
 
 
 gulp.task("lint", function () {
-    return gulp.src([
-        "component/__tests__/*.js",
-        "react_components/*.js",
-        "./*.js",
-    ]).
+    return gulp.src(["react_components/*.js", "./*.js"]).
         pipe(jshint()).
         pipe(jshint.reporter("default"));
 });
