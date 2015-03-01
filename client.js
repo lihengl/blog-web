@@ -1,5 +1,5 @@
 var Application = window.React.createFactory(require("./react_components/application"));
-var prop = window.document.getElementById("prop").innerHTML;
-var root = window.document.getElementById("application");
+var initialData = window.document.getElementById("prop").innerHTML;
+var rootElement = window.document.getElementById("application");
 
-window.React.render(Application(JSON.parse(prop)), root);
+window.React.render(Application(JSON.parse(initialData)), rootElement);

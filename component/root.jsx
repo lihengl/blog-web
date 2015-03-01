@@ -2,8 +2,8 @@ var React = require("react");
 
 var Application = React.createFactory(require("./application"));
 
-var Page = React.createClass({
-    render: function () {
+var Root = React.createClass({
+    render: function ()  {
         "use strict";
         var reference = {}, initial = {};
 
@@ -22,12 +22,11 @@ var Page = React.createClass({
                 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
                 <meta name="format-detection" content="telephone=no"/>
                 <meta name="google" value="notranslate"/>
-                <link href={reference.app + this.props.version + ".min.css"} type="text/css" rel="stylesheet"/>
                 <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
                 <link href="/favicon.ico" type="image/x-icon" rel="icon"/>
                 <title>{this.props.data.title}</title>
             </head>
-            <body>
+            <body style={{margin: 0, fontFamily: "sans-serif", color: "#333"}}>
                 <div id="application" dangerouslySetInnerHTML={{__html: initial.html}}></div>
                 <script type="application/json" id="prop" dangerouslySetInnerHTML={{__html: initial.data}}></script>
                 <script type="text/javascript" src={reference.lib}></script>
@@ -37,4 +36,4 @@ var Page = React.createClass({
     }
 });
 
-module.exports = Page;
+module.exports = Root;

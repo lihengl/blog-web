@@ -45,7 +45,7 @@
     "jest": {
         "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"],
         "moduleFileExtensions": ["jsx", "js"],
-        "testFileExtensions": ["js"],
+        "testFileExtensions": ["jsx"],
         "scriptPreprocessor": "<rootDir>/preprocessor.js",
         "collectCoverage": true
     }
