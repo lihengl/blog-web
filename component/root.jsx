@@ -1,10 +1,10 @@
+"use strict";
 var React = require("react");
 
 var Application = React.createFactory(require("./application"));
 
 var Root = React.createClass({
     render: function ()  {
-        "use strict";
         var reference = {}, initial = {};
 
         reference.lib = this.props.local ? "/bower_components/react/react.js" : "http://fb.me/react-0.12.2.min.js";

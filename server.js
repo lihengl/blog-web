@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+"use strict";
 var favicon = require("serve-favicon");
 var express = require("express");
 var robots  = require("robots.txt");
@@ -19,13 +20,11 @@ server.use(robots( __dirname + "/robots.txt"));
 server.use(morgan("combined"));
 
 ["/bower_components", "/static_assets"].forEach(function (folder) {
-    "use strict";
     server.use(folder, express.static(__dirname + folder));
     return;
 });
 
 server.get("/", function (req, res) {
-    "use strict";
     var source = {title: "A Blog's Title"};
     res.status(200).type("text/html").
         send("<!DOCTYPE html>" + React.renderToStaticMarkup(Root({
