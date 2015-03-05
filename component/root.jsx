@@ -1,17 +1,26 @@
+"use strict";
 var React = require("react");
 
 var Application = React.createFactory(require("./application"));
 
 var Root = React.createClass({
     render: function ()  {
-        "use strict";
         var reference = {}, initial = {};
 
-        reference.lib = this.props.local ? "/bower_components/react/react.js" : "http://fb.me/react-0.12.2.min.js";
-        reference.app = this.props.local ? "/static_assets/blog." : "http://cdn.lihengl.com/blog/";
+        if (!this.props.local) {
+            reference.react = "http://fb.me/react-0.12.2.min.js";
+            reference.shim  = "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-shim.min.js";
+            reference.sham  = "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-sham.min.js";
+            reference.app   = "http://cdn.lihengl.com/blog/";
+        } else {
+            reference.react = "/bower_components/react/react.js";
+            reference.shim  = "/bower_components/es5-shim/es5-shim.min.js";
+            reference.sham  = "/bower_components/es5-shim/es5-sham.min.js";
+            reference.app   = "/static_assets/blog.";
+        }
 
-        initial.html = React.renderToString(Application(this.props.data));
-        initial.data = JSON.stringify(this.props.data).
+        initial.html = React.renderToString(Application(this.props.initial));
+        initial.json = JSON.stringify(this.props.initial).
             replace(/<\/script/g, "<\\/script").
             replace(/<!--/g, "<\\!--");
 
@@ -24,12 +33,14 @@ var Root = React.createClass({
                 <meta name="google" value="notranslate"/>
                 <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
                 <link href="/favicon.ico" type="image/x-icon" rel="icon"/>
-                <title>{this.props.data.title}</title>
+                <title>{this.props.initial.title}</title>
             </head>
             <body style={{margin: 0, fontFamily: "sans-serif", color: "#333"}}>
                 <div id="application" dangerouslySetInnerHTML={{__html: initial.html}}></div>
-                <script type="application/json" id="prop" dangerouslySetInnerHTML={{__html: initial.data}}></script>
-                <script type="text/javascript" src={reference.lib}></script>
+                <script type="application/json" id="prop" dangerouslySetInnerHTML={{__html: initial.json}}></script>
+                <script type="text/javascript" src={reference.shim}></script>
+                <script type="text/javascript" src={reference.sham}></script>
+                <script type="text/javascript" src={reference.react}></script>
                 <script type="text/javascript" src={reference.app + this.props.version + ".min.js"}></script>
             </body>
         </html>;

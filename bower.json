@@ -1,6 +1,7 @@
 {
     "description": "Isomerphic Blog Application with ReactJS",
     "dependencies": {
+        "es5-shim": "4.1.0",
         "react": "0.12.2"
     },
     "homepage": "https://github.com/lihengl/blog-web",

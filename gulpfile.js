@@ -5,6 +5,7 @@ var flatten = require("gulp-flatten");
 var jshint  = require("gulp-jshint");
 var uglify  = require("gulp-uglify");
 var react   = require("gulp-react");
+var clean   = require("gulp-clean");
 var gulp    = require("gulp");
 
 var pkg     = require("./package.json");
@@ -14,6 +15,13 @@ gulp.task("lint", function () {
     return gulp.src(["react_components/*.js", "*.js"]).
         pipe(jshint()).
         pipe(jshint.reporter("default"));
+});
+
+gulp.task("clean", function () {
+    return gulp.src(["react_components", "static_assets/*.js"], {
+        read: false
+    }).
+        pipe(clean());
 });
 
 gulp.task("transform", function () {
