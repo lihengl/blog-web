@@ -25,12 +25,12 @@ server.use(morgan("combined"));
 });
 
 server.get("/", function (req, res) {
-    var source = {title: "A Blog's Title"};
+    var data = {title: "A BLOG'S NAME"};
     res.status(200).type("text/html").
         send("<!DOCTYPE html>" + React.renderToStaticMarkup(Root({
         version: version,
-        local: (mode === "development"),
-        data: source
+        initial: data,
+        local: (mode === "development")
     })));
     return;
 });

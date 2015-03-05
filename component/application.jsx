@@ -2,27 +2,31 @@
 var React = require("react");
 
 var Cover = require("./cover");
+var Paper = require("./paper");
 
 var Application = React.createClass({
-    updateScreenWidth: function () {
-        this.setState({content: window.innerWidth});
-        return;
-    },
-    componentWillUnmount: function() {
-        window.removeEventListener("resize", this.updateScreenWidth);
-        return;
-    },
-    componentDidMount: function() {
-        window.addEventListener("resize", this.updateScreenWidth);
+    captureScreenSize: function () {
+        this.setState({
+            height: window.innerHeight,
+            width:  window.innerWidth
+        });
         return;
     },
     getInitialState: function () {
-        return {content: "Hello, world?"};
+        return {width: "Default Screen Width From Our Server"};
+    },
+    componentWillUnmount: function() {
+        window.removeEventListener("resize", this.captureScreenSize);
+        return;
+    },
+    componentDidMount: function() {
+        window.addEventListener("resize", this.captureScreenSize);
+        return;
     },
     render: function () {
         return <div>
-            <Cover>{this.props.title}</Cover>
-            <p>{this.state.content}</p>
+            <Cover width={this.state.width}>{this.props.title}</Cover>
+            <Paper title="A Blog Post's Title" />
         </div>;
     }
 });

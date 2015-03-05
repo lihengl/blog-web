@@ -13,6 +13,7 @@
         "gulp-flatten": "0.0.4",
         "gulp-jshint": "1.9.2",
         "gulp-uglify": "1.1.0",
+        "gulp-clean": "0.3.1",
         "gulp-react": "2.0.0",
         "gulp-less": "3.0.1",
         "gulp": "3.8.11"
@@ -34,7 +35,7 @@
     "license": "MIT",
     "scripts": {
         "start": "gulp develop",
-        "test": "gulp lint && jest"
+        "test": "gulp bundle lint && jest"
     },
     "author": "LIHENG <admin@lihengl.com>",
     "main": "server.js",

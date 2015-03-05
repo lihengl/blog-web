@@ -12,9 +12,13 @@ var Cover = React.createClass({
             textAlign: "center",
             height: "420px",
             color: "#FFF"}}>
-            <h1 style={{fontWeight: "bold", fontSize: "60px"}}>
-                {this.props.children}
-            </h1>
+            <h1 style={{
+                fontWeight: "bold",
+                fontSize: "60px"}}>
+                {this.props.children}</h1>
+            <p style={{
+                fontSize: "20px"}}>
+                {this.props.width}</p>
         </div>;
     }
 });
