@@ -8,7 +8,11 @@ describe("Application", function () {
     var Application = require("../application.jsx");
 
     it("could just pass", function () {
-        expect(true).toBe(true);
+        var component = Utils.renderIntoDocument(
+            <Application />
+        );
+        var root = Utils.findRenderedDOMComponentWithTag(component, "div");
+        expect(root.getDOMNode().textContent).toEqual("");
     });
 
 });

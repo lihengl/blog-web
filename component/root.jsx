@@ -35,7 +35,7 @@ var Root = React.createClass({
                 <link href="/favicon.ico" type="image/x-icon" rel="icon"/>
                 <title>{this.props.initial.title}</title>
             </head>
-            <body style={{margin: 0, fontFamily: "sans-serif", color: "#333"}}>
+            <body style={{margin: 0, color: "#333333", fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif"}}>
                 <div id="application" dangerouslySetInnerHTML={{__html: initial.html}}></div>
                 <script type="application/json" id="prop" dangerouslySetInnerHTML={{__html: initial.json}}></script>
                 <script type="text/javascript" src={reference.shim}></script>

@@ -8,7 +8,9 @@ describe("Cover", function () {
     var Cover = require("../cover.jsx");
 
     it("should render correctly", function () {
-        var r = Utils.renderIntoDocument(<Cover>A Blog's Title</Cover>);
+        var r = Utils.renderIntoDocument(
+            <Cover browser={{height: 900, width: 1440}}>A Blog's Title</Cover>
+        );
         var h = Utils.findRenderedDOMComponentWithTag(r, "h1");
         expect(h.getDOMNode().textContent).toEqual("A Blog's Title");
     });
