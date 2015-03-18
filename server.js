@@ -7,9 +7,11 @@ var express = require("express");
 var logger  = require("morgan");
 var robots  = require("robots.txt");
 
+var Promise = require("bluebird");
 var React   = require("react");
 
-var pkg = require("./package.json");
+var routes = require("./routes");
+var pkg    = require("./package.json");
 
 var Root = React.createFactory(require("./react_components/root"));
 
@@ -17,6 +19,17 @@ var port = process.env.PORT || "3000";
 var mode = process.env.MODE || "test";
 
 var server = express().disable("x-powered-by").enable("strict routing");
+
+
+server.render = Promise.promisify(function (data, callback) {
+    var html = React.renderToStaticMarkup(Root({
+        application: (pkg.name + "-" + pkg.version + ".min.js"),
+        cdnized: (mode !== "local"),
+        state: data || {}
+    }));
+    return callback(null, ("<!DOCTYPE html>" + html));
+});
+
 
 server.set("mode", mode);
 
@@ -32,16 +45,19 @@ server.use(robots(__dirname + "/robots.txt"));
 server.use(cookieParser());
 server.use(logger("combined"));
 
-server.get("/", function (req, res) {
-    var data = {title: "A BLOG'S NAME"};
-    res.status(200).type("text/html").
-        send("<!DOCTYPE html>" + React.renderToStaticMarkup(Root({
-        cdnized: (mode !== "local"),
-        state: data,
-        app: (pkg.name + "-" + pkg.version + ".min.js")
-    })));
-    return;
+server.use(routes);
+
+server.use(function (err, req, res, next) {
+    var message = [
+        "Where: " + req.path,
+        "State: " + JSON.stringify(res.locals.state),
+        err.stack
+    ].join("\n");
+    console.error(message);
+    res.status(500).type("text/plain").send(message);
+    return next;
 });
+
 
 if (mode === "test") {
     module.exports = server;

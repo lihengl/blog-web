@@ -8,17 +8,17 @@ var Root = React.createClass({
         var reference = {}, initial = {};
 
         if (this.props.cdnized) {
-            reference.bluebird = "https://cdnjs.cloudflare.com/ajax/libs/bluebird/2.9.14/bluebird.min.js";
-            reference.es5shim  = "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-shim.min.js";
-            reference.es5sham  = "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-sham.min.js";
-            reference.react    = "https://cdnjs.cloudflare.com/ajax/libs/react/0.13.1/react.min.js";
-            reference.app      = "https://cdn.lihengl.com/blog/";
+            reference.application = "https://cdn.lihengl.com/blog/";
+            reference.bluebird    = "https://cdnjs.cloudflare.com/ajax/libs/bluebird/2.9.14/bluebird.min.js";
+            reference.es5shim     = "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-shim.min.js";
+            reference.es5sham     = "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-sham.min.js";
+            reference.react       = "https://cdnjs.cloudflare.com/ajax/libs/react/0.13.1/react.min.js";
         } else {
-            reference.bluebird = "/node_modules/bluebird/js/browser/bluebird.js";
-            reference.es5shim  = "/node_modules/es5-shim/es5-shim.js";
-            reference.es5sham  = "/node_modules/es5-shim/es5-sham.js";
-            reference.react    = "/node_modules/react/dist/react.js";
-            reference.app      = "/static_assets/";
+            reference.application = "/static_assets/";
+            reference.bluebird    = "/node_modules/bluebird/js/browser/bluebird.js";
+            reference.es5shim     = "/node_modules/es5-shim/es5-shim.js";
+            reference.es5sham     = "/node_modules/es5-shim/es5-sham.js";
+            reference.react       = "/node_modules/react/dist/react.js";
         }
 
         initial.html = React.renderToString(Application(this.props.state));
@@ -47,7 +47,7 @@ var Root = React.createClass({
                 <script type="text/javascript" src={reference.es5shim}></script>
                 <script type="text/javascript" src={reference.es5sham}></script>
                 <script type="text/javascript" src={reference.react}></script>
-                <script type="text/javascript" src={reference.app + this.props.app}></script>
+                <script type="text/javascript" src={reference.application + this.props.application}></script>
             </body>
         </html>;
     }
