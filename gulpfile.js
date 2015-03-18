@@ -24,7 +24,7 @@ gulp.task("clean", function () {
 });
 
 gulp.task("transform", function () {
-    return gulp.src("component/*.jsx").
+    return gulp.src("components/*.jsx").
         pipe(react()).
         pipe(flatten()).
         pipe(gulp.dest("react_components"));
@@ -46,9 +46,9 @@ gulp.task("bundle", ["transform"], function () {
 });
 
 gulp.task("develop", ["bundle", "lint"], function () {
-    gulp.watch(["component/*.jsx", "client.js"], ["bundle"]);
+    gulp.watch(["components/*.jsx", "client.js"], ["bundle"]);
     return nodemon({
-        ignore: ["react_components/*", "component/*", "gulpfile.js"],
+        ignore: ["react_components/*", "components/*", "gulpfile.js"],
         script: "server.js",
         env: {"MODE": "local"},
         ext: "js"
