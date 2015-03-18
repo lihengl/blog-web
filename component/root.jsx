@@ -7,20 +7,22 @@ var Root = React.createClass({
     render: function ()  {
         var reference = {}, initial = {};
 
-        if (!this.props.local) {
-            reference.react = "http://fb.me/react-0.12.2.min.js";
-            reference.shim  = "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-shim.min.js";
-            reference.sham  = "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-sham.min.js";
-            reference.app   = "http://cdn.lihengl.com/blog/";
+        if (this.props.cdnized) {
+            reference.bluebird = "https://cdnjs.cloudflare.com/ajax/libs/bluebird/2.9.14/bluebird.min.js";
+            reference.es5shim  = "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-shim.min.js";
+            reference.es5sham  = "https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.0/es5-sham.min.js";
+            reference.react    = "https://cdnjs.cloudflare.com/ajax/libs/react/0.13.1/react.min.js";
+            reference.app      = "https://cdn.lihengl.com/blog/";
         } else {
-            reference.react = "/bower_components/react/react.js";
-            reference.shim  = "/bower_components/es5-shim/es5-shim.min.js";
-            reference.sham  = "/bower_components/es5-shim/es5-sham.min.js";
-            reference.app   = "/static_assets/blog.";
+            reference.bluebird = "/node_modules/bluebird/js/browser/bluebird.js";
+            reference.es5shim  = "/node_modules/es5-shim/es5-shim.js";
+            reference.es5sham  = "/node_modules/es5-shim/es5-sham.js";
+            reference.react    = "/node_modules/react/dist/react.js";
+            reference.app      = "/static_assets/";
         }
 
-        initial.html = React.renderToString(Application(this.props.initial));
-        initial.json = JSON.stringify(this.props.initial).
+        initial.html = React.renderToString(Application(this.props.state));
+        initial.json = JSON.stringify(this.props.state).
             replace(/<\/script/g, "<\\/script").
             replace(/<!--/g, "<\\!--");
 
@@ -33,15 +35,19 @@ var Root = React.createClass({
                 <meta name="google" value="notranslate"/>
                 <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
                 <link href="/favicon.ico" type="image/x-icon" rel="icon"/>
-                <title>{this.props.initial.title}</title>
+                <title>{this.props.state.title}</title>
             </head>
-            <body style={{margin: 0, color: "#333333", fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif"}}>
+            <body style={{
+                fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif",
+                margin: 0,
+                color: "#333333"}}>
                 <div id="application" dangerouslySetInnerHTML={{__html: initial.html}}></div>
-                <script type="application/json" id="prop" dangerouslySetInnerHTML={{__html: initial.json}}></script>
-                <script type="text/javascript" src={reference.shim}></script>
-                <script type="text/javascript" src={reference.sham}></script>
+                <script type="application/json" id="state" dangerouslySetInnerHTML={{__html: initial.json}}></script>
+                <script type="text/javascript" src={reference.bluebird}></script>
+                <script type="text/javascript" src={reference.es5shim}></script>
+                <script type="text/javascript" src={reference.es5sham}></script>
                 <script type="text/javascript" src={reference.react}></script>
-                <script type="text/javascript" src={reference.app + this.props.version + ".min.js"}></script>
+                <script type="text/javascript" src={reference.app + this.props.app}></script>
             </body>
         </html>;
     }

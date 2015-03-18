@@ -3,12 +3,12 @@ var React = require("react");
 
 var Cover = React.createClass({
     render: function () {
-        var maxHeight = 600, totalHeight = 1.0, paddingTop = 1.0;
+        var paddingTop = 0;
+        var maxHeight = 600;
         var aspectRatio = (this.props.browser.height > this.props.browser.width) ? 1.0 : (9.0 / 16.0);
+        var totalHeight = this.props.browser.width * aspectRatio;
 
-        totalHeight = this.props.browser.width * aspectRatio;
         totalHeight = (totalHeight > maxHeight) ? maxHeight : totalHeight;
-
         paddingTop = totalHeight / 3.0;
 
         return <div style={{
