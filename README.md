@@ -6,7 +6,7 @@ Blog, Web
 [![Coverage Status](https://coveralls.io/repos/lihengl/blog-web/badge.svg?branch=release)](https://coveralls.io/r/lihengl/blog-web?branch=release)
 [![Build Status](https://travis-ci.org/lihengl/blog-web.svg?branch=release)](https://travis-ci.org/lihengl/blog-web)
 
-This is an Isomerphic&trade; JavaScript project using [React](http://facebook.github.io/react/) and [Express](http://expressjs.com/). It eliminates the separation of `HTML` and `CSS` by putting everything in `JSX`. As such, there will be no `.html/.jade/.handlebars/.dust` files anywhere throughout the project, and no `.css/.less/.sass` files to write upon. All templating and styling is *inlined* into `.jsx` so components are truely self-contained within each file. Goal for the project is to become an elegant and intuitive blogging platform which used to only be living in the author's own imagination.
+This is an Isomerphic&trade; JavaScript project using [React](http://facebook.github.io/react/) and [Express](http://expressjs.com/). It eliminates the separation of `HTML` and `CSS` by putting everything in `JSX`. As such, there will be no `.html`, `.jade`, `.handlebars`, or `.dust` files anywhere throughout the project, and no `.css`, `.less`, `.sass` files to write upon. All templating and styling is *inlined* into `.jsx` so components are truely self-contained within each file. Goal for the project is to become an elegant and intuitive blogging platform which used to only be living in the author's own imagination.
 
 Getting Started
 ---
