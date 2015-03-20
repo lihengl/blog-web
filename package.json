@@ -24,7 +24,8 @@
         "request": "2.53.0",
         "express": "4.12.2",
         "morgan": "1.5.1",
-        "react" : "0.13.0"
+        "react" : "0.13.1",
+        "flux": "2.0.1"
     },
     "description": "Isomerphic web client for Blog API",
     "repository": {
@@ -38,6 +39,10 @@
         "start": "gulp develop",
         "test": "gulp bundle lint && jest"
     },
+    "backend": {
+        "production": "https://blog-api.lihengl.com",
+        "staging": "https://test-blog-api.lihengl.com"
+    },
     "author": "LIHENG <admin@lihengl.com>",
     "main": "server.js",
     "name": "blog",
@@ -50,5 +55,9 @@
         "testFileExtensions": ["jsx"],
         "scriptPreprocessor": "<rootDir>/preprocessor.js",
         "collectCoverage": true
+    },
+    "cdn": {
+        "lib": "https://cdnjs.cloudflare.com/ajax/libs",
+        "app": "https://cdn.lihengl.com/blog"
     }
 }

@@ -5,7 +5,7 @@ var Paper = React.createClass({
     render: function () {
         var paddingSide = 10;
         var maxWidth = 680;
-        var width = (this.props.browser.width > maxWidth) ? maxWidth : this.props.browser.width;
+        var width = (this.props.width > maxWidth) ? maxWidth : this.props.width;
         return <div>
             <div style={{
                 paddingBottom: 20,

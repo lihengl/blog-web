@@ -18,13 +18,18 @@ var Root = React.createFactory(require("./react_components/root"));
 var port = process.env.PORT || "3000";
 var mode = process.env.MODE || "test";
 
+var localhost = {
+    application: "/static_assets",
+    library: "/node_modules"
+};
+
 var server = express().disable("x-powered-by").enable("strict routing");
 
 
 server.render = Promise.promisify(function (data, callback) {
     var html = React.renderToStaticMarkup(Root({
-        application: (pkg.name + "-" + pkg.version + ".min.js"),
-        cdnized: (mode !== "local"),
+        application: ("/" + pkg.name + "-" + pkg.version + ".min.js"),
+        provider: (mode === "local") ? localhost : pkg.cdn,
         state: data || {}
     }));
     return callback(null, ("<!DOCTYPE html>" + html));
@@ -36,7 +41,7 @@ server.set("mode", mode);
 server.use(serveFavicon(__dirname + "/favicon.ico"));
 server.use(robots(__dirname + "/robots.txt"));
 
-["/node_modules", "/static_assets"].forEach(function (folder) {
+[localhost.application, localhost.library].forEach(function (folder) {
     if (mode !== "local") { return; }
     server.use(folder, express.static(__dirname + folder));
     return;
@@ -44,6 +49,13 @@ server.use(robots(__dirname + "/robots.txt"));
 
 server.use(cookieParser());
 server.use(logger("combined"));
+
+server.use(function (req, res, next) {
+    var api = pkg.backend;
+    req.api = (mode === "production") ? api.production : api.staging;
+    res.locals.state = {};
+    return next();
+});
 
 server.use(routes);
 

@@ -5,29 +5,31 @@ var Cover = require("./cover");
 var Paper = require("./paper");
 
 var Application = React.createClass({
-    captureBrowserSize: function () {
-        this.setState({
-            browser: {height: window.innerHeight, width: window.innerWidth}
-        });
-        return;
+    getInitialState: function () {
+        return {
+            height: 900,
+            width: 1440
+        };
     },
     componentWillUnmount: function () {
-        window.removeEventListener("resize", this.captureBrowserSize);
+        window.removeEventListener("resize", this._captureBrowserSize);
         return;
     },
     componentDidMount: function () {
-        window.addEventListener("resize", this.captureBrowserSize);
+        window.addEventListener("resize", this._captureBrowserSize);
         return;
     },
-    getInitialState: function () {
-        return {
-            browser: {height: 900, width: 1440}
-        };
+    _captureBrowserSize: function () {
+        this.setState({
+            height: window.innerHeight,
+            width: window.innerWidth
+        });
+        return;
     },
     render: function () {
         return <div>
-            <Cover browser={this.state.browser}>{this.props.title}</Cover>
-            <Paper browser={this.state.browser} title="A Blog Post's Title" />
+            <Cover height={this.state.height} width={this.state.width}>{this.props.title}</Cover>
+            <Paper width={this.state.width} title="A Blog Post's Title" />
         </div>;
     }
 });
