@@ -8,7 +8,6 @@
     "newcap": false,
     "unused": true,
     "eqeqeq": true,
-    "predef": ["jest"],
     "curly": true,
     "undef": true,
     "node": true

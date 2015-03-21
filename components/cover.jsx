@@ -1,7 +1,13 @@
 "use strict";
+var AdjustAction = require("../actions/adjust");
+
 var React = require("react");
 
 var Cover = React.createClass({
+    _handleClick: function () {
+        AdjustAction.increment(1);
+        return;
+    },
     render: function () {
         var paddingTop = 0;
         var maxHeight = 600;
@@ -20,7 +26,7 @@ var Cover = React.createClass({
             textAlign: "center",
             height: Math.floor(totalHeight - paddingTop),
             color: "#FFFFFF"}}>
-            <h1 style={{
+            <h1 onClick={this._handleClick} style={{
                 marginBottom: 0,
                 fontWeight: "bold",
                 marginTop: 0,

@@ -46,7 +46,13 @@ gulp.task("bundle", ["transform"], function () {
 });
 
 gulp.task("develop", ["bundle", "lint"], function () {
-    gulp.watch(["components/*.jsx", "client.js"], ["bundle"]);
+    gulp.watch([
+        "components/**/*.jsx",
+        "actions/**/*.js",
+        "stores/**/*.js",
+        "dispatcher.js",
+        "client.js"
+    ], ["bundle"]);
     return nodemon({
         ignore: [
             "react_components/*",

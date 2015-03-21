@@ -5,25 +5,25 @@ var Cover = require("./cover");
 var Paper = require("./paper");
 
 var Application = React.createClass({
+    _adjustSize: function () {
+        this.setState({
+            height: window.innerHeight,
+            width:  window.innerWidth
+        });
+        return;
+    },
     getInitialState: function () {
         return {
             height: 900,
             width: 1440
         };
     },
-    componentWillUnmount: function () {
-        window.removeEventListener("resize", this._captureBrowserSize);
-        return;
-    },
     componentDidMount: function () {
-        window.addEventListener("resize", this._captureBrowserSize);
+        window.addEventListener("resize", this._adjustSize);
         return;
     },
-    _captureBrowserSize: function () {
-        this.setState({
-            height: window.innerHeight,
-            width: window.innerWidth
-        });
+    componentWillUnmount: function () {
+        window.removeEventListener("resize", this._adjustSize);
         return;
     },
     render: function () {

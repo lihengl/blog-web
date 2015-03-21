@@ -27,12 +27,12 @@ var server = express().disable("x-powered-by").enable("strict routing");
 
 
 server.render = Promise.promisify(function (data, callback) {
-    var html = React.renderToStaticMarkup(Root({
+    var markup = React.renderToStaticMarkup(Root({
         application: ("/" + pkg.name + "-" + pkg.version + ".min.js"),
         provider: (mode === "local") ? localhost : pkg.cdn,
         state: data || {}
     }));
-    return callback(null, ("<!DOCTYPE html>" + html));
+    return callback(null, ("<!DOCTYPE html>" + markup));
 });
 
 
