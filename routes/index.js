@@ -1,20 +1,20 @@
 "use strict";
 var __article__ = require("./__mocks__/article.json");
 
+var Request = require("superagent");
 var Promise = require("bluebird");
-var request = require("request");
 
 var router = require("express").Router({caseSensitive: true, strict: true});
 
 
 var fetch = Promise.promisify(function (param, callback) {
     if (param.mode === "local") { return callback(null, __article__); }
-    return request.get({url: param.url, qs: {
+    return Request.get(param.url).query({
         edit: false
-    }}, function (err, head, body) {
+    }).end(function (err, response) {
         if (err) { return callback(err); }
-        if (head.statusCode === 200) { return callback(null, body); }
-        return callback(new Error(param.url + " returns " + head.statusCode));
+        if (response.ok) { return callback(null, response.body); }
+        return callback(new Error(param.url + " returns " + response.status));
     });
 });
 

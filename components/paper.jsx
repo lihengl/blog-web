@@ -1,10 +1,15 @@
 "use strict";
-var CountStore   = require("../stores/count");
+var FetchAction = require("../actions/fetch");
+var CountStore  = require("../stores/count");
 
 var React = require("react");
 
 
 var Paper = React.createClass({
+    _handleClick: function () {
+        FetchAction.comments("lihengl");
+        return;
+    },
     _onChange: function () {
         this.setState({text: CountStore.getTotal()});
     },
@@ -30,7 +35,7 @@ var Paper = React.createClass({
                 paddingTop: 20,
                 margin: "0 auto 0 auto",
                 width: width - (paddingSide * 2)}}>
-                <h1 style={{
+                <h1 onClick={this._handleClick} style={{
                     fontSize: 40}}>
                     {this.props.title}
                 </h1>

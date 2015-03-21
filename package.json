@@ -2,6 +2,7 @@
     "devDependencies": {
         "precommit-hook": "1.0.7",
         "react-tools": "0.13.0",
+        "json-loader": "0.5.1",
         "coveralls": "2.11.2",
         "jest-cli": "0.4.0",
         "es5-shim": "4.1.0",
@@ -11,10 +12,10 @@
         "gulp-flatten": "0.0.4",
         "gulp-jshint": "1.9.2",
         "gulp-uglify": "1.1.0",
-        "gulp-clean": "0.3.1",
         "gulp-react": "2.0.0",
         "gulp-jscs": "1.4.0",
-        "gulp": "3.8.11"
+        "gulp": "3.8.11",
+        "del": "1.1.1"
     },
     "dependencies": {
         "object-assign": "2.0.0",
@@ -22,7 +23,7 @@
         "serve-favicon": "2.2.0",
         "robots.txt": "1.1.0",
         "bluebird": "2.9.14",
-        "request": "2.53.0",
+        "superagent": "1.1.0",
         "express": "4.12.2",
         "morgan": "1.5.1",
         "react" : "0.13.1",

@@ -5,8 +5,8 @@ var flatten = require("gulp-flatten");
 var jshint  = require("gulp-jshint");
 var uglify  = require("gulp-uglify");
 var react   = require("gulp-react");
-var clean   = require("gulp-clean");
 var gulp    = require("gulp");
+var del     = require("del");
 
 var pkg     = require("./package.json");
 
@@ -17,10 +17,11 @@ gulp.task("lint", function () {
         .pipe(jshint.reporter("default"));
 });
 
-gulp.task("clean", function () {
-    return gulp.src(["react_components", "static_assets/*.js"], {
-        read: false
-    }).pipe(clean());
+gulp.task("clean", function (callback) {
+    del([
+        "react_components",
+        "static_assets/*.js"
+    ], callback);
 });
 
 gulp.task("transform", function () {
@@ -37,8 +38,19 @@ gulp.task("bundle", ["transform"], function () {
                 "bluebird": "Promise",
                 "react": "React"
             },
+            module: {
+                loaders: [{
+                    loader: "json",
+                    test: /\.json$/
+                }]
+            },
             output: {
                 filename: (pkg.name + "-" + pkg.version + ".min.js")
+            },
+            node: {
+                net: "empty",
+                tls: "empty",
+                fs:  "empty"
             }
         }))
         .pipe(uglify())
