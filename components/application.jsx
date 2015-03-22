@@ -1,8 +1,8 @@
 "use strict";
 var React = require("react");
 
-var Cover = require("./cover");
-var Paper = require("./paper");
+var Canvas = require("./canvas");
+var Cover  = require("./cover");
 
 var Application = React.createClass({
     _adjustSize: function () {
@@ -29,7 +29,7 @@ var Application = React.createClass({
     render: function () {
         return <div>
             <Cover height={this.state.height} width={this.state.width}>{this.props.title}</Cover>
-            <Paper width={this.state.width} title="A Blog Post's Title" />
+            <Canvas width={this.state.width} title="A Blog Post's Title" />
         </div>;
     }
 });

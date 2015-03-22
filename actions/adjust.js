@@ -1,7 +1,7 @@
 "use strict";
 var Dispatcher = require("../dispatcher");
 
-var AdjustAction = {
+var Adjust = {
     increment: function (amount) {
         Dispatcher.dispatch({
             amount: amount,
@@ -11,4 +11,4 @@ var AdjustAction = {
     }
 };
 
-module.exports = AdjustAction;
+module.exports = Adjust;

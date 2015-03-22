@@ -46,11 +46,6 @@ gulp.task("bundle", ["transform"], function () {
             },
             output: {
                 filename: (pkg.name + "-" + pkg.version + ".min.js")
-            },
-            node: {
-                net: "empty",
-                tls: "empty",
-                fs:  "empty"
             }
         }))
         .pipe(uglify())
@@ -73,7 +68,10 @@ gulp.task("develop", ["bundle", "lint"], function () {
             "gulpfile.js"
         ],
         script: "server.js",
-        env: {"MODE": "local"},
+        env: {
+            "BLUEBIRD_DEBUG": "1",
+            "MODE": "local"
+        },
         ext: "js"
     }).on("change", ["lint"]);
 });

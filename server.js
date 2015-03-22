@@ -19,8 +19,8 @@ var port = process.env.PORT || "3000";
 var mode = process.env.MODE || "test";
 
 var localhost = {
-    application: "/static_assets",
-    library: "/node_modules"
+    app: "/static_assets",
+    lib: "/node_modules"
 };
 
 var server = express().disable("x-powered-by").enable("strict routing");
@@ -28,7 +28,7 @@ var server = express().disable("x-powered-by").enable("strict routing");
 
 server.render = Promise.promisify(function (data, callback) {
     var markup = React.renderToStaticMarkup(Root({
-        provider: (mode === "local") ? localhost : pkg.cdnhost,
+        statichost: (mode === "local") ? localhost : pkg.cdnhost,
         bundle: ("/" + pkg.name + "-" + pkg.version + ".min.js"),
         state: data || {}
     }));
@@ -41,7 +41,7 @@ server.set("mode", mode);
 server.use(serveFavicon(__dirname + "/favicon.ico"));
 server.use(robots(__dirname + "/robots.txt"));
 
-[localhost.application, localhost.library].forEach(function (folder) {
+[localhost.app, localhost.lib].forEach(function (folder) {
     if (mode !== "local") { return; }
     server.use(folder, express.static(__dirname + folder));
     return;
@@ -61,6 +61,7 @@ server.use(routes);
 
 server.use(function (err, req, res, next) {
     var message = [
+        "Error: " + err.code,
         "Where: " + req.path,
         "State: " + JSON.stringify(res.locals.state),
         err.stack

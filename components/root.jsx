@@ -7,7 +7,7 @@ var Root = React.createClass({
     render: function ()  {
         var libraries = [], initial = {}, self = this;
 
-        libraries = (this.props.provider.library === "/node_modules") ? [
+        libraries = (this.props.statichost.lib === "/node_modules") ? [
             "/bluebird/js/browser/bluebird.js",
             "/es5-shim/es5-shim.js",
             "/es5-shim/es5-sham.js",
@@ -42,9 +42,9 @@ var Root = React.createClass({
                 <div id="application" dangerouslySetInnerHTML={{__html: initial.html}}></div>
                 <script type="application/json" id="state" dangerouslySetInnerHTML={{__html: initial.json}}></script>
                 {libraries.map(function (library, index) {
-                    return <script type="text/javascript" key={index} src={self.props.provider.library + library}></script>;
+                    return <script type="text/javascript" key={index} src={self.props.statichost.lib + library}></script>;
                 })}
-                <script type="text/javascript" src={this.props.provider.application + this.props.bundle}></script>
+                <script type="text/javascript" src={this.props.statichost.app + this.props.bundle}></script>
             </body>
         </html>;
     }
