@@ -41,9 +41,13 @@
         "start": "gulp develop",
         "test": "gulp bundle lint && jest"
     },
-    "backend": {
+    "apihost": {
         "production": "https://blog-api.lihengl.com",
         "staging": "https://test-blog-api.lihengl.com"
+    },
+    "cdnhost": {
+        "application": "https://cdn.lihengl.com/blog",
+        "library": "https://cdnjs.cloudflare.com/ajax/libs"
     },
     "author": "LIHENG <admin@lihengl.com>",
     "main": "server.js",
@@ -57,9 +61,5 @@
         "testFileExtensions": ["jsx"],
         "scriptPreprocessor": "<rootDir>/preprocessor.js",
         "collectCoverage": true
-    },
-    "cdn": {
-        "application": "https://cdn.lihengl.com/blog",
-        "library": "https://cdnjs.cloudflare.com/ajax/libs"
     }
 }

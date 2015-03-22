@@ -5,9 +5,9 @@ var Application = React.createFactory(require("./application"));
 
 var Root = React.createClass({
     render: function ()  {
-        var libPaths = [], initial = {}, self = this;
+        var libraries = [], initial = {}, self = this;
 
-        libPaths = (this.props.provider.library === "/node_modules") ? [
+        libraries = (this.props.provider.library === "/node_modules") ? [
             "/bluebird/js/browser/bluebird.js",
             "/es5-shim/es5-shim.js",
             "/es5-shim/es5-sham.js",
@@ -41,10 +41,10 @@ var Root = React.createClass({
                 color: "#333333"}}>
                 <div id="application" dangerouslySetInnerHTML={{__html: initial.html}}></div>
                 <script type="application/json" id="state" dangerouslySetInnerHTML={{__html: initial.json}}></script>
-                {libPaths.map(function (path, index) {
-                    return <script type="text/javascript" key={index} src={self.props.provider.library + path}></script>;
+                {libraries.map(function (library, index) {
+                    return <script type="text/javascript" key={index} src={self.props.provider.library + library}></script>;
                 })}
-                <script type="text/javascript" src={this.props.provider.application + this.props.application}></script>
+                <script type="text/javascript" src={this.props.provider.application + this.props.bundle}></script>
             </body>
         </html>;
     }

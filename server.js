@@ -28,8 +28,8 @@ var server = express().disable("x-powered-by").enable("strict routing");
 
 server.render = Promise.promisify(function (data, callback) {
     var markup = React.renderToStaticMarkup(Root({
-        application: ("/" + pkg.name + "-" + pkg.version + ".min.js"),
-        provider: (mode === "local") ? localhost : pkg.cdn,
+        provider: (mode === "local") ? localhost : pkg.cdnhost,
+        bundle: ("/" + pkg.name + "-" + pkg.version + ".min.js"),
         state: data || {}
     }));
     return callback(null, ("<!DOCTYPE html>" + markup));
@@ -51,7 +51,7 @@ server.use(cookieParser());
 server.use(logger("combined"));
 
 server.use(function (req, res, next) {
-    var api = pkg.backend;
+    var api = pkg.apihost;
     req.api = (mode === "production") ? api.production : api.staging;
     res.locals.state = {};
     return next();
