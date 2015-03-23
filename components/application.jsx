@@ -27,7 +27,9 @@ var Application = React.createClass({
         return;
     },
     render: function () {
-        return <div>
+        return <div style={{
+            fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', Arial, sans-serif",
+            color: "#333333"}}>
             <Cover height={this.state.height} width={this.state.width}>
                 {this.props.title}
             </Cover>

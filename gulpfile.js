@@ -13,43 +13,43 @@ var pkg     = require("./package.json");
 
 gulp.task("lint", function () {
     return gulp.src(["react_components/*.js", "*.js"])
-        .pipe(jshint())
-        .pipe(jshint.reporter("default"));
+    .pipe(jshint())
+    .pipe(jshint.reporter("default"));
 });
 
 gulp.task("clean", function (callback) {
     del([
         "react_components",
-        "static_assets/*.js"
+        "static_assets/**/*.js"
     ], callback);
 });
 
 gulp.task("transform", function () {
     return gulp.src("components/*.jsx")
-        .pipe(react())
-        .pipe(flatten())
-        .pipe(gulp.dest("react_components"));
+    .pipe(react())
+    .pipe(flatten())
+    .pipe(gulp.dest("react_components"));
 });
 
 gulp.task("bundle", ["transform"], function () {
     return gulp.src("client.js")
-        .pipe(webpack({
-            externals: {
-                "bluebird": "Promise",
-                "react": "React"
-            },
-            module: {
-                loaders: [{
-                    loader: "json",
-                    test: /\.json$/
-                }]
-            },
-            output: {
-                filename: (pkg.name + "-" + pkg.version + ".min.js")
-            }
-        }))
-        .pipe(uglify())
-        .pipe(gulp.dest("static_assets"));
+    .pipe(webpack({
+        externals: {
+            "bluebird": "Promise",
+            "react": "React"
+        },
+        module: {
+            loaders: [{
+                loader: "json",
+                test: /\.json$/
+            }]
+        },
+        output: {
+            filename: (pkg.name + ".min.js")
+        }
+    }))
+    .pipe(uglify())
+    .pipe(gulp.dest("static_assets/" + pkg.version));
 });
 
 gulp.task("develop", ["bundle", "lint"], function () {

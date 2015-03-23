@@ -23,18 +23,35 @@ var localhost = {
     lib: "/node_modules"
 };
 
-var server = express().disable("x-powered-by").enable("strict routing");
+var libraries = (mode === "local") ? [
+    "/bluebird/js/browser/bluebird.js",
+    "/es5-shim/es5-shim.js",
+    "/es5-shim/es5-sham.js",
+    "/react/dist/react.js"
+].map(function (path) { return (localhost.lib + path); }) : [
+    "/bluebird/" + pkg.dependencies.bluebird + "/bluebird.min.js",
+    "/es5-shim/" + pkg.devDependencies["es5-shim"] + "/es5-shim.min.js",
+    "/es5-shim/" + pkg.devDependencies["es5-shim"] + "/es5-sham.min.js",
+    "/react/" + pkg.dependencies.react + "/react.min.js"
+].map(function (path) { return (pkg.cdnhost.lib + path); });
 
+var bundle = [
+    (mode === "local") ? localhost.app : pkg.cdnhost.app,
+    pkg.version,
+    pkg.name + ".min.js"
+].join("/");
+
+
+var server = express().disable("x-powered-by").enable("strict routing");
 
 server.render = Promise.promisify(function (data, callback) {
     var markup = React.renderToStaticMarkup(Root({
-        statichost: (mode === "local") ? localhost : pkg.cdnhost,
-        bundle: ("/" + pkg.name + "-" + pkg.version + ".min.js"),
+        libraries: libraries,
+        bundle: bundle,
         state: data || {}
     }));
     return callback(null, ("<!DOCTYPE html>" + markup));
 });
-
 
 server.set("mode", mode);
 
@@ -52,7 +69,7 @@ server.use(logger("combined"));
 
 server.use(function (req, res, next) {
     var api = pkg.apihost;
-    req.api = (mode === "production") ? api.production : api.staging;
+    req.apihost = (mode === "production") ? api.production : api.staging;
     res.locals.state = {};
     return next();
 });

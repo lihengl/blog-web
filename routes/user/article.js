@@ -1,33 +1,35 @@
 "use strict";
 var __article__ = require("./__mocks__/article.json");
 
-var Request = require("superagent");
-var Promise = require("bluebird");
+var Request  = require("superagent");
+var Promise  = require("bluebird");
 
 
-var fetch = Promise.promisify(function (param, callback) {
+var query = Promise.promisify(function (param, callback) {
     if (param.mocking) { return callback(null, __article__); }
-    return Request.get(param.url).query({
+    return Request.get(param.api).query({
         edit: false
-    }).end(function (err, response) {
+    }).end(function (err, res) {
         if (err) { return callback(err); }
-        if (response.ok) { return callback(null, response.body); }
-        return callback(new Error(param.url + " returns " + response.status));
+        if (res.ok) { return callback(null, res.body); }
+        return callback(new Error(param.api + " status " + res.status));
     });
 });
 
-var filter = Promise.promisify(function (response, callback) {
-    if (!response.title) { return callback(new Error("invalid")); }
-    return callback(null, response);
+var validate = Promise.promisify(function (result, callback) {
+    if (!result.title) { return callback(new Error("invalid")); }
+    return callback(null, result);
 });
 
 
 var handler = function (req, res, next) {
-    return fetch({
+    if (!req.app.get("mode")) { return next(new Error("invalid mode")); }
+    if (!req.apihost) { return next(new Error("invalid apihost")); }
+    return query({
         mocking: (req.app.get("mode") === "local"),
-        url: req.api + "/v1/articles/1"
-    }).then(filter).then(function (response) {
-        res.locals.state.title = response.title;
+        api: req.apihost + "/v1/articles/1"
+    }).then(validate).then(function (result) {
+        res.locals.state.title = result.title;
         return req.app.render(res.locals.state);
     }).then(function (html) {
         return res.status(200).type("text/html").send(html);

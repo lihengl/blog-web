@@ -5,6 +5,9 @@
     "browser": true,
     "jasmine": true,
     "strict": true,
+    "globals": {
+        "Promise": true
+    },
     "newcap": false,
     "unused": true,
     "eqeqeq": true,

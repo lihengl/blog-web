@@ -5,12 +5,110 @@
 [![Coverage Status](https://coveralls.io/repos/lihengl/blog-web/badge.svg?branch=release)](https://coveralls.io/r/lihengl/blog-web?branch=release)
 [![Build Status](https://travis-ci.org/lihengl/blog-web.svg?branch=release)](https://travis-ci.org/lihengl/blog-web)
 
-Goal for this project is to become an elegant and intuitive blogging platform which used to only be living in the author's own imagination.
+With the current capability of open-source software, that elegant and intuitive blogging platform which used to only be living in the author's own imagination might finally become a reality.
 
-## Architecture
+## Rendering Pipeline
 
-This is an Isomerphic&trade; JavaScript project using [React](http://facebook.github.io/react/) and [Express](http://expressjs.com/). It follows the original [Flux](http://facebook.github.io/flux/docs/overview.html) convention, which means an unidirectional data flow is enforced with a set of singleton `dispatcher`, `stores` and `actions` being kept within the browser. All outgoing HTTP requests, whether originated from server-side node process or from the browser, are all implemented with [Superagent](http://visionmedia.github.io/superagent/). It eliminates the separation of `HTML` and `CSS` by putting them all into `JSX`. As such, there will be no `.html`, `.jade`, `.handlebars`, or `.dust` files anywhere throughout the project, and no `.css`, `.less`, or `.sass` files to write upon. All templating and styling is *inlined* into `.jsx` so components are truely self-contained within each file.
+This is a [React](http://facebook.github.io/react/) & [Express](http://expressjs.com/) based project with some philosophy in mind:
 
-## Getting Started
+- It should render on the server
+- It should not make use of any other templating engine
 
-The project uses [Jest](https://facebook.github.io/jest/) for unit-testing, [Webpack](http://webpack.github.io/) for client-server component sharing, and configures [Gulp](http://gulpjs.com/) to automate development builds. To begin, clone this repository, navigate to its root directory, then do `npm install` followed by `npm start`. Go to `http://localhost:3000/` in a web browser to see the default greeting page. Go back to the console to examine access/error logs.
+With inspiration from [Rendering React Components on the Server](http://www.crmarsh.com/react-ssr/) and [Two React Tips](https://medium.com/@dan_abramov/two-weird-tricks-that-fix-react-7cf9bbdef375), the project setup a *rendering pipeline* that plays nicely with both the convention of React and Express, explained here.
+
+### HTML Document as React Component
+
+`components/root.jsx`:
+
+```javascript
+<body style={{margin: 0}}>
+    <div id="application" dangerouslySetInnerHTML={{
+        __html: React.renderToString(Application(this.props.state))
+    }}></div>
+    <script type="application/json" id="state" dangerouslySetInnerHTML={{
+        __html: JSON.stringify(this.props.state)
+        .replace(/<\/script/g, "<\\/script")
+        .replace(/<!--/g, "<\\!--")
+    }}></script>
+    {this.props.libraries.map(function (library, index) {
+        return <script type="text/javascript" key={index} src={library}></script>;
+    })}
+    <script type="text/javascript" src={this.props.bundle}></script>
+</body>
+```
+
+### Override Express's Render Function
+
+`server.js`
+
+```javascript
+var server = express().disable("x-powered-by").enable("strict routing");
+
+server.render = Promise.promisify(function (data, callback) {
+    var markup = React.renderToStaticMarkup(Root({
+        libraries: libraries,
+        bundle: bundle,
+        state: data || {}
+    }));
+    return callback(null, ("<!DOCTYPE html>" + markup));
+});
+```
+
+### Middleware Like Normal
+
+`routes/*.js`
+
+```javascript
+var handler = function (req, res, next) {
+    if (!req.app.get("mode")) { return next(new Error("invalid mode")); }
+    if (!req.apihost) { return next(new Error("invalid apihost")); }
+    return query({
+        mocking: (req.app.get("mode") === "local"),
+        api: req.apihost + "/v1/articles/1"
+    }).then(validate).then(function (result) {
+        res.locals.state.title = result.title;
+        return req.app.render(res.locals.state);
+    }).then(function (html) {
+        return res.status(200).type("text/html").send(html);
+    }, next);
+};
+
+module.exports = handler;
+```
+
+### Bundle for Client
+
+`client.js`
+
+```javascript
+var Application = window.React.createFactory(require("./react_components/application"));
+var initialData = document.getElementById("state").innerHTML;
+var rootElement = document.getElementById("application");
+
+window.React.render(Application(JSON.parse(initialData)), rootElement);
+```
+
+`gulpfile.js`
+
+```javascript
+gulp.task("bundle", ["transform"], function () {
+    return gulp.src("client.js")
+    .pipe(webpack({
+        externals: {
+            "bluebird": "Promise",
+            "react": "React"
+        },
+        module: {
+            loaders: [{
+                loader: "json",
+                test: /\.json$/
+            }]
+        },
+        output: {
+            filename: (pkg.name + ".min.js")
+        }
+    }))
+    .pipe(uglify())
+    .pipe(gulp.dest("static_assets/" + pkg.version));
+});
+```
