@@ -3,10 +3,11 @@ var Dispatcher = require("../dispatcher");
 
 var Adjust = {
     increment: function (amount) {
-        Dispatcher.dispatch({
+        var payload = {
             amount: amount,
             type: "ADJUST_INCREMENT"
-        });
+        };
+        Dispatcher.dispatch(payload);
         return;
     }
 };

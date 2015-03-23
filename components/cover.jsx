@@ -1,11 +1,11 @@
 "use strict";
-var AdjustAction = require("../actions/adjust");
+var Adjust = require("../actions/adjust");
 
 var React = require("react");
 
 var Cover = React.createClass({
     _handleClick: function () {
-        AdjustAction.increment(1);
+        Adjust.increment(1);
         return;
     },
     render: function () {
@@ -31,10 +31,12 @@ var Cover = React.createClass({
                 fontWeight: "bold",
                 marginTop: 0,
                 fontSize: Math.floor((3.0 * this.props.width + 11280.0) / 260.0)}}>
-                {this.props.children}</h1>
+                {this.props.children}
+            </h1>
             <p style={{
                 fontSize: Math.round((this.props.width + 3760.0) / 260.0)}}>
-                {this.props.width}</p>
+                {this.props.width}
+            </p>
         </div>;
     }
 });

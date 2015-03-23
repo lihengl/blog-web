@@ -1,6 +1,6 @@
 "use strict";
-var fetch = require("../actions/fetch");
-var count = require("../stores/count");
+var Fetch = require("../actions/fetch");
+var Count = require("../stores/count");
 
 var React = require("react");
 
@@ -8,25 +8,25 @@ var React = require("react");
 var Canvas = React.createClass({
     _handleChange: function () {
         this.setState({
-            text: count.getTotal()
+            text: Count.getTotal()
         });
         return;
     },
     _handleClick: function () {
-        fetch.comments("lihengl", true);
+        Fetch.comments("lihengl", true);
         return;
     },
     getInitialState: function () {
         return {
-            text: count.getTotal()
+            text: Count.getTotal()
         };
     },
     componentDidMount: function () {
-        count.addChangeListener(this._handleChange);
+        Count.addChangeListener(this._handleChange);
         return;
     },
     componentWillUnmount: function () {
-        count.removeChangeListener(this._handleChange);
+        Count.removeChangeListener(this._handleChange);
         return;
     },
     render: function () {

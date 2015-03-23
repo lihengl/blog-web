@@ -28,7 +28,9 @@ var Application = React.createClass({
     },
     render: function () {
         return <div>
-            <Cover height={this.state.height} width={this.state.width}>{this.props.title}</Cover>
+            <Cover height={this.state.height} width={this.state.width}>
+                {this.props.title}
+            </Cover>
             <Canvas width={this.state.width} title="A Blog Post's Title" />
         </div>;
     }
