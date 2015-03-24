@@ -24,12 +24,10 @@ var localhost = {
 };
 
 var libraries = (mode === "local") ? [
-    "/bluebird/js/browser/bluebird.js",
     "/es5-shim/es5-shim.js",
     "/es5-shim/es5-sham.js",
     "/react/dist/react.js"
 ].map(function (path) { return (localhost.lib + path); }) : [
-    "/bluebird/" + pkg.dependencies.bluebird + "/bluebird.min.js",
     "/es5-shim/" + pkg.devDependencies["es5-shim"] + "/es5-shim.min.js",
     "/es5-shim/" + pkg.devDependencies["es5-shim"] + "/es5-sham.min.js",
     "/react/" + pkg.dependencies.react + "/react.min.js"

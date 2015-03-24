@@ -1,7 +1,6 @@
 "use strict";
 var ObjectAssign = require("object-assign");
 var EventEmitter = require("events").EventEmitter;
-
 var Dispatcher   = require("../dispatcher");
 
 
@@ -21,7 +20,7 @@ var Count = ObjectAssign({}, EventEmitter.prototype, {
     getTotal: function () {
         return total;
     },
-    dispatcherIndex: Dispatcher.register(function (payload) {
+    dispatchToken: Dispatcher.register(function (payload) {
         switch (payload.type) {
             case "ADJUST_INCREMENT":
                 total += payload.amount;

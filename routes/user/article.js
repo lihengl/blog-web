@@ -1,8 +1,8 @@
 "use strict";
 var __article__ = require("./__mocks__/article.json");
 
-var Request  = require("superagent");
-var Promise  = require("bluebird");
+var Request = require("superagent");
+var Promise = require("bluebird");
 
 
 var query = Promise.promisify(function (param, callback) {

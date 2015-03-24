@@ -12,19 +12,19 @@ var Application = React.createClass({
         });
         return;
     },
-    getInitialState: function () {
-        return {
-            height: 900,
-            width: 1440
-        };
+    componentWillUnmount: function () {
+        window.removeEventListener("resize", this._adjustSize);
+        return;
     },
     componentDidMount: function () {
         window.addEventListener("resize", this._adjustSize);
         return;
     },
-    componentWillUnmount: function () {
-        window.removeEventListener("resize", this._adjustSize);
-        return;
+    getInitialState: function () {
+        return {
+            height: 900,
+            width: 1440
+        };
     },
     render: function () {
         return <div style={{

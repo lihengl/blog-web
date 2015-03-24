@@ -1,5 +1,5 @@
 "use strict";
-var __comments__   = require("./__mocks__/comments.json");
+var __comments__ = require("./__mocks__/comments.json");
 
 var Dispatcher = require("../dispatcher");
 var Request    = require("superagent");

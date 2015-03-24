@@ -16,18 +16,18 @@ var Canvas = React.createClass({
         Fetch.comments("lihengl", true);
         return;
     },
-    getInitialState: function () {
-        return {
-            text: Count.getTotal()
-        };
+    componentWillUnmount: function () {
+        Count.removeChangeListener(this._handleChange);
+        return;
     },
     componentDidMount: function () {
         Count.addChangeListener(this._handleChange);
         return;
     },
-    componentWillUnmount: function () {
-        Count.removeChangeListener(this._handleChange);
-        return;
+    getInitialState: function () {
+        return {
+            text: Count.getTotal()
+        };
     },
     render: function () {
         var paddingSide = 10;
