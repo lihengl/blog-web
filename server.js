@@ -19,29 +19,44 @@ var port = process.env.PORT || "3000";
 var mode = process.env.MODE || "test";
 
 var localhost = {
-    application: "/static_assets",
-    library: "/node_modules"
+    app: "/static_assets",
+    lib: "/node_modules"
 };
+
+var libraries = (mode === "local") ? [
+    "/es5-shim/es5-shim.js",
+    "/es5-shim/es5-sham.js",
+    "/react/dist/react.js"
+].map(function (path) { return (localhost.lib + path); }) : [
+    "/es5-shim/" + pkg.devDependencies["es5-shim"] + "/es5-shim.min.js",
+    "/es5-shim/" + pkg.devDependencies["es5-shim"] + "/es5-sham.min.js",
+    "/react/" + pkg.dependencies.react + "/react.min.js"
+].map(function (path) { return (pkg.cdnhost.lib + path); });
+
+var bundle = [
+    (mode === "local") ? localhost.app : pkg.cdnhost.app,
+    pkg.version,
+    pkg.name + ".min.js"
+].join("/");
+
 
 var server = express().disable("x-powered-by").enable("strict routing");
 
-
 server.render = Promise.promisify(function (data, callback) {
     var markup = React.renderToStaticMarkup(Root({
-        provider: (mode === "local") ? localhost : pkg.cdnhost,
-        bundle: ("/" + pkg.name + "-" + pkg.version + ".min.js"),
+        libraries: libraries,
+        bundle: bundle,
         state: data || {}
     }));
     return callback(null, ("<!DOCTYPE html>" + markup));
 });
-
 
 server.set("mode", mode);
 
 server.use(serveFavicon(__dirname + "/favicon.ico"));
 server.use(robots(__dirname + "/robots.txt"));
 
-[localhost.application, localhost.library].forEach(function (folder) {
+[localhost.app, localhost.lib].forEach(function (folder) {
     if (mode !== "local") { return; }
     server.use(folder, express.static(__dirname + folder));
     return;
@@ -52,7 +67,7 @@ server.use(logger("combined"));
 
 server.use(function (req, res, next) {
     var api = pkg.apihost;
-    req.api = (mode === "production") ? api.production : api.staging;
+    req.apihost = (mode === "production") ? api.production : api.staging;
     res.locals.state = {};
     return next();
 });
@@ -61,6 +76,7 @@ server.use(routes);
 
 server.use(function (err, req, res, next) {
     var message = [
+        "Error: " + err.code,
         "Where: " + req.path,
         "State: " + JSON.stringify(res.locals.state),
         err.stack

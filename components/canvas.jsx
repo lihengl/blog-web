@@ -1,26 +1,33 @@
 "use strict";
-var FetchAction = require("../actions/fetch");
-var CountStore  = require("../stores/count");
+var Fetch = require("../actions/fetch");
+var Count = require("../stores/count");
 
 var React = require("react");
 
 
-var Paper = React.createClass({
-    _handleClick: function () {
-        FetchAction.comments("lihengl");
+var Canvas = React.createClass({
+    _handleChange: function () {
+        this.setState({
+            text: Count.getTotal()
+        });
         return;
     },
-    _onChange: function () {
-        this.setState({text: CountStore.getTotal()});
-    },
-    getInitialState: function () {
-        return {text: CountStore.getTotal()};
-    },
-    componentDidMount: function () {
-        CountStore.addChangeListener(this._onChange);
+    _handleClick: function () {
+        Fetch.comments("lihengl", true);
+        return;
     },
     componentWillUnmount: function () {
-        CountStore.removeChangeListener(this._onChange);
+        Count.removeChangeListener(this._handleChange);
+        return;
+    },
+    componentDidMount: function () {
+        Count.addChangeListener(this._handleChange);
+        return;
+    },
+    getInitialState: function () {
+        return {
+            text: Count.getTotal()
+        };
     },
     render: function () {
         var paddingSide = 10;
@@ -50,4 +57,4 @@ var Paper = React.createClass({
 });
 
 
-module.exports = Paper;
+module.exports = Canvas;

@@ -1,14 +1,13 @@
 "use strict";
 var ObjectAssign = require("object-assign");
 var EventEmitter = require("events").EventEmitter;
-
 var Dispatcher   = require("../dispatcher");
 
 
 var total = 100;
 
 
-var CountStore = ObjectAssign({}, EventEmitter.prototype, {
+var Count = ObjectAssign({}, EventEmitter.prototype, {
     removeChangeListener: function (callback) {
         this.removeListener("change", callback);
     },
@@ -21,11 +20,11 @@ var CountStore = ObjectAssign({}, EventEmitter.prototype, {
     getTotal: function () {
         return total;
     },
-    dispatcherIndex: Dispatcher.register(function (payload) {
+    dispatchToken: Dispatcher.register(function (payload) {
         switch (payload.type) {
             case "ADJUST_INCREMENT":
                 total += payload.amount;
-                CountStore.emitChange();
+                Count.emitChange();
                 break;
             default:
                 console.log("ignored: %s", payload.type);
@@ -35,4 +34,4 @@ var CountStore = ObjectAssign({}, EventEmitter.prototype, {
 });
 
 
-module.exports = CountStore;
+module.exports = Count;
