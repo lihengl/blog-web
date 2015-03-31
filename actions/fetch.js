@@ -17,7 +17,7 @@ var Fetch = function (user, mocking) {
         return;
     }
 
-    Request.get("http://localhost:3000/").end(function (err, res) {
+    Request.get("http://localhost:3000/a/1").end(function (err, res) {
         if (err || !res.ok) {
             payload.error = err || new Error("Status: " + res.status);
             payload.type = "FETCH_FAILED";

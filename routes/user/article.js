@@ -19,7 +19,7 @@ var validate = Promise.promisify(function (response, callback) {
     var message = null;
     ["entries", "title"].forEach(function (field) {
         if (message !== null) { return; }
-        if (!response[field]) { message = ("Missing '" + field + "'"); }
+        if (!response[field]) { message = ("Missing \"" + field + "\""); }
         return;
     });
     if (message !== null) { return callback(new Error(message)); }

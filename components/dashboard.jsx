@@ -5,7 +5,7 @@ var Dashboard = React.createClass({
     propTypes: {
     },
     render: function () {
-        return <p>{"Not Yet Implemented."}</p>;
+        return <p>{"Not Implemented Yet."}</p>;
     }
 });
 

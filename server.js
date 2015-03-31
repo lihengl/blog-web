@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 "use strict";
-var cookieParser = require("cookie-parser");
-var serveFavicon = require("serve-favicon");
 
 var express = require("express");
+var favicon = require("serve-favicon");
+var cookie  = require("cookie-parser");
 var logger  = require("morgan");
 var robots  = require("robots.txt");
 
@@ -54,7 +54,7 @@ server.render = Promise.promisify(function (data, callback) {
 
 server.set("mode", mode);
 
-server.use(serveFavicon(__dirname + "/favicon.ico"));
+server.use(favicon(__dirname + "/favicon.ico"));
 server.use(robots(__dirname + "/robots.txt"));
 
 [localhost.app, localhost.lib].forEach(function (folder) {
@@ -63,7 +63,7 @@ server.use(robots(__dirname + "/robots.txt"));
     return;
 });
 
-server.use(cookieParser());
+server.use(cookie());
 server.use(logger("combined"));
 
 server.use(function (req, res, next) {

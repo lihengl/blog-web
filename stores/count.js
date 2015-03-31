@@ -27,7 +27,7 @@ var Count = ObjectAssign({}, EventEmitter.prototype, {
                 Count.emitChange();
                 break;
             default:
-                console.log("Ignored Payload: %s", payload.type);
+                console.log("CountStore Ignored: %s", payload.type);
         }
         return true;
     })

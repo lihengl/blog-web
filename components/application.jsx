@@ -2,9 +2,8 @@
 var React = require("react");
 
 var Dashboard = require("./dashboard");
-var Navbar    = require("./navbar");
-var Footer    = require("./footer");
 var Canvas    = require("./canvas");
+var Footer    = require("./footer");
 var Cover     = require("./cover");
 
 var Application = React.createClass({
@@ -38,7 +37,6 @@ var Application = React.createClass({
         return <div style={{
             fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', sans-serif",
             color: "#333333"}}>
-            <Navbar />
             <Cover height={this.state.height} width={this.state.width}>
                 {this.props.title}
             </Cover>

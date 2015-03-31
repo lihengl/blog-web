@@ -5,11 +5,20 @@ var flatten = require("gulp-flatten");
 var jshint  = require("gulp-jshint");
 var uglify  = require("gulp-uglify");
 var react   = require("gulp-react");
+var bsync   = require("browser-sync");
 var gulp    = require("gulp");
 var del     = require("del");
 
 var pkg     = require("./package.json");
 
+
+gulp.task("browser-sync", function () {
+    bsync({
+        logLevel: "debug",
+        files: "static_assets/*/*.js",
+        proxy: "localhost:3000"
+    });
+});
 
 gulp.task("lint", function () {
     return gulp.src(["react_components/*.js", "*.js"])
@@ -63,9 +72,11 @@ gulp.task("develop", ["bundle", "lint"], function () {
     return nodemon({
         ignore: [
             "react_components/*",
+            "static_assets",
             "node_modules",
             "components/*",
-            "gulpfile.js"
+            "gulpfile.js",
+            "client.js"
         ],
         script: "server.js",
         env: {

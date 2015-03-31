@@ -11,8 +11,9 @@ var React = require("react");
 
 var Canvas = React.createClass({
     propTypes: {
-        width: React.PropTypes.number.isRequired,
-        title: React.PropTypes.string.isRequired
+        entries: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+        width:   React.PropTypes.number.isRequired,
+        title:   React.PropTypes.string.isRequired
     },
     componentWillUnmount: function () {
         CountStore.removeChangeListener(this._handleChange);
@@ -35,21 +36,30 @@ var Canvas = React.createClass({
         var rendered = null;
         switch (entry.type.toUpperCase()) {
             case "PARAGRAPH":
-                rendered = <Paragraph key={index}>{entry.content}</Paragraph>;
+                rendered = <Paragraph
+                    identity={index}
+                    key={index}>
+                    {entry.content}
+                </Paragraph>;
                 break;
             case "SUBTITLE":
-                rendered = <Subtitle key={index}>{entry.content}</Subtitle>;
+                rendered = <Subtitle
+                    identity={index}
+                    key={index}>
+                    {entry.content}
+                </Subtitle>;
                 break;
             case "PHOTO":
                 rendered = <Photo
-                    footnote={entry.description}
+                    description={entry.description}
+                    identity={index}
                     source={entry.content}
                     layout={entry.layout}
                     width={this.props.width}
                     key={index} />;
                 break;
             default:
-                rendered = <div key={index} style={{
+                rendered = <div identity={index} key={index} style={{
                     marginBottom: 0,
                     marginTop: 50,
                     color: "#FF0000"}}>

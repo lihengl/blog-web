@@ -8,7 +8,7 @@ describe("Cover Component", function () {
     var Cover = require("../cover.jsx");
 
     it("should render correctly", function () {
-        var title = "A Blog's Title";
+        var title = "A Blog\"s Title";
         var r = Utils.renderIntoDocument(
             <Cover height={900} width={1440}>{title}</Cover>
         );
