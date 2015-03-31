@@ -1,16 +1,16 @@
 "use strict";
 var React = require("react");
 
-var Canvas = require("./canvas");
-var Cover  = require("./cover");
+var Dashboard = require("./dashboard");
+var Navbar    = require("./navbar");
+var Footer    = require("./footer");
+var Canvas    = require("./canvas");
+var Cover     = require("./cover");
 
 var Application = React.createClass({
-    _adjustSize: function () {
-        this.setState({
-            height: window.innerHeight,
-            width:  window.innerWidth
-        });
-        return;
+    propTypes: {
+        layout: React.PropTypes.string.isRequired,
+        title:  React.PropTypes.string.isRequired
     },
     componentWillUnmount: function () {
         window.removeEventListener("resize", this._adjustSize);
@@ -26,14 +26,34 @@ var Application = React.createClass({
             width: 1440
         };
     },
+    _adjustSize: function () {
+        var state = this.state;
+        state.height = window.innerHeight;
+        state.width  = window.innerWidth;
+        this.setState(state);
+        return;
+    },
     render: function () {
+        var columnWidth = (Math.min(680, this.state.width) - (10 * 2));
         return <div style={{
-            fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', Arial, sans-serif",
+            fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', sans-serif",
             color: "#333333"}}>
+            <Navbar />
             <Cover height={this.state.height} width={this.state.width}>
                 {this.props.title}
             </Cover>
-            <Canvas width={this.state.width} title="A Blog Post's Title" />
+            <div style={{
+                padding: "20px 10px 20px 10px",
+                margin: "0 auto 0 auto",
+                width: columnWidth}}>
+                {(this.props.layout === "DASHBOARD") ? <Dashboard>
+                </Dashboard> : <Canvas
+                    entries={this.props.entries}
+                    title={this.props.title}
+                    width={columnWidth}>
+                </Canvas>}
+            </div>
+            <Footer />
         </div>;
     }
 });

@@ -43,10 +43,11 @@ var bundle = [
 var server = express().disable("x-powered-by").enable("strict routing");
 
 server.render = Promise.promisify(function (data, callback) {
+    if (!data || !data.title) { return callback(new Error("Invalid Data!")); }
     var markup = React.renderToStaticMarkup(Root({
         libraries: libraries,
         bundle: bundle,
-        state: data || {}
+        data: data
     }));
     return callback(null, ("<!DOCTYPE html>" + markup));
 });

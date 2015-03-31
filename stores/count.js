@@ -22,12 +22,12 @@ var Count = ObjectAssign({}, EventEmitter.prototype, {
     },
     dispatchToken: Dispatcher.register(function (payload) {
         switch (payload.type) {
-            case "ADJUST_INCREMENT":
+            case "INCREMENT":
                 total += payload.amount;
                 Count.emitChange();
                 break;
             default:
-                console.log("ignored: %s", payload.type);
+                console.log("Ignored Payload: %s", payload.type);
         }
         return true;
     })
