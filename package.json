@@ -24,6 +24,7 @@
         "serve-favicon": "2.2.0",
         "robots.txt": "1.1.0",
         "superagent": "1.1.0",
+        "immutable": "3.7.1",
         "bluebird": "2.9.14",
         "express": "4.12.3",
         "morgan": "1.5.2",

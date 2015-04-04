@@ -1,9 +1,10 @@
 "use strict";
 var Signin = require("../actions/signin");
 
-var React = require("react");
+var React = require("react/addons");
 
 var Navbar = React.createClass({
+    mixins: [React.addons.PureRenderMixin],
     propTypes: {
     },
     getInitialState: function () {

@@ -44,8 +44,9 @@ gulp.task("bundle", ["transform"], function () {
     return gulp.src("client.js")
     .pipe(webpack({
         externals: {
-            "bluebird": "Promise",
-            "react": "React"
+            "react/addons": "React",
+            "immutable": "Immutable",
+            "bluebird": "Promise"
         },
         module: {
             loaders: [{

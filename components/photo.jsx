@@ -1,12 +1,14 @@
 "use strict";
 var FocusAction = require("../actions/focus");
 
-var React = require("react");
+var React = require("react/addons");
 
 var Photo = React.createClass({
+    mixins: [React.addons.PureRenderMixin],
     propTypes: {
         description: React.PropTypes.string,
         identity:    React.PropTypes.number.isRequired,
+        leading:     React.PropTypes.number.isRequired,
         layout:      React.PropTypes.string.isRequired,
         source:      React.PropTypes.string.isRequired,
         width:       React.PropTypes.number.isRequired
@@ -33,7 +35,7 @@ var Photo = React.createClass({
 
         return <div style={{
             marginBottom: 0,
-            marginTop: 50,
+            marginTop: this.props.leading,
             textAlign: "center"}}>
             <div style={{
                 backgroundColor: "#EFEFEF",

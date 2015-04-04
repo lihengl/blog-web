@@ -1,12 +1,13 @@
 "use strict";
-var React = require("react");
-
 var Dashboard = require("./dashboard");
 var Canvas    = require("./canvas");
 var Footer    = require("./footer");
 var Cover     = require("./cover");
 
+var React = require("react/addons");
+
 var Application = React.createClass({
+    mixins: [React.addons.PureRenderMixin],
     propTypes: {
         layout: React.PropTypes.string.isRequired,
         title:  React.PropTypes.string.isRequired

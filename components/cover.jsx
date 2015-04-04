@@ -1,9 +1,10 @@
 "use strict";
 var IncreaseAction = require("../actions/increase");
 
-var React = require("react");
+var React = require("react/addons");
 
 var Cover = React.createClass({
+    mixins: [React.addons.PureRenderMixin],
     propTypes: {
         height: React.PropTypes.number.isRequired,
         width:  React.PropTypes.number.isRequired

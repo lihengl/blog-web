@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 "use strict";
-
 var express = require("express");
 var favicon = require("serve-favicon");
 var cookie  = require("cookie-parser");
@@ -8,7 +7,7 @@ var logger  = require("morgan");
 var robots  = require("robots.txt");
 
 var Promise = require("bluebird");
-var React   = require("react");
+var React   = require("react/addons");
 
 var routes = require("./routes");
 var pkg    = require("./package.json");
@@ -26,11 +25,13 @@ var localhost = {
 var libraries = (mode === "local") ? [
     "/es5-shim/es5-shim.js",
     "/es5-shim/es5-sham.js",
-    "/react/dist/react.js"
+    "/immutable/dist/immutable.js",
+    "/react/dist/react-with-addons.js"
 ].map(function (path) { return (localhost.lib + path); }) : [
     "/es5-shim/" + pkg.devDependencies["es5-shim"] + "/es5-shim.min.js",
     "/es5-shim/" + pkg.devDependencies["es5-shim"] + "/es5-sham.min.js",
-    "/react/" + pkg.dependencies.react + "/react.min.js"
+    "/immutable/" + pkg.dependencies.immutable + "/immutable.min.js",
+    "/react/" + pkg.dependencies.react + "/react-with-addons.min.js"
 ].map(function (path) { return (pkg.cdnhost.lib + path); });
 
 var bundle = [

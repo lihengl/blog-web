@@ -2,9 +2,10 @@
 var FocusAction = require("../actions/focus");
 var FetchAction = require("../actions/fetch");
 
-var React = require("react");
+var React = require("react/addons");
 
 var Title = React.createClass({
+    mixins: [React.addons.PureRenderMixin],
     propTypes: {
         children: React.PropTypes.string.isRequired
     },

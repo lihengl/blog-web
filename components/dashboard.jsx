@@ -1,7 +1,8 @@
 "use strict";
-var React = require("react");
+var React = require("react/addons");
 
 var Dashboard = React.createClass({
+    mixins: [React.addons.PureRenderMixin],
     propTypes: {
     },
     render: function () {

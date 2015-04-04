@@ -6,10 +6,14 @@ var Subtitle  = require("./subtitle");
 var Title     = require("./title");
 var Photo     = require("./photo");
 
-var React = require("react");
+var React = require("react/addons");
+
+
+var SPACING = 56;
 
 
 var Canvas = React.createClass({
+    mixins: [React.addons.PureRenderMixin],
     propTypes: {
         entries: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
         width:   React.PropTypes.number.isRequired,
@@ -33,18 +37,20 @@ var Canvas = React.createClass({
         return;
     },
     _renderEntry: function (entry, index) {
-        var rendered = null;
+        var rendered = null, id = index + 1;
         switch (entry.type.toUpperCase()) {
             case "PARAGRAPH":
                 rendered = <Paragraph
-                    identity={index}
+                    identity={id}
+                    leading={SPACING}
                     key={index}>
                     {entry.content}
                 </Paragraph>;
                 break;
             case "SUBTITLE":
                 rendered = <Subtitle
-                    identity={index}
+                    identity={id}
+                    leading={SPACING}
                     key={index}>
                     {entry.content}
                 </Subtitle>;
@@ -52,14 +58,15 @@ var Canvas = React.createClass({
             case "PHOTO":
                 rendered = <Photo
                     description={entry.description}
-                    identity={index}
+                    identity={id}
+                    leading={SPACING}
                     source={entry.content}
                     layout={entry.layout}
                     width={this.props.width}
                     key={index} />;
                 break;
             default:
-                rendered = <div identity={index} key={index} style={{
+                rendered = <div identity={id} key={index} style={{
                     marginBottom: 0,
                     marginTop: 50,
                     color: "#FF0000"}}>
@@ -70,7 +77,7 @@ var Canvas = React.createClass({
     },
     render: function () {
         return <div>
-            <Title>{this.props.title}</Title>
+            <Title identity={0}>{this.props.title}</Title>
             <p>{this.state.text}</p>
             {this.props.entries.map(this._renderEntry)}
         </div>;
