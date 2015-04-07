@@ -22,19 +22,9 @@ var Paragraph = React.createClass({
             idle: false
         };
     },
-    _handleMouseEnter: function () {
-        console.log("FFG");
-        if (this.state.idle === true) { return; }
-        this.setState({
-            text: this.state.text,
-            idle: true
-        });
-        return;
-    },
     _handleTyping: function (evt) {
         this.setState({
-            text: evt.target.value,
-            idle: false
+            text: evt.target.value
         });
         return;
     },
@@ -43,20 +33,10 @@ var Paragraph = React.createClass({
         React.findDOMNode(this.refs.receiver).focus();
         return;
     },
-    _renderText: function () {
-        var self = this;
-        if (this.state.idle === false) { return this.state.text; }
-        return this.state.text.split("").map(function (character, index) {
-            return <span
-                onClick={self._handleClick.bind(self, index)}
-                key={index}>
-                {character}
-            </span>;
-        });
-    },
     render: function () {
+        var self = this;
         return <div>
-            <p onMouseEnter={this._handleMouseEnter} style={{
+            <p style={{
                 letterSpacing: FONT.SPACING,
                 marginBottom: 0,
                 fontFamily: FONT.FAMILY,
@@ -66,7 +46,13 @@ var Paragraph = React.createClass({
                 marginTop: this.props.leading,
                 wordWrap: "break-word",
                 fontSize: FONT.SIZE}}>
-                {this._renderText()}
+                {this.state.text.split("").map(function (character, index) {
+                    return <span
+                        onClick={self._handleClick.bind(self, index)}
+                        key={index}>
+                        {character}
+                    </span>;
+                })}
             </p>
             <div style={{
                 overflow: "hidden",

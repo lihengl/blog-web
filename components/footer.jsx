@@ -1,9 +1,12 @@
 "use strict";
 var React = require("react/addons");
 
+var yearNumber = (new Date()).getFullYear();
+
 var Footer = React.createClass({
     mixins: [React.addons.PureRenderMixin],
     propTypes: {
+        author: React.PropTypes.string.isRequired
     },
     render: function () {
         return <div style={{
@@ -13,7 +16,7 @@ var Footer = React.createClass({
             textAlign: "center",
             fontSize: 12,
             margin: "100px 0 0 0"}}>
-            <p>{"Copyright © 2015 LIHENG"}</p>
+            <p>{[yearNumber, this.props.author.toUpperCase()].join(" © ")}</p>
         </div>;
     }
 });

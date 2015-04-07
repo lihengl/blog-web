@@ -27,12 +27,16 @@ var libraries = (mode === "local") ? [
     "/es5-shim/es5-sham.js",
     "/immutable/dist/immutable.js",
     "/react/dist/react-with-addons.js"
-].map(function (path) { return (localhost.lib + path); }) : [
+].map(function (path) {
+    return (localhost.lib + path);
+}) : [
     "/es5-shim/" + pkg.devDependencies["es5-shim"] + "/es5-shim.min.js",
     "/es5-shim/" + pkg.devDependencies["es5-shim"] + "/es5-sham.min.js",
     "/immutable/" + pkg.dependencies.immutable + "/immutable.min.js",
     "/react/" + pkg.dependencies.react + "/react-with-addons.min.js"
-].map(function (path) { return (pkg.cdnhost.lib + path); });
+].map(function (path) {
+    return (pkg.cdnhost.lib + path);
+});
 
 var bundle = [
     (mode === "local") ? localhost.app : pkg.cdnhost.app,

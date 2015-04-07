@@ -37,7 +37,7 @@ var middleware = function (req, res, next) {
         path: req.apihost + "/v1/articles/1"
     }).then(validate).then(function (result) {
         res.locals.state.entries = result.entries;
-        res.locals.state.layout = "ARTICLE";
+        res.locals.state.layout = "canvas";
         res.locals.state.title = result.title;
         return req.app.render(res.locals.state);
     }).then(function (html) {

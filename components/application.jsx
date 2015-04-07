@@ -13,11 +13,11 @@ var Application = React.createClass({
         title:  React.PropTypes.string.isRequired
     },
     componentWillUnmount: function () {
-        window.removeEventListener("resize", this._adjustSize);
+        window.removeEventListener("resize", this._handleResize);
         return;
     },
     componentDidMount: function () {
-        window.addEventListener("resize", this._adjustSize);
+        window.addEventListener("resize", this._handleResize);
         return;
     },
     getInitialState: function () {
@@ -26,12 +26,35 @@ var Application = React.createClass({
             width: 1440
         };
     },
-    _adjustSize: function () {
-        var state = this.state;
-        state.height = window.innerHeight;
-        state.width  = window.innerWidth;
-        this.setState(state);
+    _handleResize: function () {
+        this.setState({
+            height: window.innerHeight,
+            width:  window.innerWidth
+        });
         return;
+    },
+    _renderBody: function (width) {
+        var rendered = null;
+        switch (this.props.layout.toUpperCase()) {
+            case "DASHBOARD":
+                rendered = <Dashboard />;
+                break;
+            case "CANVAS":
+                rendered = <Canvas
+                    entries={this.props.entries}
+                    title={this.props.title}
+                    width={width}>
+                </Canvas>;
+                break;
+            default:
+                rendered = <div style={{
+                    marginBottom: 0,
+                    marginTop: 50,
+                    color: "#FF0000"}}>
+                    {"Invalid Layout: " + this.props.layout}
+                </div>;
+        }
+        return rendered;
     },
     render: function () {
         var columnWidth = (Math.min(680, this.state.width) - (10 * 2));
@@ -45,14 +68,9 @@ var Application = React.createClass({
                 padding: "20px 10px 20px 10px",
                 margin: "0 auto 0 auto",
                 width: columnWidth}}>
-                {(this.props.layout === "DASHBOARD") ? <Dashboard>
-                </Dashboard> : <Canvas
-                    entries={this.props.entries}
-                    title={this.props.title}
-                    width={columnWidth}>
-                </Canvas>}
+                {this._renderBody(columnWidth)}
             </div>
-            <Footer />
+            <Footer author={"liheng"} />
         </div>;
     }
 });

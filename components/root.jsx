@@ -9,7 +9,7 @@ var Root = React.createClass({
         bundle:    React.PropTypes.string.isRequired,
         data:      React.PropTypes.object.isRequired
     },
-    render: function ()  {
+    render: function () {
         return <html lang="en-US">
             <head>
                 <meta charSet="UTF-8"/>

@@ -30,7 +30,7 @@ var Cover = React.createClass({
                 marginBottom: 0,
                 fontWeight: "bold",
                 marginTop: 0,
-                fontSize: Math.floor((3.0 * this.props.width + 11280.0) / 260.0)}}>
+                fontSize: Math.floor((3.0 * this.props.width + 12280.0) / 260.0)}}>
                 {this.props.children}
             </h1>
             <p style={{
