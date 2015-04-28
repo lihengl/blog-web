@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 "use strict";
-var cookieParser = require("cookie-parser");
-var serveFavicon = require("serve-favicon");
-
 var express = require("express");
+var favicon = require("serve-favicon");
+var cookie  = require("cookie-parser");
 var logger  = require("morgan");
 var robots  = require("robots.txt");
 
 var Promise = require("bluebird");
-var React   = require("react");
+var React   = require("react/addons");
 
 var routes = require("./routes");
 var pkg    = require("./package.json");
@@ -26,12 +25,18 @@ var localhost = {
 var libraries = (mode === "local") ? [
     "/es5-shim/es5-shim.js",
     "/es5-shim/es5-sham.js",
-    "/react/dist/react.js"
-].map(function (path) { return (localhost.lib + path); }) : [
+    "/immutable/dist/immutable.js",
+    "/react/dist/react-with-addons.js"
+].map(function (path) {
+    return (localhost.lib + path);
+}) : [
     "/es5-shim/" + pkg.devDependencies["es5-shim"] + "/es5-shim.min.js",
     "/es5-shim/" + pkg.devDependencies["es5-shim"] + "/es5-sham.min.js",
-    "/react/" + pkg.dependencies.react + "/react.min.js"
-].map(function (path) { return (pkg.cdnhost.lib + path); });
+    "/immutable/" + pkg.dependencies.immutable + "/immutable.min.js",
+    "/react/" + pkg.dependencies.react + "/react-with-addons.min.js"
+].map(function (path) {
+    return (pkg.cdnhost.lib + path);
+});
 
 var bundle = [
     (mode === "local") ? localhost.app : pkg.cdnhost.app,
@@ -43,17 +48,18 @@ var bundle = [
 var server = express().disable("x-powered-by").enable("strict routing");
 
 server.render = Promise.promisify(function (data, callback) {
+    if (!data || !data.title) { return callback(new Error("Invalid Data!")); }
     var markup = React.renderToStaticMarkup(Root({
         libraries: libraries,
         bundle: bundle,
-        state: data || {}
+        data: data
     }));
     return callback(null, ("<!DOCTYPE html>" + markup));
 });
 
 server.set("mode", mode);
 
-server.use(serveFavicon(__dirname + "/favicon.ico"));
+server.use(favicon(__dirname + "/favicon.ico"));
 server.use(robots(__dirname + "/robots.txt"));
 
 [localhost.app, localhost.lib].forEach(function (folder) {
@@ -62,7 +68,7 @@ server.use(robots(__dirname + "/robots.txt"));
     return;
 });
 
-server.use(cookieParser());
+server.use(cookie());
 server.use(logger("combined"));
 
 server.use(function (req, res, next) {
