@@ -4,15 +4,15 @@ var FocusAction = require("../actions/focus");
 var React = require("react/addons");
 
 var Photo = React.createClass({
-    mixins: [React.addons.PureRenderMixin],
     propTypes: {
         description: React.PropTypes.string,
         identity:    React.PropTypes.number.isRequired,
-        leading:     React.PropTypes.number.isRequired,
         layout:      React.PropTypes.string.isRequired,
+        leading:     React.PropTypes.number.isRequired,
         source:      React.PropTypes.string.isRequired,
         width:       React.PropTypes.number.isRequired
     },
+    mixins: [React.addons.PureRenderMixin],
     _clickText: function (characterIndex) {
         FocusAction(characterIndex, this.props.description);
         return;
@@ -33,7 +33,7 @@ var Photo = React.createClass({
             imageStyle.width = "100%";
         }
 
-        return <div style={{
+        return (<div style={{
             marginBottom: 0,
             marginTop: this.props.leading,
             textAlign: "center"}}>
@@ -51,14 +51,14 @@ var Photo = React.createClass({
                 {this.props.description
                     .split("")
                     .map(function (character, index) {
-                    return <span
-                        onClick={self._clickText.bind(self, index)}
-                        key={index}>
+                    return (<span
+                        key={index}
+                        onClick={self._clickText.bind(self, index)}>
                         {character}
-                    </span>;
+                    </span>);
                 })}
             </div>}
-        </div>;
+        </div>);
     }
 });
 

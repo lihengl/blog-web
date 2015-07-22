@@ -1,67 +1,126 @@
 {
-    "devDependencies": {
-        "precommit-hook": "2.0.1",
-        "browser-sync": "2.5.2",
-        "react-tools": "0.13.1",
-        "json-loader": "0.5.1",
-        "coveralls": "2.11.2",
-        "jest-cli": "0.4.0",
-        "es5-shim": "4.1.1",
-        "webpack": "1.7.3",
-        "gulp-nodemon": "2.0.2",
-        "gulp-webpack": "1.4.0",
-        "gulp-flatten": "0.0.4",
-        "gulp-jshint": "1.10.0",
-        "gulp-uglify": "1.2.0",
-        "gulp-react": "3.0.1",
-        "gulp-jscs": "1.6.0",
-        "gulp": "3.8.11",
-        "del": "1.1.1"
+  "devDependencies": {
+    "eslint-plugin-react": "3.1.0",
+    "eslint": "1.0.0",
+    "precommit-hook": "3.0.0",
+    "browser-sync": "2.8.0",
+    "react-tools": "0.13.3",
+    "json-loader": "0.5.2",
+    "protractor": "1.8.0",
+    "coveralls": "2.11.3",
+    "cucumber": "0.5.2",
+    "istanbul": "0.3.17",
+    "es5-shim": "4.1.10",
+    "webpack": "1.10.1",
+    "mocha": "2.2.5",
+    "chai": "3.2.0",
+    "gulp-nodemon": "2.0.3",
+    "gulp-webpack": "1.5.0",
+    "gulp-flatten": "0.1.0",
+    "gulp-uglify": "1.2.0",
+    "gulp-react": "3.0.1",
+    "gulp-jscs": "1.6.0",
+    "gulp": "3.9.0",
+    "del": "1.2.0"
+  },
+  "dependencies": {
+    "object-assign": "3.0.0",
+    "cookie-parser": "1.3.5",
+    "serve-favicon": "2.3.0",
+    "robots.txt": "1.1.0",
+    "superagent": "1.2.0",
+    "immutable": "3.7.4",
+    "bluebird": "2.9.34",
+    "express": "4.13.2",
+    "morgan": "1.6.1",
+    "react": "0.13.3",
+    "flux": "2.0.3"
+  },
+  "eslintConfig": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "dependencies": {
-        "object-assign": "2.0.0",
-        "cookie-parser": "1.3.4",
-        "serve-favicon": "2.2.0",
-        "robots.txt": "1.1.0",
-        "superagent": "1.2.0",
-        "immutable": "3.7.1",
-        "bluebird": "2.9.24",
-        "express": "4.12.3",
-        "morgan": "1.5.2",
-        "react" : "0.13.2",
-        "flux": "2.0.3"
-    },
-    "description": "Web client for Blog API",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/lihengl/blog-web.git"
-    },
-    "homepage": "https://github.com/lihengl/blog-web",
-    "version": "0.1.0",
-    "license": "MIT",
-    "scripts": {
-        "start": "gulp develop",
-        "test": "gulp bundle lint && jest"
-    },
-    "apihost": {
-        "production": "https://blog-api.lihengl.com",
-        "staging": "https://test-blog-api.lihengl.com"
-    },
-    "cdnhost": {
-        "lib": "https://cdnjs.cloudflare.com/ajax/libs",
-        "app": "https://cdn.lihengl.com/blog"
-    },
-    "author": "LIHENG <admin@lihengl.com>",
-    "main": "server.js",
-    "name": "blog",
-    "bugs": {
-        "url": "https://github.com/lihengl/blog-web/issues"
-    },
-    "jest": {
-        "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"],
-        "moduleFileExtensions": ["jsx", "js"],
-        "testFileExtensions": ["jsx"],
-        "scriptPreprocessor": "<rootDir>/preprocessor.js",
-        "collectCoverage": true
+    "plugins": [
+      "react"
+    ],
+    "rules": {
+      "react/jsx-boolean-value": 1,
+      "react/jsx-no-duplicate-props": 1,
+      "react/jsx-no-undef": 1,
+      "react/jsx-quotes": 1,
+      "react/jsx-sort-prop-types": 1,
+      "react/jsx-sort-props": 1,
+      "react/jsx-uses-react": 1,
+      "react/jsx-uses-vars": 1,
+      "react/no-did-mount-set-state": 1,
+      "react/no-did-update-set-state": 1,
+      "react/no-multi-comp": 1,
+      "react/no-unknown-property": 1,
+      "react/prop-types": 1,
+      "react/react-in-jsx-scope": 1,
+      "react/require-extension": 1,
+      "react/self-closing-comp": 1,
+      "react/sort-comp": 1,
+      "react/wrap-multilines": 1,
+      "semi": [
+        2,
+        "always"
+      ]
     }
+  },
+  "jshintConfig": {
+    "camelcase": true,
+    "quotmark": "double",
+    "latedef": true,
+    "browser": true,
+    "strict": true,
+    "globals": {
+      "Promise": true
+    },
+    "newcap": false,
+    "unused": true,
+    "eqeqeq": true,
+    "mocha": true,
+    "curly": true,
+    "undef": true,
+    "node": true
+  },
+  "description": "Web client for Blog API",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lihengl/blog-web.git"
+  },
+  "homepage": "https://github.com/lihengl/blog-web",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "functional": "protractor",
+    "validate": "travis-lint && npm prune && npm outdated",
+    "compile": "gulp compile",
+    "build": "gulp build",
+    "start": "gulp develop",
+    "lint": "jshint . && eslint ./components/*.jsx",
+    "test": "istanbul cover _mocha -- -R dot"
+  },
+  "apihost": {
+    "production": "https://blog-api.lihengl.com",
+    "staging": "https://test-blog-api.lihengl.com"
+  },
+  "cdnhost": {
+    "lib": "https://cdnjs.cloudflare.com/ajax/libs",
+    "app": "https://cdn.lihengl.com/blog"
+  },
+  "author": "LIHENG <admin@lihengl.com>",
+  "main": "server.js",
+  "name": "blog",
+  "bugs": {
+    "url": "https://github.com/lihengl/blog-web/issues"
+  },
+  "pre-commit": [
+    "validate",
+    "lint",
+    "compile",
+    "build",
+    "test"
+  ]
 }

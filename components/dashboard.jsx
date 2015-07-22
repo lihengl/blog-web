@@ -2,11 +2,11 @@
 var React = require("react/addons");
 
 var Dashboard = React.createClass({
-    mixins: [React.addons.PureRenderMixin],
     propTypes: {
     },
+    mixins: [React.addons.PureRenderMixin],
     render: function () {
-        return <p>{"Not Implemented Yet."}</p>;
+        return (<p>{"Not Implemented Yet."}</p>);
     }
 });
 

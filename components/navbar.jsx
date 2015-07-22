@@ -4,9 +4,9 @@ var Signin = require("../actions/signin");
 var React = require("react/addons");
 
 var Navbar = React.createClass({
-    mixins: [React.addons.PureRenderMixin],
     propTypes: {
     },
+    mixins: [React.addons.PureRenderMixin],
     getInitialState: function () {
         return {
             password: {
@@ -38,29 +38,34 @@ var Navbar = React.createClass({
         return;
     },
     render: function () {
-        return <div style={{
+        return (<div style={{
             paddingTop: 6,
-            textAlign: "right",
             position: "fixed",
-            width: "100%",
-            top: 0}}>
-            <input type="text" value={this.state.email.value} style={{
-                borderColor: (this.state.email.valid) ? "#000000" : "#FF0000",
-                fontSize: 14
-            }} onChange={this._validateEmail} />
-            <input type="password" value={this.state.password.value} style={{
-                borderColor: (this.state.password.valid) ? "#000000" : "#FF0000",
-                marginLeft: 10,
-                fontSize: 14
-            }} onChange={this._validatePassword} />
-            <button style={{
+            textAlign: "right",
+            top: 0,
+            width: "100%"}}>
+            <input onChange={this._validateEmail}
+                style={{
+                    borderColor: (this.state.email.valid) ? "#000000" : "#FF0000",
+                    fontSize: 14
+                }}
+                type="text"
+                value={this.state.email.value} />
+            <input onChange={this._validatePassword}
+                 style={{
+                    borderColor: (this.state.password.valid) ? "#000000" : "#FF0000",
+                    marginLeft: 10,
+                    fontSize: 14
+                }}
+                type="password"
+                value={this.state.password.value} />
+            <button onClick={this._submitIdentity} style={{
                 marginRight: 10,
                 marginLeft: 10,
-                fontSize: 14
-            }} onClick={this._submitIdentity}>
+                fontSize: 14}}>
                 {"Signin"}
             </button>
-        </div>;
+        </div>);
     }
 });
 

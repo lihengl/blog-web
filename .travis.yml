@@ -1,7 +1,5 @@
-sudo:
-    - false
-language:
-    - node_js
+sudo: false
+language: node_js
 node_js:
     - "0.10"
 branches:
@@ -10,5 +8,8 @@ branches:
 cache:
     directories:
         - node_modules
+before_script:
+    - npm run compile
+    - npm run build
 after_success:
     - cat coverage/lcov.info | coveralls

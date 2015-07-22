@@ -2,7 +2,6 @@
 var webpack = require("gulp-webpack");
 var nodemon = require("gulp-nodemon");
 var flatten = require("gulp-flatten");
-var jshint  = require("gulp-jshint");
 var uglify  = require("gulp-uglify");
 var react   = require("gulp-react");
 var bsync   = require("browser-sync");
@@ -20,12 +19,6 @@ gulp.task("browser-sync", function () {
     });
 });
 
-gulp.task("lint", function () {
-    return gulp.src(["react_components/*.js", "*.js"])
-    .pipe(jshint())
-    .pipe(jshint.reporter("default"));
-});
-
 gulp.task("clean", function (callback) {
     del([
         "react_components",
@@ -33,14 +26,14 @@ gulp.task("clean", function (callback) {
     ], callback);
 });
 
-gulp.task("transform", function () {
+gulp.task("compile", function () {
     return gulp.src("components/*.jsx")
     .pipe(react())
     .pipe(flatten())
     .pipe(gulp.dest("react_components"));
 });
 
-gulp.task("bundle", ["transform"], function () {
+gulp.task("build", ["compile"], function () {
     return gulp.src("client.js")
     .pipe(webpack({
         externals: {
@@ -62,14 +55,14 @@ gulp.task("bundle", ["transform"], function () {
     .pipe(gulp.dest("static_assets/" + pkg.version));
 });
 
-gulp.task("develop", ["bundle", "lint"], function () {
+gulp.task("develop", ["build"], function () {
     gulp.watch([
         "components/**/*.jsx",
         "actions/**/*.js",
         "stores/**/*.js",
         "dispatcher.js",
         "client.js"
-    ], ["bundle"]);
+    ], ["build"]);
     return nodemon({
         ignore: [
             "react_components/*",
