@@ -1,21 +1,20 @@
-"use strict";
-var expect = require("chai").expect;
+'use strict';
+var expect = require('chai').expect;
 
-var React = require("react/addons");
+var React = require('react/addons');
 
 var renderer = React.addons.TestUtils.createRenderer();
-var Application = React.createFactory(require("../react_components/application"));
+var Footer = React.createFactory(require('../react_components/footer'));
 
 
-describe("Application component", function () {
-    renderer.render(Application({
-        layout: "dashboard",
-        title: "From Unit Test"
+describe('Footer component', function () {
+    renderer.render(Footer({
+        author: 'blogger'
     }));
 
-    it("should render to a 'div' element at top level", function () {
+    it('should render to a <div> element at top level', function () {
         var output = renderer.getRenderOutput();
-        expect(output.type).to.equal("div");
+        expect(output.type).to.equal('div');
         return;
     });
 });

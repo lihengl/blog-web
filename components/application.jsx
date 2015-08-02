@@ -8,7 +8,7 @@ var React = require("react/addons");
 
 var Application = React.createClass({
     propTypes: {
-        entries: React.PropTypes.array.isRequired,
+        entries: React.PropTypes.array,
         layout: React.PropTypes.string.isRequired,
         title: React.PropTypes.string.isRequired
     },

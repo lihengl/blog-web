@@ -20,8 +20,7 @@
     "gulp-uglify": "1.2.0",
     "gulp-react": "3.0.1",
     "gulp-jscs": "1.6.0",
-    "gulp": "3.9.0",
-    "del": "1.2.0"
+    "gulp": "3.9.0"
   },
   "dependencies": {
     "object-assign": "3.0.0",
@@ -70,7 +69,7 @@
   },
   "jshintConfig": {
     "camelcase": true,
-    "quotmark": "double",
+    "quotmark": "single",
     "latedef": true,
     "browser": true,
     "strict": true,
@@ -95,12 +94,13 @@
   "license": "MIT",
   "scripts": {
     "functional": "protractor",
-    "validate": "travis-lint && npm prune && npm outdated",
+    "validate": "travis-lint; npm prune; npm outdated",
     "compile": "gulp compile",
+    "clean": "rm -r static_assets react_components",
     "build": "gulp build",
     "start": "gulp develop",
-    "lint": "jshint . && eslint ./components/*.jsx",
-    "test": "istanbul cover _mocha -- -R dot"
+    "lint": "jshint .; eslint ./components/*.jsx",
+    "test": "istanbul cover _mocha -- --reporter dot"
   },
   "apihost": {
     "production": "https://blog-api.lihengl.com",

@@ -5,7 +5,7 @@ var React = require("react/addons");
 
 var Cover = React.createClass({
     propTypes: {
-        children: React.PropTypes.object.isRequired,
+        children: React.PropTypes.string.isRequired,
         height: React.PropTypes.number.isRequired,
         width: React.PropTypes.number.isRequired
     },

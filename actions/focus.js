@@ -1,8 +1,8 @@
-"use strict";
-var Dispatcher = require("../dispatcher");
+'use strict';
+var Dispatcher = require('../dispatcher');
 
 var Focus = function (position, content) {
-    var payload = {type: "FOCUS"};
+    var payload = {type: 'FOCUS'};
     payload.index = position;
     payload.text = content;
     Dispatcher.dispatch(payload);
