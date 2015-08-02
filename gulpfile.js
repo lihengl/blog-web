@@ -1,5 +1,5 @@
 'use strict';
-var webpack = require('gulp-webpack');
+var webpack = require('webpack-stream');
 var nodemon = require('gulp-nodemon');
 var flatten = require('gulp-flatten');
 var uglify  = require('gulp-uglify');
@@ -18,14 +18,14 @@ gulp.task('browser-sync', function () {
     });
 });
 
-gulp.task('compile', function () {
+gulp.task('compile-jsx', function () {
     return gulp.src('components/*.jsx')
     .pipe(react())
     .pipe(flatten())
     .pipe(gulp.dest('react_components'));
 });
 
-gulp.task('build', ['compile'], function () {
+gulp.task('build', function () {
     return gulp.src('client.js')
     .pipe(webpack({
         externals: {
