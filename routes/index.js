@@ -1,12 +1,12 @@
-"use strict";
-var authenticate = require("./authenticate");
-var user = require("./user");
+'use strict';
+var authenticate = require('./authenticate');
+var user = require('./user');
 
-var router = require("express").Router({caseSensitive: true, strict: true});
+var router = require('express').Router({caseSensitive: true, strict: true});
 
 
 router.use(authenticate);
-router.use("/:user", user);
+router.use('/:user', user);
 
 
 module.exports = router;

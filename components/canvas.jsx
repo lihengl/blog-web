@@ -1,10 +1,10 @@
 "use strict";
 var CountStore = require("../stores/count");
 
-var Paragraph = require("./paragraph");
-var Subtitle  = require("./subtitle");
-var Title     = require("./title");
-var Photo     = require("./photo");
+var Paragraph = require("./paragraph.jsx");
+var Subtitle  = require("./subtitle.jsx");
+var Title     = require("./title.jsx");
+var Photo     = require("./photo.jsx");
 
 var React = require("react/addons");
 
@@ -13,22 +13,22 @@ var SPACING = 56;
 
 
 var Canvas = React.createClass({
-    mixins: [React.addons.PureRenderMixin],
     propTypes: {
         entries: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-        width:   React.PropTypes.number.isRequired,
-        title:   React.PropTypes.string.isRequired
+        title:   React.PropTypes.string.isRequired,
+        width:   React.PropTypes.number.isRequired
     },
-    componentWillUnmount: function () {
-        CountStore.removeChangeListener(this._handleChange);
-        return;
+    mixins: [React.addons.PureRenderMixin],
+    getInitialState: function () {
+        return {text: CountStore.getTotal()};
     },
     componentDidMount: function () {
         CountStore.addChangeListener(this._handleChange);
         return;
     },
-    getInitialState: function () {
-        return {text: CountStore.getTotal()};
+    componentWillUnmount: function () {
+        CountStore.removeChangeListener(this._handleChange);
+        return;
     },
     _handleChange: function () {
         var state = this.state;
@@ -40,47 +40,47 @@ var Canvas = React.createClass({
         var rendered = null, id = index + 1;
         switch (entry.type.toUpperCase()) {
             case "PARAGRAPH":
-                rendered = <Paragraph
+                rendered = (<Paragraph
                     identity={id}
-                    leading={SPACING}
-                    key={index}>
+                    key={index}
+                    leading={SPACING}>
                     {entry.content}
-                </Paragraph>;
+                </Paragraph>);
                 break;
             case "SUBTITLE":
-                rendered = <Subtitle
+                rendered = (<Subtitle
                     identity={id}
-                    leading={SPACING}
-                    key={index}>
+                    key={index}
+                    leading={SPACING}>
                     {entry.content}
-                </Subtitle>;
+                </Subtitle>);
                 break;
             case "PHOTO":
-                rendered = <Photo
+                rendered = (<Photo
                     description={entry.description}
                     identity={id}
+                    key={index}
+                    layout={entry.layout}
                     leading={SPACING}
                     source={entry.content}
-                    layout={entry.layout}
-                    width={this.props.width}
-                    key={index} />;
+                    width={this.props.width} />);
                 break;
             default:
-                rendered = <div identity={id} key={index} style={{
+                rendered = (<div identity={id} key={index} style={{
                     marginBottom: 0,
                     marginTop: 50,
                     color: "#FF0000"}}>
                     {"Invalid Type: " + entry.type}
-                </div>;
+                </div>);
         }
         return rendered;
     },
     render: function () {
-        return <div>
+        return (<div>
             <Title identity={0}>{this.props.title}</Title>
             <p>{this.state.text}</p>
             {this.props.entries.map(this._renderEntry)}
-        </div>;
+        </div>);
     }
 });
 

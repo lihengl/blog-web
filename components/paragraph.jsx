@@ -10,12 +10,12 @@ var FONT = {
 };
 
 var Paragraph = React.createClass({
-    mixins: [React.addons.PureRenderMixin],
     propTypes: {
-        identity: React.PropTypes.number.isRequired,
         children: React.PropTypes.string.isRequired,
+        identity: React.PropTypes.number.isRequired,
         leading:  React.PropTypes.number.isRequired
     },
+    mixins: [React.addons.PureRenderMixin],
     getInitialState: function () {
         return {
             text: this.props.children,
@@ -35,7 +35,7 @@ var Paragraph = React.createClass({
     },
     render: function () {
         var self = this;
-        return <div>
+        return (<div>
             <p style={{
                 letterSpacing: FONT.SPACING,
                 marginBottom: 0,
@@ -47,11 +47,11 @@ var Paragraph = React.createClass({
                 wordWrap: "break-word",
                 fontSize: FONT.SIZE}}>
                 {this.state.text.split("").map(function (character, index) {
-                    return <span
-                        onClick={self._handleClick.bind(self, index)}
-                        key={index}>
+                    return (<span
+                        key={index}
+                        onClick={self._handleClick.bind(self, index)}>
                         {character}
-                    </span>;
+                    </span>);
                 })}
             </p>
             <div style={{
@@ -59,7 +59,7 @@ var Paragraph = React.createClass({
                 height: 0}}>
                 <textarea
                     onChange={this._handleTyping}
-                    value={this.state.text}
+                    ref="receiver"
                     style={{
                         letterSpacing: FONT.SPACING,
                         fontFamily: FONT.FAMILY,
@@ -68,10 +68,10 @@ var Paragraph = React.createClass({
                         outline: "none",
                         width: "100%"
                     }}
-                    ref="receiver">
+                    value={this.state.text}>
                 </textarea>
             </div>
-        </div>;
+        </div>);
     }
 });
 

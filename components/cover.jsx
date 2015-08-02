@@ -4,11 +4,12 @@ var IncreaseAction = require("../actions/increase");
 var React = require("react/addons");
 
 var Cover = React.createClass({
-    mixins: [React.addons.PureRenderMixin],
     propTypes: {
+        children: React.PropTypes.string.isRequired,
         height: React.PropTypes.number.isRequired,
-        width:  React.PropTypes.number.isRequired
+        width: React.PropTypes.number.isRequired
     },
+    mixins: [React.addons.PureRenderMixin],
     _handleClick: function () {
         IncreaseAction(1);
         return;
@@ -17,7 +18,7 @@ var Cover = React.createClass({
         var aspectRatio = (this.props.height > this.props.width) ? 1.0 : (9.0 / 16.0);
         var totalHeight = Math.min(600, (this.props.width * aspectRatio));
 
-        return <div style={{
+        return (<div style={{
             backgroundRepeat: "no-repeat",
             backgroundImage: "url(/static_assets/cover.jpg)",
             backgroundSize: "cover",
@@ -37,7 +38,7 @@ var Cover = React.createClass({
                 fontSize: Math.round((this.props.width + 3760.0) / 260.0)}}>
                 {this.props.width}
             </p>
-        </div>;
+        </div>);
     }
 });
 

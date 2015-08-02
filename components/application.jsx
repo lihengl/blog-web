@@ -1,30 +1,31 @@
 "use strict";
-var Dashboard = require("./dashboard");
-var Canvas    = require("./canvas");
-var Footer    = require("./footer");
-var Cover     = require("./cover");
+var Dashboard = require("./dashboard.jsx");
+var Canvas    = require("./canvas.jsx");
+var Footer    = require("./footer.jsx");
+var Cover     = require("./cover.jsx");
 
 var React = require("react/addons");
 
 var Application = React.createClass({
-    mixins: [React.addons.PureRenderMixin],
     propTypes: {
+        entries: React.PropTypes.array,
         layout: React.PropTypes.string.isRequired,
-        title:  React.PropTypes.string.isRequired
+        title: React.PropTypes.string.isRequired
     },
-    componentWillUnmount: function () {
-        window.removeEventListener("resize", this._handleResize);
-        return;
-    },
-    componentDidMount: function () {
-        window.addEventListener("resize", this._handleResize);
-        return;
-    },
+    mixins: [React.addons.PureRenderMixin],
     getInitialState: function () {
         return {
             height: 900,
             width: 1440
         };
+    },
+    componentDidMount: function () {
+        window.addEventListener("resize", this._handleResize);
+        return;
+    },
+    componentWillUnmount: function () {
+        window.removeEventListener("resize", this._handleResize);
+        return;
     },
     _handleResize: function () {
         this.setState({
@@ -40,25 +41,24 @@ var Application = React.createClass({
                 rendered = <Dashboard />;
                 break;
             case "CANVAS":
-                rendered = <Canvas
+                rendered = (<Canvas
                     entries={this.props.entries}
                     title={this.props.title}
-                    width={width}>
-                </Canvas>;
+                    width={width} />);
                 break;
             default:
-                rendered = <div style={{
+                rendered = (<div style={{
                     marginBottom: 0,
                     marginTop: 50,
                     color: "#FF0000"}}>
                     {"Invalid Layout: " + this.props.layout}
-                </div>;
+                </div>);
         }
         return rendered;
     },
     render: function () {
         var columnWidth = (Math.min(680, this.state.width) - (10 * 2));
-        return <div style={{
+        return (<div style={{
             fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', sans-serif",
             color: "#333333"}}>
             <Cover height={this.state.height} width={this.state.width}>
@@ -71,7 +71,7 @@ var Application = React.createClass({
                 {this._renderBody(columnWidth)}
             </div>
             <Footer author={"liheng"} />
-        </div>;
+        </div>);
     }
 });
 
