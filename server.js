@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 'use strict';
+require('babel/register')({extensions: ['.jsx']});
+
 var express = require('express');
 var favicon = require('serve-favicon');
 var cookie  = require('cookie-parser');
@@ -12,7 +14,7 @@ var React   = require('react/addons');
 var routes = require('./routes');
 var pkg    = require('./package.json');
 
-var Root = React.createFactory(require('./react_components/root'));
+var Root = React.createFactory(require('./components/root'));
 
 var port = process.env.PORT || '3000';
 var mode = process.env.MODE || 'test';

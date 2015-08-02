@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var React = require('react/addons');
 
 var renderer = React.addons.TestUtils.createRenderer();
-var Footer = React.createFactory(require('../react_components/footer'));
+var Footer = React.createFactory(require('../components/footer.jsx'));
 
 
 describe('Footer component', function () {

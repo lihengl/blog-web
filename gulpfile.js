@@ -1,9 +1,6 @@
 'use strict';
 var webpack = require('webpack-stream');
-var nodemon = require('gulp-nodemon');
-var flatten = require('gulp-flatten');
 var uglify  = require('gulp-uglify');
-var react   = require('gulp-react');
 var bsync   = require('browser-sync');
 var gulp    = require('gulp');
 
@@ -18,13 +15,6 @@ gulp.task('browser-sync', function () {
     });
 });
 
-gulp.task('compile-jsx', function () {
-    return gulp.src('components/*.jsx')
-    .pipe(react())
-    .pipe(flatten())
-    .pipe(gulp.dest('react_components'));
-});
-
 gulp.task('build', function () {
     return gulp.src('client.js')
     .pipe(webpack({
@@ -37,6 +27,10 @@ gulp.task('build', function () {
             loaders: [{
                 loader: 'json',
                 test: /\.json$/
+            }, {
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                test: /\.jsx$/
             }]
         },
         output: {
@@ -45,30 +39,4 @@ gulp.task('build', function () {
     }))
     .pipe(uglify())
     .pipe(gulp.dest('static_assets/' + pkg.version));
-});
-
-gulp.task('develop', ['build'], function () {
-    gulp.watch([
-        'components/**/*.jsx',
-        'actions/**/*.js',
-        'stores/**/*.js',
-        'dispatcher.js',
-        'client.js'
-    ], ['build']);
-    return nodemon({
-        ignore: [
-            'react_components/*',
-            'static_assets',
-            'node_modules',
-            'components/*',
-            'gulpfile.js',
-            'client.js'
-        ],
-        script: 'server.js',
-        env: {
-            'BLUEBIRD_DEBUG': '1',
-            'MODE': 'local'
-        },
-        ext: 'js'
-    });
 });

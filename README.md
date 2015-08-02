@@ -13,4 +13,4 @@ The project uses [Mocha](http://mochajs.org)/[Protractor](http://www.protractort
 
 ## Coding Convention
 
-Despite the sizable directory structure, development changes should only be made into `actions`, `components`, `routes` and `stores`. Directories with underscored names, namely `node_modules`, `react_components`, and `static_assets`, will be populated by system processes and should always be kept out from version control.
+Despite the sizable directory structure, development changes should only be made into `actions`, `components`, `routes` and `stores`. Directories with underscored names, namely `node_modules` and `static_assets`, will be populated by system processes and should always be kept out from version control.
