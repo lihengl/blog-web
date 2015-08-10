@@ -1,5 +1,5 @@
 'use strict';
-var Application = window.React.createFactory(require('./components/application.jsx'));
+var Application = window.React.createFactory(require('./components/Application.jsx'));
 
 var initialData = document.getElementById('state').innerHTML;
 var rootElement = document.getElementById('application');

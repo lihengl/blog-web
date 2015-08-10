@@ -1,8 +1,8 @@
 "use strict";
-var Dashboard = require("./dashboard.jsx");
-var Canvas    = require("./canvas.jsx");
-var Footer    = require("./footer.jsx");
-var Cover     = require("./cover.jsx");
+var Dashboard = require("./Dashboard.jsx");
+var Canvas    = require("./Canvas.jsx");
+var Footer    = require("./Footer.jsx");
+var Cover     = require("./Cover.jsx");
 
 var React = require("react/addons");
 

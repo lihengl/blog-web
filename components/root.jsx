@@ -1,13 +1,13 @@
 "use strict";
 var React = require("react/addons");
 
-var Application = React.createFactory(require("./application"));
+var Application = React.createFactory(require("./Application"));
 
 var Root = React.createClass({
     propTypes: {
-        bundle:    React.PropTypes.string.isRequired,
-        data:      React.PropTypes.object.isRequired,
-        libraries: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+        data: React.PropTypes.object.isRequired,
+        metadata: React.PropTypes.object.isRequired,
+        sources: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
     },
     render: function () {
         return (<html lang="en-US">
@@ -25,7 +25,7 @@ var Root = React.createClass({
                 <meta name="google" value="notranslate"/>
                 <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
                 <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
-                <title>{this.props.data.title}</title>
+                <title>{this.props.metadata.title}</title>
             </head>
             <body style={{margin: 0}}>
                 <div dangerouslySetInnerHTML={{
@@ -36,10 +36,9 @@ var Root = React.createClass({
                     .replace(/<\/script/g, "<\\/script")
                     .replace(/<!--/g, "<\\!--")
                 }} id="state" type="application/json"></script>
-                {this.props.libraries.map(function (library, index) {
-                    return <script key={index} src={library} type="text/javascript"></script>;
+                {this.props.sources.map(function (source, index) {
+                    return <script key={index} src={source}></script>;
                 })}
-                <script src={this.props.bundle} type="text/javascript"></script>
             </body>
         </html>);
     }

@@ -1,10 +1,10 @@
 "use strict";
 var CountStore = require("../stores/count");
 
-var Paragraph = require("./paragraph.jsx");
-var Subtitle  = require("./subtitle.jsx");
-var Title     = require("./title.jsx");
-var Photo     = require("./photo.jsx");
+var Paragraph = require("./Paragraph.jsx");
+var Subtitle  = require("./Subtitle.jsx");
+var Title     = require("./Title.jsx");
+var Photo     = require("./Photo.jsx");
 
 var React = require("react/addons");
 

@@ -1,8 +1,8 @@
 'use strict';
-var __article__ = require('./__mocks__/article.json');
+Promise = require('bluebird');
 
+var __article__ = require('./__mocks__/article.json');
 var Request = require('superagent');
-var Promise = require('bluebird');
 
 
 var query = Promise.promisify(function (parameter, callback) {
@@ -39,7 +39,7 @@ var middleware = function (req, res, next) {
         res.locals.state.entries = result.entries;
         res.locals.state.layout = 'canvas';
         res.locals.state.title = result.title;
-        return req.app.render(res.locals.state);
+        return req.app.render({title: result.title}, res.locals.state);
     }).then(function (html) {
         return res.status(200).type('text/html').send(html);
     }, next);
