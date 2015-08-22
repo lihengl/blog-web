@@ -5,9 +5,9 @@ var Application = React.createFactory(require("./Application"));
 
 var Root = React.createClass({
     propTypes: {
-        data: React.PropTypes.object.isRequired,
+        content: React.PropTypes.object.isRequired,
         metadata: React.PropTypes.object.isRequired,
-        sources: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+        resources: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
     },
     render: function () {
         return (<html lang="en-US">
@@ -29,15 +29,15 @@ var Root = React.createClass({
             </head>
             <body style={{margin: 0}}>
                 <div dangerouslySetInnerHTML={{
-                    __html: React.renderToString(Application(this.props.data))
+                    __html: React.renderToString(Application(this.props.content))
                 }} id="application"></div>
                 <script dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(this.props.data)
+                    __html: JSON.stringify(this.props.content)
                     .replace(/<\/script/g, "<\\/script")
                     .replace(/<!--/g, "<\\!--")
                 }} id="state" type="application/json"></script>
-                {this.props.sources.map(function (source, index) {
-                    return <script key={index} src={source}></script>;
+                {this.props.resources.map(function (resource, index) {
+                    return <script key={index} src={resource}></script>;
                 })}
             </body>
         </html>);

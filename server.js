@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 require('babel/register')({extensions: ['.jsx']});
-Promise = require('bluebird');
+var Promise = require('bluebird');
 
 var cookie = require('cookie-parser');
 var express = require('express');
@@ -11,7 +11,7 @@ var robots = require('robots.txt');
 
 var React = require('react/addons');
 
-var routes = require('./routes');
+var routers = require('./routers');
 var pkg = require('./package.json');
 
 var Root = React.createFactory(require('./components/Root'));
@@ -28,7 +28,8 @@ var sources = (mode === 'local') ? [
     [pkg.version, pkg.name].join('/') + '.min.js'
 ].map(function (source, index, sources) {
     var last = (index === (sources.length - 1));
-    return ((last) ? '/static_assets/' : '/node_modules/') + source;
+    var host = (last) ? '/static_assets/' : '/node_modules/';
+    return (host + source);
 }) : [
     'es5-shim/' + pkg.devDependencies['es5-shim'] + '/es5-shim.min.js',
     'es5-shim/' + pkg.devDependencies['es5-shim'] + '/es5-sham.min.js',
@@ -44,15 +45,16 @@ var sources = (mode === 'local') ? [
 
 var server = express().disable('x-powered-by').enable('strict routing');
 
-server.render = Promise.promisify(function (metadata, data, callback) {
+
+server.render = Promise.promisify(function (metadata, content, callback) {
     var markup = React.renderToStaticMarkup(Root({
-        data: data,
+        content: content,
         metadata: metadata,
-        sources: sources
+        resources: sources
     }));
-    callback(null, ('<!DOCTYPE html>' + markup));
-    return;
+    return callback(null, '<!DOCTYPE html>' + markup);
 });
+
 
 server.set('mode', mode);
 
@@ -69,13 +71,13 @@ server.use(cookie());
 server.use(logger('combined'));
 
 server.use(function (req, res, next) {
-    var api = pkg.apihost;
+    var api = pkg.backend;
     req.apihost = (mode === 'production') ? api.production : api.staging;
     res.locals.state = {};
     return next();
 });
 
-server.use(routes);
+server.use(routers);
 
 server.use(function (err, req, res, next) {
     var message = [

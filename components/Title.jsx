@@ -9,21 +9,21 @@ var Title = React.createClass({
         children: React.PropTypes.string.isRequired
     },
     mixins: [React.addons.PureRenderMixin],
-    _handleClick: function (characterIndex) {
+    handleClick: function (characterIndex) {
         FetchAction("lihengl", true);
         FocusAction(characterIndex, this.props.children);
         return;
     },
+    renderCharacter: function (character, index) {
+        return (<span
+            key={index}
+            onClick={this.handleClick.bind(this, index)}>
+            {character}
+        </span>);
+    },
     render: function () {
-        var self = this;
         return (<h1 style={{fontSize: 60}}>
-            {this.props.children.split("").map(function (character, index) {
-                return (<span
-                    key={index}
-                    onClick={self._handleClick.bind(self, index)}>
-                    {character}
-                </span>);
-            })}
+            {this.props.children.split("").map(this.renderCharacter)}
         </h1>);
     }
 });

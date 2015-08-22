@@ -1,8 +1,8 @@
 "use strict";
 var Dashboard = require("./Dashboard.jsx");
-var Canvas    = require("./Canvas.jsx");
-var Footer    = require("./Footer.jsx");
-var Cover     = require("./Cover.jsx");
+var Document = require("./Document.jsx");
+var Footer = require("./Footer.jsx");
+var Header = require("./Header.jsx");
 
 var React = require("react/addons");
 
@@ -14,45 +14,36 @@ var Application = React.createClass({
     },
     mixins: [React.addons.PureRenderMixin],
     getInitialState: function () {
-        return {
-            height: 900,
-            width: 1440
-        };
+        return {height: 900, width: 1440};
     },
     componentDidMount: function () {
-        window.addEventListener("resize", this._handleResize);
-        return;
+        window.addEventListener("resize", this.resize);
     },
     componentWillUnmount: function () {
-        window.removeEventListener("resize", this._handleResize);
-        return;
+        window.removeEventListener("resize", this.resize);
     },
-    _handleResize: function () {
+    resize: function () {
         this.setState({
             height: window.innerHeight,
-            width:  window.innerWidth
+            width: window.innerWidth
         });
-        return;
     },
-    _renderBody: function (width) {
+    renderBody: function (width) {
         var rendered = null;
-        switch (this.props.layout.toUpperCase()) {
-            case "DASHBOARD":
-                rendered = <Dashboard />;
-                break;
-            case "CANVAS":
-                rendered = (<Canvas
-                    entries={this.props.entries}
-                    title={this.props.title}
-                    width={width} />);
-                break;
-            default:
-                rendered = (<div style={{
-                    marginBottom: 0,
-                    marginTop: 50,
-                    color: "#FF0000"}}>
-                    {"Invalid Layout: " + this.props.layout}
-                </div>);
+        if (this.props.layout.toUpperCase() === "DASHBOARD") {
+            rendered = <Dashboard />;
+        } else if (this.props.layout.toUpperCase() === "DOCUMENT") {
+            rendered = (<Document
+                entries={this.props.entries}
+                title={this.props.title}
+                width={width} />);
+        } else {
+            rendered = (<div style={{
+                marginBottom: 0,
+                marginTop: 50,
+                color: "#FF0000"}}>
+                {"Invalid Layout: " + this.props.layout}
+            </div>);
         }
         return rendered;
     },
@@ -61,14 +52,14 @@ var Application = React.createClass({
         return (<div style={{
             fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', sans-serif",
             color: "#333333"}}>
-            <Cover height={this.state.height} width={this.state.width}>
+            <Header height={this.state.height} width={this.state.width}>
                 {this.props.title}
-            </Cover>
+            </Header>
             <div style={{
                 padding: "20px 10px 20px 10px",
                 margin: "0 auto 0 auto",
                 width: columnWidth}}>
-                {this._renderBody(columnWidth)}
+                {this.renderBody(columnWidth)}
             </div>
             <Footer author={"liheng"} />
         </div>);

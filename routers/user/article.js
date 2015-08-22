@@ -1,14 +1,14 @@
 'use strict';
-Promise = require('bluebird');
+var Promise = require('bluebird');
 
 var __article__ = require('./__mocks__/article.json');
-var Request = require('superagent');
+var superagent = require('superagent');
 
 
 var query = Promise.promisify(function (parameter, callback) {
     var message = parameter.path + ' Returns Status: ';
     if (parameter.mocking) { return callback(null, __article__); }
-    return Request.get(parameter.path).end(function (err, res) {
+    return superagent.get(parameter.path).end(function (err, res) {
         if (err) { return callback(err); }
         if (res.ok) { return callback(null, res.body); }
         return callback(new Error(message + res.status));
@@ -37,7 +37,7 @@ var middleware = function (req, res, next) {
         path: req.apihost + '/v1/articles/1'
     }).then(validate).then(function (result) {
         res.locals.state.entries = result.entries;
-        res.locals.state.layout = 'canvas';
+        res.locals.state.layout = 'document';
         res.locals.state.title = result.title;
         return req.app.render({title: result.title}, res.locals.state);
     }).then(function (html) {
