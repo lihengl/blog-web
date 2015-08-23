@@ -2,7 +2,7 @@
 var __comments__ = require('./__mocks__/comments.json');
 
 var Dispatcher = require('../dispatcher');
-var Request    = require('superagent');
+var superagent = require('superagent');
 
 
 var Fetch = function (user, mocking) {
@@ -17,7 +17,7 @@ var Fetch = function (user, mocking) {
         return;
     }
 
-    Request.get('http://localhost:3000/a/1').end(function (err, res) {
+    superagent.get('http://localhost:3000/a/1').end(function (err, res) {
         if (err || !res.ok) {
             payload.error = err || new Error('Status: ' + res.status);
             payload.type = 'FETCH_FAILED';

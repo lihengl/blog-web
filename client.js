@@ -1,7 +1,10 @@
 'use strict';
-var Application = window.React.createFactory(require('./components/application.jsx'));
+require('babel/polyfill');
+var React = require('react/addons');
+
+var Application = React.createFactory(require('./components/Application.jsx'));
 
 var initialData = document.getElementById('state').innerHTML;
 var rootElement = document.getElementById('application');
 
-window.React.render(Application(JSON.parse(initialData)), rootElement);
+React.render(Application(JSON.parse(initialData)), rootElement);

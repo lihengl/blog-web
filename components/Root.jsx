@@ -1,13 +1,13 @@
 "use strict";
 var React = require("react/addons");
 
-var Application = React.createFactory(require("./application"));
+var Application = React.createFactory(require("./Application"));
 
 var Root = React.createClass({
     propTypes: {
-        bundle:    React.PropTypes.string.isRequired,
-        data:      React.PropTypes.object.isRequired,
-        libraries: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+        content: React.PropTypes.object.isRequired,
+        metadata: React.PropTypes.object.isRequired,
+        resources: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
     },
     render: function () {
         return (<html lang="en-US">
@@ -25,21 +25,20 @@ var Root = React.createClass({
                 <meta name="google" value="notranslate"/>
                 <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
                 <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
-                <title>{this.props.data.title}</title>
+                <title>{this.props.metadata.title}</title>
             </head>
             <body style={{margin: 0}}>
                 <div dangerouslySetInnerHTML={{
-                    __html: React.renderToString(Application(this.props.data))
+                    __html: React.renderToString(Application(this.props.content))
                 }} id="application"></div>
                 <script dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(this.props.data)
+                    __html: JSON.stringify(this.props.content)
                     .replace(/<\/script/g, "<\\/script")
                     .replace(/<!--/g, "<\\!--")
                 }} id="state" type="application/json"></script>
-                {this.props.libraries.map(function (library, index) {
-                    return <script key={index} src={library} type="text/javascript"></script>;
+                {this.props.resources.map(function (resource, index) {
+                    return <script key={index} src={resource}></script>;
                 })}
-                <script src={this.props.bundle} type="text/javascript"></script>
             </body>
         </html>);
     }

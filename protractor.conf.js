@@ -8,6 +8,6 @@ exports.config = {
     },
     framework: 'cucumber',
     specs: [
-        './features/**/*.feature'
+        './specs/**/*.feature'
     ]
 };
