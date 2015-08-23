@@ -23,7 +23,6 @@ var mode = process.env.MODE || 'test';
 var sources = (mode === 'local') ? [
     'es5-shim/es5-shim.js',
     'es5-shim/es5-sham.js',
-    'react/dist/react-with-addons.js',
     'webpack-dev-server.js',
     [pkg.version, pkg.name].join('/') + '.min.js'
 ].map(function (source, index, sources) {

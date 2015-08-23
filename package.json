@@ -109,6 +109,7 @@
     "clean": "rm -r static_assets coverage; npm prune",
     "develop": "BLUEBIRD_DEBUG=1 MODE=local node server.js",
     "functional": "protractor",
+    "hot": "MODE=local webpack-dev-server --hot --inline",
     "lint": "jshint .; eslint ./components/*.jsx",
     "test": "istanbul cover _mocha -- --compilers js:babel/register --reporter dot",
     "validate": "travis-lint"

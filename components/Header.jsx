@@ -28,8 +28,7 @@ var Header = React.createClass({
                 fontSize: Math.floor((3.0 * this.props.width + 12280.0) / 260.0)}}>
                 {this.props.children}
             </h1>
-            <p style={{
-                fontSize: Math.round((this.props.width + 3760.0) / 260.0)}}>
+            <p style={{fontSize: Math.round((this.props.width + 3760.0) / 260.0)}}>
                 {this.props.width}
             </p>
         </div>);
