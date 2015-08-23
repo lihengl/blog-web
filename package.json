@@ -114,5 +114,5 @@
     "test": "istanbul cover _mocha -- --compilers js:babel/register --reporter dot",
     "validate": "travis-lint"
   },
-  "version": "0.1.0"
+  "version": "0.3.0"
 }
