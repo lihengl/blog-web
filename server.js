@@ -23,17 +23,16 @@ var mode = process.env.MODE || 'test';
 var sources = (mode === 'local') ? [
     'es5-shim/es5-shim.js',
     'es5-shim/es5-sham.js',
-    'immutable/dist/immutable.js',
     'react/dist/react-with-addons.js',
+    'webpack-dev-server.js',
     [pkg.version, pkg.name].join('/') + '.min.js'
 ].map(function (source, index, sources) {
-    var last = (index === (sources.length - 1));
-    var host = (last) ? '/static_assets/' : '/node_modules/';
-    return (host + source);
+    if (index === (sources.length - 2)) { return 'http://localhost:8080/' + source; }
+    if (index === (sources.length - 1)) { return 'http://localhost:8080/static_assets/' + source; }
+    return ('/node_modules/' + source);
 }) : [
     'es5-shim/' + pkg.devDependencies['es5-shim'] + '/es5-shim.min.js',
     'es5-shim/' + pkg.devDependencies['es5-shim'] + '/es5-sham.min.js',
-    'immutable/' + pkg.dependencies.immutable + '/immutable.min.js',
     'react/' + pkg.dependencies.react + '/react-with-addons.min.js',
     [pkg.version, pkg.name].join('/') + '.min.js'
 ].map(function (source, index, sources) {

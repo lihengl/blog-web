@@ -1,9 +1,15 @@
 'use strict';
 require('babel/polyfill');
-
-var Application = window.React.createFactory(require('./components/Application.jsx'));
+/* globals React */
+var Application = React.createFactory(require('./components/Application.jsx'));
 
 var initialData = document.getElementById('state').innerHTML;
 var rootElement = document.getElementById('application');
 
-window.React.render(Application(JSON.parse(initialData)), rootElement);
+var appInstance = React.render(Application(JSON.parse(initialData)), rootElement);
+
+if (module.hot) {
+    require('react-hot-loader/Injection').RootInstanceProvider.injectProvider({
+        getRootInstances: function () { return [appInstance]; }
+    });
+}

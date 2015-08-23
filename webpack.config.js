@@ -4,10 +4,15 @@ var pkg = require('./package.json');
 
 module.exports = {
     context: __dirname,
-    entry: './client.js',
+    entry: {
+        app: [
+            'webpack-dev-server/client?http://0.0.0.0:8080',
+            'webpack/hot/only-dev-server',
+            './client.js'
+        ]
+    },
     externals: {
         'bluebird': 'Promise',
-        'immutable': 'Immutable',
         'react/addons': 'React'
     },
     module: {
@@ -16,15 +21,17 @@ module.exports = {
             test: /\.json$/
         }, {
             exclude: /node_modules/,
-            loader: 'babel-loader',
+            loaders: ['react-hot', 'babel-loader'],
             test: /\.jsx$/
         }]
     },
     output: {
         filename: pkg.name + '.min.js',
-        path: [__dirname, 'static_assets', pkg.version].join('/')
+        path: [__dirname, 'static_assets', pkg.version].join('/'),
+        publicPath: ['http://localhost:8080/static_assets', pkg.version].join('/')
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}})
+        new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
+        new webpack.NoErrorsPlugin()
     ]
 };
