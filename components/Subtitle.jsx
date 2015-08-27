@@ -1,6 +1,4 @@
 "use strict";
-var FocusAction = require("../actions/focus");
-
 var React = require("react/addons");
 
 var Subtitle = React.createClass({
@@ -10,13 +8,11 @@ var Subtitle = React.createClass({
         leading: React.PropTypes.number.isRequired
     },
     mixins: [React.addons.PureRenderMixin],
-    handleClick: function (characterIndex) {
-        FocusAction(characterIndex, this.props.children);
+    gainFocus: function (characterIndex) {
+        window.dispatchEvent(new CustomEvent("focus", {detail: characterIndex}));
     },
     renderCharacter: function (character, index) {
-        return (<span
-            key={index}
-            onClick={this.handleClick.bind(this, index)}>
+        return (<span key={index} onClick={this.gainFocus.bind(this, index)}>
             {character}
         </span>);
     },

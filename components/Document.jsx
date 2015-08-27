@@ -1,6 +1,4 @@
 "use strict";
-var CountStore = require("../stores/count");
-
 var Paragraph = require("./Paragraph.jsx");
 var Subtitle = require("./Subtitle.jsx");
 var Title = require("./Title.jsx");
@@ -16,32 +14,18 @@ var Document = React.createClass({
         width: React.PropTypes.number.isRequired
     },
     mixins: [React.addons.PureRenderMixin],
-    getInitialState: function () {
-        return {text: CountStore.getTotal()};
-    },
-    componentDidMount: function () {
-        CountStore.addChangeListener(this.update);
-    },
-    componentWillUnmount: function () {
-        CountStore.removeChangeListener(this.update);
-    },
-    update: function () {
-        var state = this.state;
-        state.text = CountStore.getTotal();
-        this.setState(state);
-    },
     renderEntry: function (entry, index) {
-        var rendered = null, id = index + 1;
+        var rendered = null;
         if (entry.type.toUpperCase() === "PARAGRAPH") {
             rendered = (<Paragraph
-                identity={id}
+                identity={index}
                 key={index}
                 leading={56}>
                 {entry.content}
             </Paragraph>);
         } else if (entry.type.toUpperCase() === "SUBTITLE") {
             rendered = (<Subtitle
-                identity={id}
+                identity={index}
                 key={index}
                 leading={56}>
                 {entry.content}
@@ -49,14 +33,14 @@ var Document = React.createClass({
         } else if (entry.type.toUpperCase() === "PHOTO") {
             rendered = (<Photo
                 description={entry.description}
-                identity={id}
+                identity={index}
                 key={index}
                 layout={entry.layout}
                 leading={56}
                 source={entry.content}
                 width={this.props.width} />);
         } else {
-            rendered = (<div identity={id} key={index} style={{
+            rendered = (<div identity={index} key={index} style={{
                 marginBottom: 0,
                 marginTop: 50,
                 color: "#FF0000"}}>
@@ -68,7 +52,6 @@ var Document = React.createClass({
     render: function () {
         return (<div>
             <Title identity={0}>{this.props.title}</Title>
-            <p>{this.state.text}</p>
             {this.props.entries.map(this.renderEntry)}
         </div>);
     }

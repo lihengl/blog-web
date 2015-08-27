@@ -5,9 +5,9 @@ var Application = React.createFactory(require("./Application"));
 
 var Root = React.createClass({
     propTypes: {
-        content: React.PropTypes.object.isRequired,
-        metadata: React.PropTypes.object.isRequired,
-        resources: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+        managed: React.PropTypes.object.isRequired,
+        resources: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+        unmanaged: React.PropTypes.object.isRequired
     },
     render: function () {
         return (<html lang="en-US">
@@ -25,14 +25,14 @@ var Root = React.createClass({
                 <meta name="google" value="notranslate"/>
                 <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
                 <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
-                <title>{this.props.metadata.title}</title>
+                <title>{this.props.unmanaged.title}</title>
             </head>
             <body style={{margin: 0}}>
                 <div dangerouslySetInnerHTML={{
-                    __html: React.renderToString(Application(this.props.content))
+                    __html: React.renderToString(Application(this.props.managed))
                 }} id="application"></div>
                 <script dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(this.props.content)
+                    __html: JSON.stringify(this.props.managed)
                     .replace(/<\/script/g, "<\\/script")
                     .replace(/<!--/g, "<\\!--")
                 }} id="state" type="application/json"></script>

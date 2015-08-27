@@ -1,8 +1,7 @@
 "use strict";
-var FocusAction = require("../actions/focus");
 var React = require("react/addons");
 
-var css = {
+var Style = {
     letterSpacing: ".05em",
     fontFamily: "Georgia, serif",
     textAlign: "left",
@@ -16,23 +15,16 @@ var Paragraph = React.createClass({
         leading: React.PropTypes.number.isRequired
     },
     mixins: [React.addons.PureRenderMixin],
-    getInitialState: function () {
-        return {
-            text: this.props.children,
-            idle: false
-        };
-    },
     updateText: function (evt) {
-        this.setState({text: evt.target.value});
+        var payload = {entryId: this.props.identity, text: evt.target.value};
+        window.dispatchEvent(new CustomEvent("text", {detail: payload}));
     },
     gainFocus: function (characterIndex) {
-        FocusAction(characterIndex, this.props.children);
+        window.dispatchEvent(new CustomEvent("focus", {detail: characterIndex}));
         React.findDOMNode(this.refs.receiver).focus();
     },
     renderCharacter: function (character, index) {
-        return (<span
-            key={index}
-            onClick={this.gainFocus.bind(this, index)}>
+        return (<span key={index} onClick={this.gainFocus.bind(this, index)}>
             {character}
         </span>);
     },
@@ -43,15 +35,15 @@ var Paragraph = React.createClass({
                 whiteSpace: "pre-wrap",
                 lineHeight: ((this.props.leading / 2) + "px"),
                 marginTop: this.props.leading,
-                wordWrap: "break-word"}, css)}>
-                {this.state.text.split("").map(this.renderCharacter)}
+                wordWrap: "break-word"}, Style)}>
+                {this.props.children.split("").map(this.renderCharacter)}
             </p>
             <div style={{overflow: "hidden", height: 0}}>
                 <textarea
                     onChange={this.updateText}
                     ref="receiver"
-                    style={Object.assign({outline: "none", width: "100%"}, css)}
-                    value={this.state.text}>
+                    style={Object.assign({outline: "none", width: "100%"}, Style)}
+                    value={this.props.children}>
                 </textarea>
             </div>
         </div>);

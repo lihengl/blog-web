@@ -16,7 +16,7 @@ var pkg = require('./package.json');
 
 var Root = React.createFactory(require('./components/Root'));
 
-var port = process.env.PORT || '3000';
+var port = process.env.PORT || 3000;
 var mode = process.env.MODE || 'test';
 
 
@@ -44,13 +44,18 @@ var sources = (mode === 'local') ? [
 var server = express().disable('x-powered-by').enable('strict routing');
 
 
-server.render = Promise.promisify(function (metadata, content, callback) {
-    var markup = React.renderToStaticMarkup(Root({
-        content: content,
-        metadata: metadata,
-        resources: sources
-    }));
-    return callback(null, '<!DOCTYPE html>' + markup);
+server.render = Promise.promisify(function (data, callback) {
+    var markup = '<!DOCTYPE html>';
+
+    if (!data.unmanaged) { return callback(new Error('No unmanaged data')); }
+    if (!data.managed) { return callback(new Error('No managed data')); }
+
+    data.managed.height = 900;
+    data.managed.width = 1440;
+    data.resources = sources;
+
+    markup += React.renderToStaticMarkup(Root(data));
+    return callback(null, markup);
 });
 
 
@@ -71,7 +76,10 @@ server.use(logger('combined'));
 server.use(function (req, res, next) {
     var api = pkg.backend;
     req.apihost = (mode === 'production') ? api.production : api.staging;
-    res.locals.state = {};
+    res.locals = {managed: {}, unmanaged: {}};
+    res.locals.managed.height = 900;
+    res.locals.managed.scroll = 0;
+    res.locals.managed.width = 1440;
     return next();
 });
 
@@ -79,9 +87,9 @@ server.use(routers);
 
 server.use(function (err, req, res, next) {
     var message = [
-        'Error: ' + err.code,
+        'Error: ' + err.message,
         'Where: ' + req.path,
-        'State: ' + JSON.stringify(res.locals.state),
+        'State: ' + JSON.stringify(res.locals),
         err.stack
     ].join('\n');
     console.error(message);
@@ -90,10 +98,8 @@ server.use(function (err, req, res, next) {
 });
 
 
-if (mode === 'test') {
-    module.exports = server;
-} else if (mode === 'local') {
-    console.log('[%s] running on localhost:%d ...', pkg.name, port);
+if (mode === 'local') {
+    console.info('[%s] running on localhost:%d ...', pkg.name, port);
     server.listen(port);
 } else {
     server.listen(port);

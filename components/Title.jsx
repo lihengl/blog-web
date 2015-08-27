@@ -1,7 +1,4 @@
 "use strict";
-var FocusAction = require("../actions/focus");
-var FetchAction = require("../actions/fetch");
-
 var React = require("react/addons");
 
 var Title = React.createClass({
@@ -9,15 +6,11 @@ var Title = React.createClass({
         children: React.PropTypes.string.isRequired
     },
     mixins: [React.addons.PureRenderMixin],
-    handleClick: function (characterIndex) {
-        FetchAction("lihengl", true);
-        FocusAction(characterIndex, this.props.children);
-        return;
+    gainFocus: function (characterIndex) {
+        window.dispatchEvent(new CustomEvent("focus", {detail: characterIndex}));
     },
     renderCharacter: function (character, index) {
-        return (<span
-            key={index}
-            onClick={this.handleClick.bind(this, index)}>
+        return (<span key={index} onClick={this.gainFocus.bind(this, index)}>
             {character}
         </span>);
     },

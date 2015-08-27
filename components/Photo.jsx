@@ -1,21 +1,24 @@
 "use strict";
-var FocusAction = require("../actions/focus");
-
 var React = require("react/addons");
 
 var Photo = React.createClass({
     propTypes: {
         description: React.PropTypes.string,
-        identity:    React.PropTypes.number.isRequired,
-        layout:      React.PropTypes.string.isRequired,
-        leading:     React.PropTypes.number.isRequired,
-        source:      React.PropTypes.string.isRequired,
-        width:       React.PropTypes.number.isRequired
+        identity: React.PropTypes.number.isRequired,
+        layout: React.PropTypes.string.isRequired,
+        leading: React.PropTypes.number.isRequired,
+        source: React.PropTypes.string.isRequired,
+        width: React.PropTypes.number.isRequired
     },
     mixins: [React.addons.PureRenderMixin],
-    _clickText: function (characterIndex) {
-        FocusAction(characterIndex, this.props.description);
-        return;
+    gainFocus: function (characterIndex) {
+        var focus = new CustomEvent("focus", {detail: characterIndex});
+        window.dispatchEvent(focus);
+    },
+    renderCharacter: function (character, index) {
+        return (<span key={index} onClick={this.gainFocus.bind(this, index)}>
+            {character}
+        </span>);
     },
     render: function () {
         var imageStyle = {cursor: "pointer"};
@@ -23,7 +26,6 @@ var Photo = React.createClass({
             this.props.description &&
             this.props.description.length > 0
         );
-        var self = this;
 
         if (this.props.layout === "portrait") {
             imageStyle.height = this.props.width;
@@ -48,15 +50,7 @@ var Photo = React.createClass({
                 marginTop: 12,
                 textAlign: "right",
                 fontSize: 14}}>
-                {this.props.description
-                    .split("")
-                    .map(function (character, index) {
-                    return (<span
-                        key={index}
-                        onClick={self._clickText.bind(self, index)}>
-                        {character}
-                    </span>);
-                })}
+                {this.props.description.split("").map(this.renderCharacter)}
             </div>}
         </div>);
     }
