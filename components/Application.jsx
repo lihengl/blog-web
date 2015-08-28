@@ -5,12 +5,14 @@ var Footer = require("./Footer.jsx");
 var Header = require("./Header.jsx");
 
 var React = require("react/addons");
+var _ = require("lodash");
 
 
 var Application = React.createClass({
     propTypes: {
         height: React.PropTypes.number.isRequired,
         scroll: React.PropTypes.number.isRequired,
+        tagline: React.PropTypes.string.isRequired,
         title: React.PropTypes.string.isRequired,
         width: React.PropTypes.number.isRequired,
     },
@@ -28,18 +30,32 @@ var Application = React.createClass({
         this.intervals.push(setInterval(this.updateTimestamp, 1000));
         window.addEventListener("scroll", this.updateScrollPosition);
         window.addEventListener("resize", this.updateWindowSize);
+        window.addEventListener("response", this.handleResponseEvent);
+        window.addEventListener("loading", this.handleLoadingEvent);
         window.addEventListener("focus", this.handleFocusEvent);
         window.addEventListener("text", this.handleTextEvent);
     },
     componentWillUnmount: function () {
         window.removeEventListener("text", this.handleTextEvent);
         window.removeEventListener("focus", this.handleFocusEvent);
+        window.removeEventListener("loading", this.handleLoadingEvent);
+        window.removeEventListener("response", this.handleResponseEvent);
         window.removeEventListener("resize", this.updateWindowSize);
         window.removeEventListener("scroll", this.updateScrollPosition);
         this.intervals.map(clearInterval);
     },
+    handleLoadingEvent: function () {
+        this.setState(React.addons.update(this.state, {
+            tagline: {$set: "Loading..."}
+        }));
+    },
     handleFocusEvent: function (evt) {
         console.info(evt.detail);
+    },
+    handleResponseEvent: function (evt) {
+        this.setState(React.addons.update(this.state, {
+            tagline: {$set: _.pluck(evt.detail, "name").join(", ")}
+        }));
     },
     handleTextEvent: function (evt) {
         var mutation = {content: {$set: evt.detail.text}};
@@ -63,11 +79,11 @@ var Application = React.createClass({
             width: {$set: window.innerWidth}
         }));
     },
-    renderBody: function () {
+    renderBody: function (width) {
         var body = null;
 
         if (this.state.article) {
-            body = (<Document {...this.state.article} width={this.props.width} />);
+            body = (<Document {...this.state.article} width={width} />);
         } else if (this.state.setting) {
             body = <Dashboard />;
         } else {
@@ -83,14 +99,14 @@ var Application = React.createClass({
         return (<div style={{
             fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', sans-serif",
             color: "#333333"}}>
-            <Header height={this.state.height} width={this.state.width}>
+            <Header height={this.state.height} tagline={this.state.tagline} width={this.state.width}>
                 {this.state.title}
             </Header>
             <div style={{
                 padding: "20px 10px 20px 10px",
                 margin: "0 auto 0 auto",
                 width: width}}>
-                {this.renderBody()}
+                {this.renderBody(width)}
             </div>
             <Footer author={"liheng"} />
         </div>);

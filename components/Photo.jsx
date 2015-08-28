@@ -1,5 +1,6 @@
 "use strict";
 var React = require("react/addons");
+var request = require("superagent");
 
 var Photo = React.createClass({
     propTypes: {
@@ -11,9 +12,17 @@ var Photo = React.createClass({
         width: React.PropTypes.number.isRequired
     },
     mixins: [React.addons.PureRenderMixin],
+    processResponse: function (err, response) {
+        response = JSON.parse(response.text);
+        window.dispatchEvent(new CustomEvent("response", {detail: response}));
+    },
+    requestRepos: function () {
+        var api = "https://api.github.com/users/lihengl/repos";
+        request.get(api).end(this.processResponse);
+        window.dispatchEvent(new CustomEvent("loading"));
+    },
     gainFocus: function (characterIndex) {
-        var focus = new CustomEvent("focus", {detail: characterIndex});
-        window.dispatchEvent(focus);
+        window.dispatchEvent(new CustomEvent("focus", {detail: characterIndex}));
     },
     renderCharacter: function (character, index) {
         return (<span key={index} onClick={this.gainFocus.bind(this, index)}>
@@ -42,7 +51,7 @@ var Photo = React.createClass({
             <div style={{
                 backgroundColor: "#EFEFEF",
                 fontSize: 0}}>
-                <img src={this.props.source} style={imageStyle}/>
+                <img onClick={this.loadMore} src={this.props.source} style={imageStyle}/>
             </div>
             {(!hasText) ? false : <div style={{
                 marginBottom: 0,

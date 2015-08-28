@@ -22,7 +22,7 @@
         "type": "paragraph"
     }, {
         "description": "Binary number syntax uses a leading zero followed by a lowercase or uppercase Latin letter.",
-        "content": "/static_assets/photo_square.jpg",
+        "content": "/static_assets/square.jpg",
         "layout": "square",
         "type": "photo"
     }, {
@@ -35,7 +35,7 @@
         },
         "type": "paragraph"
     }, {
-        "content": "/static_assets/photo_portrait.jpg",
+        "content": "/static_assets/portrait.jpg",
         "layout": "portrait",
         "type": "photo"
     }, {
@@ -43,7 +43,7 @@
         "type": "subtitle"
     }, {
         "description": "The onMouseEnter and onMouseLeave events propagate from the component being left.",
-        "content": "/static_assets/photo_landscape.jpg",
+        "content": "/static_assets/landscape.jpg",
         "layout": "landscape",
         "type": "photo"
     }, {

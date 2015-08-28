@@ -38,6 +38,7 @@ var middleware = function (req, res, next) {
     }).then(validate).then(function (result) {
         res.locals.unmanaged.title = result.title;
         res.locals.managed.article = result;
+        res.locals.managed.tagline = 'Hello, world?';
         res.locals.managed.title = result.title;
         return req.app.render(res.locals);
     }).then(function (html) {

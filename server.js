@@ -32,6 +32,8 @@ var sources = (mode === 'local') ? [
 }) : [
     'es5-shim/' + pkg.devDependencies['es5-shim'] + '/es5-shim.min.js',
     'es5-shim/' + pkg.devDependencies['es5-shim'] + '/es5-sham.min.js',
+    'lodash.js/' + pkg.dependencies.lodash + '/lodash.min.js',
+    'superagent/' + pkg.dependencies.superagent + '/superagent.min.js',
     'react/' + pkg.dependencies.react + '/react-with-addons.min.js',
     [pkg.version, pkg.name].join('/') + '.min.js'
 ].map(function (source, index, sources) {
