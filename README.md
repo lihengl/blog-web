@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/lihengl/blog-web/badge.svg?branch=release)](https://coveralls.io/r/lihengl/blog-web?branch=release)
 [![Build Status](https://travis-ci.org/lihengl/blog-web.svg?branch=release)](https://travis-ci.org/lihengl/blog-web)
 
-Given the current state of web technology, this might be the time where that elegant and intuitive blogging platform which used to only be living in the author's own imagination, to finally become a reality.
+Given the current state of web technology, this might be the time where that overly idealized blogging platform which used to only be living in the author's own imagination, to finally become a reality.
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ Development effort is either on [React](http://facebook.github.io/react/) in the
 
 The design philosophy is heavily inspired by studies on following materials:
 
-- [Rendering React Components on the Server](http://www.crmarsh.com/react-ssr/) by Charlie Marsh for understanding React's rendering mechanism
-- [Live React: Hot Reloading with Time Travel](https://youtu.be/xsSnOQynTHs) by Dan Abramov for the brilliant *(state, action) -> state* concept
-- [React Tipes and Best Practices](http://aeflash.com/2015-02/react-tips-and-best-practices.html) by AEFLASH for the idea of using a single state object
-- [A Better Flux with DOM Events](http://arqex.com/1028/better-flux-dom-events) by arqex for fortifying my thought on using custom event 
+- [Rendering React Components on the Server](http://www.crmarsh.com/react-ssr/) for deep understanding how React renders
+- [Live React: Hot Reloading with Time Travel](https://youtu.be/xsSnOQynTHs) for the *(state, action) -> state* concept
+- [React Tipes and Best Practices](http://aeflash.com/2015-02/react-tips-and-best-practices.html) for the idea of having single state object
+- [A Better Flux with DOM Events](http://arqex.com/1028/better-flux-dom-events) for fortifying my thought on using custom event 
