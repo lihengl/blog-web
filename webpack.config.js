@@ -33,6 +33,8 @@ if (process.env.MODE === 'local') {
     config.module.loaders[1].loaders.unshift('react-hot');
     config.plugins.push(new webpack.NoErrorsPlugin());
 } else {
+    config.externals['lodash'] = '_';
+    config.externals['superagent'] = 'request';
     config.externals['react/addons'] = 'React';
     config.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
     config.plugins.push(new webpack.optimize.UglifyJsPlugin());

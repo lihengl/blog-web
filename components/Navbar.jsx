@@ -1,41 +1,27 @@
 "use strict";
-var Signin = require("../actions/signin");
-
 var React = require("react/addons");
+
 
 var Navbar = React.createClass({
     propTypes: {
+        email: React.PropTypes.string.isRequired,
+        password: React.PropTypes.string.isRequired
     },
     mixins: [React.addons.PureRenderMixin],
-    getInitialState: function () {
-        return {
-            password: {
-                value: "1qaz",
-                valid: true
-            },
-            email: {
-                value: "abra@ka.dabra",
-                valid: true
-            }
-        };
+    updatePassword: function (evt) {
+        window.dispatchEvent(new CustomEvent("password", {detail: evt.target.value}));
     },
-    _validatePassword: function (event) {
-        var state = this.state, value = event.target.value;
-        state.password.valid = /^[a-zA-Z0-9]{6,20}$/.test(value);
-        state.password.value = value;
-        this.setState(state);
-        return;
+    updateEmail: function (evt) {
+        window.dispatchEvent(new CustomEvent("email", {detail: evt.target.value}));
     },
-    _validateEmail: function (event) {
-        var state = this.state, value = event.target.value;
-        state.email.valid = /(@{1})(?=\w)/.test(value);
-        state.email.value = value;
-        this.setState(state);
-        return;
+    validatePassword: function () {
+        return /^[a-zA-Z0-9]{6,20}$/.test(this.props.password);
     },
-    _submitIdentity: function () {
-        Signin("admin@lihengl.com", "1qaz");
-        return;
+    validateEmail: function (evt) {
+        return /(@{1})(?=\w)/.test(this.props.email);
+    },
+    submitCredential: function () {
+        window.dispatch("SUBMIT_CREDENTIAL");
     },
     render: function () {
         return (<div style={{
@@ -44,22 +30,18 @@ var Navbar = React.createClass({
             textAlign: "right",
             top: 0,
             width: "100%"}}>
-            <input onChange={this._validateEmail}
-                style={{
-                    borderColor: (this.state.email.valid) ? "#000000" : "#FF0000",
-                    fontSize: 14
-                }}
+            <input onChange={this.updateEmail} style={{
+                borderColor: this.validateEmail() ? "#000000" : "#FF0000",
+                fontSize: 14}}
                 type="text"
-                value={this.state.email.value} />
-            <input onChange={this._validatePassword}
-                 style={{
-                    borderColor: (this.state.password.valid) ? "#000000" : "#FF0000",
-                    marginLeft: 10,
-                    fontSize: 14
-                }}
+                value={this.props.email} />
+            <input onChange={this.updatePassword} style={{
+                borderColor: this.validatePassword() ? "#000000" : "#FF0000",
+                marginLeft: 10,
+                fontSize: 14}}
                 type="password"
-                value={this.state.password.value} />
-            <button onClick={this._submitIdentity} style={{
+                value={this.props.password} />
+            <button onClick={this.submitCredential} style={{
                 marginRight: 10,
                 marginLeft: 10,
                 fontSize: 14}}>

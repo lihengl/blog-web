@@ -36,10 +36,11 @@ var middleware = function (req, res, next) {
         mocking: (req.app.get('mode') === 'local'),
         path: req.apihost + '/v1/articles/1'
     }).then(validate).then(function (result) {
-        res.locals.state.entries = result.entries;
-        res.locals.state.layout = 'document';
-        res.locals.state.title = result.title;
-        return req.app.render({title: result.title}, res.locals.state);
+        res.locals.unmanaged.title = result.title;
+        res.locals.managed.article = result;
+        res.locals.managed.tagline = 'Hello, world?';
+        res.locals.managed.title = result.title;
+        return req.app.render(res.locals);
     }).then(function (html) {
         return res.status(200).type('text/html').send(html);
     }, next);

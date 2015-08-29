@@ -1,6 +1,6 @@
 'use strict';
 var middleware = function (req, res, next) {
-    res.locals.state.user = req.cookies;
+    res.locals.managed.user = req.cookies;
     next();
 };
 

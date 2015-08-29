@@ -6,7 +6,7 @@ var Dashboard = React.createClass({
     },
     mixins: [React.addons.PureRenderMixin],
     render: function () {
-        return (<p>{"Not Implemented Yet."}</p>);
+        return (<div>{"Not Implemented Yet."}</div>);
     }
 });
 

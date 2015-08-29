@@ -1,6 +1,6 @@
 'use strict';
 var settings = require('./settings');
-var article  = require('./article');
+var article = require('./article');
 
 var router = require('express').Router({caseSensitive: true, strict: true});
 
