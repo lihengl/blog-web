@@ -4,9 +4,9 @@ var request = require("superagent");
 
 var Img = React.createClass({
     propTypes: {
-        description: React.PropTypes.string,
         id: React.PropTypes.number.isRequired,
         orientation: React.PropTypes.string.isRequired,
+        text: React.PropTypes.string,
         url: React.PropTypes.string.isRequired,
         width: React.PropTypes.number.isRequired
     },
@@ -20,19 +20,20 @@ var Img = React.createClass({
         request.get(api).end(this.processResponse);
         window.dispatchEvent(new CustomEvent("loading"));
     },
-    gainFocus: function (characterIndex) {
-        window.dispatchEvent(new CustomEvent("focus", {detail: characterIndex}));
+    dispatchFocusEvent: function (position) {
+        var detail = {entry: this.props.id, position: position, text: this.props.text};
+        window.dispatchEvent(new CustomEvent("focus", {detail: detail}));
     },
     renderCharacter: function (character, index) {
-        return (<span key={index} onClick={this.gainFocus.bind(this, index)}>
+        return (<span key={index} onClick={this.dispatchFocusEvent.bind(this, index)}>
             {character}
         </span>);
     },
     render: function () {
-        var imageStyle = {cursor: "pointer"};
+        var imageStyle = {cursor: "pointer", display: "block", margin: "0 auto 0 auto"};
         var hasText = (
-            this.props.description &&
-            this.props.description.length > 0
+            this.props.text &&
+            this.props.text.length > 0
         );
 
         if (this.props.orientation === "portrait") {
@@ -43,18 +44,18 @@ var Img = React.createClass({
             imageStyle.width = "100%";
         }
 
-        return (<div style={{marginBottom: 0, marginTop: 56, textAlign: "center"}}>
-            <div style={{backgroundColor: "#EFEFEF", fontSize: 0}}>
+        return (<div style={{marginTop: 56, width: this.props.width}}>
+            <div style={{backgroundColor: "#EFEFEF"}}>
                 <img onClick={this.sendRequest} src={this.props.url} style={imageStyle}/>
             </div>
-            {(!hasText) ? false : <div style={{
+            {(this.props.text && this.props.text.length > 0) ? <div style={{
                 marginBottom: 0,
                 lineHeight: "20px",
                 marginTop: 12,
                 textAlign: "right",
                 fontSize: 14}}>
-                {this.props.description.split("").map(this.renderCharacter)}
-            </div>}
+                {this.props.text.split("").map(this.renderCharacter)}
+            </div> : false}
         </div>);
     }
 });

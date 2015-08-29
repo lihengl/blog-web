@@ -3,14 +3,16 @@ var React = require("react/addons");
 
 var H1 = React.createClass({
     propTypes: {
-        children: React.PropTypes.string.isRequired
+        children: React.PropTypes.string.isRequired,
+        id: React.PropTypes.number.isRequired,
     },
     mixins: [React.addons.PureRenderMixin],
-    gainFocus: function (characterIndex) {
-        window.dispatchEvent(new CustomEvent("focus", {detail: characterIndex}));
+    dispatchFocusEvent: function (position) {
+        var detail = {entry: this.props.id, position: position, text: this.props.children};
+        window.dispatchEvent(new CustomEvent("focus", {detail: detail}));
     },
     renderCharacter: function (character, index) {
-        return (<span key={index} onClick={this.gainFocus.bind(this, index)}>
+        return (<span key={index} onClick={this.dispatchFocusEvent.bind(this, index)}>
             {character}
         </span>);
     },

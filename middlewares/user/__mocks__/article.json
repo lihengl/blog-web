@@ -21,8 +21,8 @@
         },
         "type": "paragraph"
     }, {
-        "caption": "Binary number syntax uses a leading zero followed by a lowercase or uppercase Latin letter.",
         "orientation": "square",
+        "text": "Binary number syntax uses a leading zero followed by a lowercase or uppercase Latin letter.",
         "type": "photo",
         "url": "/static_assets/square.jpg"
     }, {
@@ -42,8 +42,8 @@
         "text": "The Inside Out",
         "type": "subtitle"
     }, {
-        "caption": "The onMouseEnter and onMouseLeave events propagate from the component being left.",
         "orientation": "landscape",
+        "text": "The onMouseEnter and onMouseLeave events propagate from the component being left.",
         "type": "photo",
         "url": "/static_assets/landscape.jpg"
     }, {

@@ -10,15 +10,23 @@ var Header = require("./Header.jsx");
 
 var Application = React.createClass({
     propTypes: {
+        blog: React.PropTypes.shape({
+            name: React.PropTypes.string,
+            tagline: React.PropTypes.string
+        }).isRequired,
+        focus: React.PropTypes.object,
         height: React.PropTypes.number.isRequired,
         scroll: React.PropTypes.number.isRequired,
-        tagline: React.PropTypes.string.isRequired,
-        title: React.PropTypes.string.isRequired,
+        timestamp: React.PropTypes.number.isRequired,
+        user: React.PropTypes.shape({
+            alias: React.PropTypes.string.isRequired,
+            id: React.PropTypes.number
+        }).isRequired,
         width: React.PropTypes.number.isRequired,
     },
     mixins: [React.addons.PureRenderMixin],
     getDefaultProps: function () {
-        return {timestamp: 0};
+        return {focus: null, timestamp: 0};
     },
     getInitialState: function () {
         return this.props;
@@ -33,10 +41,10 @@ var Application = React.createClass({
         window.addEventListener("response", this.handleResponseEvent);
         window.addEventListener("loading", this.handleLoadingEvent);
         window.addEventListener("focus", this.handleFocusEvent);
-        window.addEventListener("text", this.handleTextEvent);
+        window.addEventListener("edit", this.handleEditEvent);
     },
     componentWillUnmount: function () {
-        window.removeEventListener("text", this.handleTextEvent);
+        window.removeEventListener("edit", this.handleEditEvent);
         window.removeEventListener("focus", this.handleFocusEvent);
         window.removeEventListener("loading", this.handleLoadingEvent);
         window.removeEventListener("response", this.handleResponseEvent);
@@ -50,17 +58,23 @@ var Application = React.createClass({
         }));
     },
     handleFocusEvent: function (evt) {
-        console.info(evt.detail);
+        this.setState(React.addons.update(this.state, {
+            focus: {$set: evt.detail}
+        }));
     },
     handleResponseEvent: function (evt) {
         this.setState(React.addons.update(this.state, {
             tagline: {$set: _.pluck(evt.detail, "name").join(", ")}
         }));
     },
-    handleTextEvent: function (evt) {
-        var mutation = {content: {$set: evt.detail.text}};
+    handleEditEvent: function (evt) {
+        var id = this.state.focus.entry;
+        var mutation = (id < 0) ? {title: {$set: evt.detail}} : {
+            entries: {[id]: {text: {$set: evt.detail}}}
+        };
         this.setState(React.addons.update(this.state, {
-            article: {entries: {[evt.detail.entryId]: mutation}}
+            article: mutation,
+            focus: {text: {$set: evt.detail}}
         }));
     },
     updateScrollPosition: function () {
@@ -69,8 +83,9 @@ var Application = React.createClass({
         }));
     },
     updateTimestamp: function () {
+        return;
         this.setState(React.addons.update(this.state, {
-            timestamp: {$set: Math.floor(Date.now() / 1000.0)}
+            timestamp: {$set: Date.now()}
         }));
     },
     updateWindowSize: function () {
@@ -83,7 +98,7 @@ var Application = React.createClass({
         var body = null;
 
         if (this.state.article) {
-            body = (<Document {...this.state.article} width={width} />);
+            body = (<Document {...this.state.article} focus={this.state.focus} width={width}/>);
         } else if (this.state.setting) {
             body = <Dashboard />;
         } else {
@@ -99,8 +114,8 @@ var Application = React.createClass({
         return (<div style={{
             fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', sans-serif",
             color: "#333333"}}>
-            <Header height={this.state.height} tagline={this.state.tagline} width={this.state.width}>
-                {this.state.title}
+            <Header height={this.state.height} width={this.state.width}>
+                {this.state.blog}
             </Header>
             <div style={{
                 padding: "20px 10px 20px 10px",
@@ -108,7 +123,7 @@ var Application = React.createClass({
                 width: width}}>
                 {this.renderBody(width)}
             </div>
-            <Footer author={"liheng"} />
+            <Footer author={this.state.user.alias} timestamp={this.state.timestamp} />
         </div>);
     }
 });

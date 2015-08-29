@@ -28,18 +28,13 @@ var validate = Promise.promisify(function (response, callback) {
 
 
 var middleware = function (req, res, next) {
-    var message = null;
-    if (!req.app.get('mode')) { message = 'Missing Application Mode'; }
-    if (!req.apihost) { message = 'Missing API Host'; }
-    if (message !== null) { return next(new Error(message)); }
     return query({
-        mocking: (req.app.get('mode') === 'local'),
+        mocking: req.app.get('mocking'),
         path: req.apihost + '/v1/articles/1'
     }).then(validate).then(function (result) {
         res.locals.unmanaged.title = result.title;
         res.locals.managed.article = result;
-        res.locals.managed.tagline = 'Hello, world?';
-        res.locals.managed.title = result.title;
+        res.locals.managed.blog = {name: 'Bunkuro Zingdema', tagline: 'Hello'};
         return req.app.render(res.locals);
     }).then(function (html) {
         return res.status(200).type('text/html').send(html);

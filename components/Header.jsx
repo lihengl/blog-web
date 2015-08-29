@@ -3,9 +3,11 @@ var React = require("react/addons");
 
 var Header = React.createClass({
     propTypes: {
-        children: React.PropTypes.string.isRequired,
+        children: React.PropTypes.shape({
+            name: React.PropTypes.string,
+            tagline: React.PropTypes.string
+        }).isRequired,
         height: React.PropTypes.number.isRequired,
-        tagline: React.PropTypes.string,
         width: React.PropTypes.number.isRequired
     },
     mixins: [React.addons.PureRenderMixin],
@@ -30,10 +32,10 @@ var Header = React.createClass({
                 fontWeight: "bold",
                 marginBottom: 0,
                 marginTop: 0}}>
-                {this.props.children}
+                {this.props.children.name}
             </div>
             <div style={{fontSize: Math.round((this.props.width + 3760.0) / 260.0)}}>
-                {this.props.tagline}
+                {this.props.children.tagline}
             </div>
         </div>);
     }
