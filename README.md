@@ -9,8 +9,17 @@ Given the current state of web technology, this might be the time where that ele
 
 ## Getting Started
 
-This is a Node.JS project. A standard `npm install` would download all the dependencies. To start the development server, execute `npm run hot` first, then open a separate terminal and execute `npm run develop`. The first command launches the *webpack dev server* for live-reloading whereas the second command launches the actual application server. Go to `http://localhost:3000/<article>/<id>` with a web browser and you should see the blog document page.
+This is a [Node.js](http://nodejs.org) project. After cloning the repository and execute a standard `npm install`, run `npm run hot` to start a hot-reload development server, then on a separate terminal session run `npm run develop` to start the actual application server.
 
-## Coding Convention
+## Directory Structure
 
-Despite the sizable directory structure, development changes should only be made into `actions`, `components`, `routers` and `stores`. Directories with underscored names, namely `node_modules` and `static_assets`, will be populated by system processes and should always be kept out from version control.
+Development effort is either on [React](http://facebook.github.io/react/) in the `component` folder or on [Express](http://expressjs.com) in the `middlewares` folder. Directories with underscored names, namely `node_modules` and `static_assets`, will be populated by build steps and should always be kept out from version control.
+
+## References
+
+The design philosophy is heavily inspired by studies on following materials:
+
+- [Rendering React Components on the Server](http://www.crmarsh.com/react-ssr/) by Charlie Marsh for understanding React's rendering mechanism
+- [Live React: Hot Reloading with Time Travel](https://youtu.be/xsSnOQynTHs) by Dan Abramov for the brilliant *(state, action) -> state* concept
+- [React Tipes and Best Practices](http://aeflash.com/2015-02/react-tips-and-best-practices.html) by AEFLASH for the idea of using a single state object
+- [A Better Flux with DOM Events](http://arqex.com/1028/better-flux-dom-events) by arqex for fortifying my thought on using custom event 

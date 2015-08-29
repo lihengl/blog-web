@@ -11,7 +11,7 @@ var robots = require('robots.txt');
 
 var React = require('react/addons');
 
-var routers = require('./routers');
+var middlewares = require('./middlewares');
 var pkg = require('./package.json');
 
 var Root = React.createFactory(require('./components/Root'));
@@ -85,7 +85,7 @@ server.use(function (req, res, next) {
     return next();
 });
 
-server.use(routers);
+server.use(middlewares);
 
 server.use(function (err, req, res, next) {
     var message = [

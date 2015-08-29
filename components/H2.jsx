@@ -1,9 +1,10 @@
 "use strict";
 var React = require("react/addons");
 
-var Title = React.createClass({
+var H2 = React.createClass({
     propTypes: {
-        children: React.PropTypes.string.isRequired
+        children: React.PropTypes.string.isRequired,
+        id: React.PropTypes.number.isRequired
     },
     mixins: [React.addons.PureRenderMixin],
     gainFocus: function (characterIndex) {
@@ -15,10 +16,10 @@ var Title = React.createClass({
         </span>);
     },
     render: function () {
-        return (<h1 style={{fontSize: 60}}>
+        return (<h2 style={{marginBottom: 0, marginTop: 56, fontSize: 42}}>
             {this.props.children.split("").map(this.renderCharacter)}
-        </h1>);
+        </h2>);
     }
 });
 
-module.exports = Title;
+module.exports = H2;

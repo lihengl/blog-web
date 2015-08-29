@@ -8,15 +8,14 @@ var Style = {
     fontSize: 18
 };
 
-var Paragraph = React.createClass({
+var P = React.createClass({
     propTypes: {
         children: React.PropTypes.string.isRequired,
-        identity: React.PropTypes.number.isRequired,
-        leading: React.PropTypes.number.isRequired
+        id: React.PropTypes.number.isRequired
     },
     mixins: [React.addons.PureRenderMixin],
     updateText: function (evt) {
-        var payload = {entryId: this.props.identity, text: evt.target.value};
+        var payload = {entryId: this.props.id, text: evt.target.value};
         window.dispatchEvent(new CustomEvent("text", {detail: payload}));
     },
     gainFocus: function (characterIndex) {
@@ -29,12 +28,13 @@ var Paragraph = React.createClass({
         </span>);
     },
     render: function () {
+        var marginTop = 56;
         return (<div>
             <p style={Object.assign({
                 marginBottom: 0,
                 whiteSpace: "pre-wrap",
-                lineHeight: ((this.props.leading / 2) + "px"),
-                marginTop: this.props.leading,
+                lineHeight: ((marginTop / 2) + "px"),
+                marginTop: marginTop,
                 wordWrap: "break-word"}, Style)}>
                 {this.props.children.split("").map(this.renderCharacter)}
             </p>
@@ -50,4 +50,4 @@ var Paragraph = React.createClass({
     }
 });
 
-module.exports = Paragraph;
+module.exports = P;

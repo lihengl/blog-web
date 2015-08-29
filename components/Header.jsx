@@ -25,16 +25,16 @@ var Header = React.createClass({
             textAlign: "center",
             height: Math.floor(height * (2.0 / 3.0)),
             color: "#FFFFFF"}}>
-            <h1 style={{
+            <div style={{
                 fontSize: Math.floor((3.0 * this.props.width + 12280.0) / 260.0),
                 fontWeight: "bold",
                 marginBottom: 0,
                 marginTop: 0}}>
                 {this.props.children}
-            </h1>
-            <p style={{fontSize: Math.round((this.props.width + 3760.0) / 260.0)}}>
+            </div>
+            <div style={{fontSize: Math.round((this.props.width + 3760.0) / 260.0)}}>
                 {this.props.tagline}
-            </p>
+            </div>
         </div>);
     }
 });

@@ -1,8 +1,8 @@
 "use strict";
-var Paragraph = require("./Paragraph.jsx");
-var Subtitle = require("./Subtitle.jsx");
-var Title = require("./Title.jsx");
-var Photo = require("./Photo.jsx");
+var H1 = require("./H1.jsx");
+var H2 = require("./H2.jsx");
+var Img = require("./Img.jsx");
+var P = require("./P.jsx");
 
 var React = require("react/addons");
 
@@ -17,30 +17,19 @@ var Document = React.createClass({
     renderEntry: function (entry, index) {
         var rendered = null;
         if (entry.type.toUpperCase() === "PARAGRAPH") {
-            rendered = (<Paragraph
-                identity={index}
-                key={index}
-                leading={56}>
-                {entry.content}
-            </Paragraph>);
+            rendered = (<P id={index + 1} key={index}>{entry.text}</P>);
         } else if (entry.type.toUpperCase() === "SUBTITLE") {
-            rendered = (<Subtitle
-                identity={index}
-                key={index}
-                leading={56}>
-                {entry.content}
-            </Subtitle>);
+            rendered = (<H2 id={index + 1} key={index}>{entry.text}</H2>);
         } else if (entry.type.toUpperCase() === "PHOTO") {
-            rendered = (<Photo
-                description={entry.description}
-                identity={index}
+            rendered = (<Img
+                caption={entry.caption}
+                id={index + 1}
                 key={index}
-                layout={entry.layout}
-                leading={56}
-                source={entry.content}
+                orientation={entry.orientation}
+                url={entry.url}
                 width={this.props.width} />);
         } else {
-            rendered = (<div identity={index} key={index} style={{
+            rendered = (<div id={index + 1} key={index} style={{
                 marginBottom: 0,
                 marginTop: 50,
                 color: "#FF0000"}}>
@@ -51,7 +40,7 @@ var Document = React.createClass({
     },
     render: function () {
         return (<div>
-            <Title identity={0}>{this.props.title}</Title>
+            <H1 id={0}>{this.props.title}</H1>
             {this.props.entries.map(this.renderEntry)}
         </div>);
     }

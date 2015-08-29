@@ -1,11 +1,11 @@
 "use strict";
+var React = require("react/addons");
+var _ = require("lodash");
+
 var Dashboard = require("./Dashboard.jsx");
 var Document = require("./Document.jsx");
 var Footer = require("./Footer.jsx");
 var Header = require("./Header.jsx");
-
-var React = require("react/addons");
-var _ = require("lodash");
 
 
 var Application = React.createClass({
