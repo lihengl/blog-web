@@ -54,7 +54,7 @@ var Application = React.createClass({
     },
     handleLoadingEvent: function () {
         this.setState(React.addons.update(this.state, {
-            tagline: {$set: "Loading..."}
+            blog: {tagline: {$set: "Loading..."}}
         }));
     },
     handleFocusEvent: function (evt) {
@@ -64,7 +64,7 @@ var Application = React.createClass({
     },
     handleResponseEvent: function (evt) {
         this.setState(React.addons.update(this.state, {
-            tagline: {$set: _.pluck(evt.detail, "name").join(", ")}
+            blog: {tagline: {$set: _.pluck(evt.detail, "name").join(", ")}}
         }));
     },
     handleEditEvent: function (evt) {

@@ -11,9 +11,6 @@ var Header = React.createClass({
         width: React.PropTypes.number.isRequired
     },
     mixins: [React.addons.PureRenderMixin],
-    getDefaultProps: function () {
-        return {tagline: "Hello, world!"};
-    },
     render: function () {
         var aspect = (this.props.height > this.props.width) ? 1.0 : (9.0 / 16.0);
         var height = Math.min(600, (this.props.width * aspect));
