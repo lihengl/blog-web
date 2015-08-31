@@ -9,19 +9,23 @@ var Navbar = React.createClass({
     },
     mixins: [React.addons.PureRenderMixin],
     updatePassword: function (evt) {
-        window.dispatchEvent(new CustomEvent("password", {detail: evt.target.value}));
+        var password = evt.target.value;
+        window.dispatchEvent(new CustomEvent("password", {detail: password}));
     },
     updateEmail: function (evt) {
-        window.dispatchEvent(new CustomEvent("email", {detail: evt.target.value}));
+        var email = evt.target.value;
+        window.dispatchEvent(new CustomEvent("email", {detail: email}));
     },
     validatePassword: function () {
-        return /^[a-zA-Z0-9]{6,20}$/.test(this.props.password);
+        if (/^[a-zA-Z0-9]{6,20}$/.test(this.props.password)) { return; }
+        window.dispatchEvent(new CustomEvent("invalid", {detail: "email"}));
     },
     validateEmail: function (evt) {
-        return /(@{1})(?=\w)/.test(this.props.email);
+        if (/(@{1})(?=\w)/.test(this.props.email)) { return; }
+        window.dispatchEvent(new CustomEvent("invalid", {detail: "password"}));
     },
     submitCredential: function () {
-        window.dispatch("SUBMIT_CREDENTIAL");
+        window.dispatchEvent(new CustomEvent("submit"));
     },
     render: function () {
         return (<div style={{

@@ -3,11 +3,17 @@ var React = require("react/addons");
 
 var Application = React.createFactory(require("./Application"));
 
-var Root = React.createClass({
+var Page = React.createClass({
     propTypes: {
-        managed: React.PropTypes.object.isRequired,
+        client: React.PropTypes.object.isRequired,
+        og: React.PropTypes.objectOf(React.PropTypes.string).isRequired,
         resources: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-        unmanaged: React.PropTypes.object.isRequired
+        title: React.PropTypes.string.isRequired
+    },
+    renderOg: function (name) {
+        var content = this.props.og[name];
+        if (!content) { return false; }
+        return (<meta content={content} key={name} name={"og:" + name}/>);
     },
     render: function () {
         return (<html lang="en-US">
@@ -22,17 +28,18 @@ var Root = React.createClass({
                     "maximum-scale=1.0",
                     "user-scalable=no"].join(",")}
                     name="viewport"/>
+                {["description", "image", "title", "type", "url"].map(this.renderOg)}
                 <meta name="google" value="notranslate"/>
                 <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
                 <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
-                <title>{this.props.unmanaged.title}</title>
+                <title>{this.props.title}</title>
             </head>
             <body style={{margin: 0}}>
                 <div dangerouslySetInnerHTML={{
-                    __html: React.renderToString(Application(this.props.managed))
+                    __html: React.renderToString(Application(this.props.client))
                 }} id="application"></div>
                 <script dangerouslySetInnerHTML={{
-                    __html: JSON.stringify(this.props.managed)
+                    __html: JSON.stringify(this.props.client)
                     .replace(/<\/script/g, "<\\/script")
                     .replace(/<!--/g, "<\\!--")
                 }} id="state" type="application/json"></script>
@@ -44,4 +51,4 @@ var Root = React.createClass({
     }
 });
 
-module.exports = Root;
+module.exports = Page;

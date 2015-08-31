@@ -10,10 +10,7 @@ var Header = require("./Header.jsx");
 
 var Application = React.createClass({
     propTypes: {
-        blog: React.PropTypes.shape({
-            name: React.PropTypes.string,
-            tagline: React.PropTypes.string
-        }).isRequired,
+        blog: React.PropTypes.object.isRequired,
         focus: React.PropTypes.object,
         height: React.PropTypes.number.isRequired,
         scroll: React.PropTypes.number.isRequired,
@@ -35,39 +32,39 @@ var Application = React.createClass({
         this.intervals = [];
     },
     componentDidMount: function () {
-        this.intervals.push(setInterval(this.updateTimestamp, 1000));
-        window.addEventListener("scroll", this.updateScrollPosition);
-        window.addEventListener("resize", this.updateWindowSize);
-        window.addEventListener("response", this.handleResponseEvent);
-        window.addEventListener("loading", this.handleLoadingEvent);
-        window.addEventListener("focus", this.handleFocusEvent);
-        window.addEventListener("edit", this.handleEditEvent);
+        this.intervals.push(setInterval(this.handleInterval, 1000));
+        window.addEventListener("scroll", this.handleScroll);
+        window.addEventListener("resize", this.handleResize);
+        window.addEventListener("response", this.handleResponse);
+        window.addEventListener("loading", this.handleLoading);
+        window.addEventListener("focus", this.handleFocus);
+        window.addEventListener("edit", this.handleEdit);
     },
     componentWillUnmount: function () {
-        window.removeEventListener("edit", this.handleEditEvent);
-        window.removeEventListener("focus", this.handleFocusEvent);
-        window.removeEventListener("loading", this.handleLoadingEvent);
-        window.removeEventListener("response", this.handleResponseEvent);
-        window.removeEventListener("resize", this.updateWindowSize);
-        window.removeEventListener("scroll", this.updateScrollPosition);
+        window.removeEventListener("edit", this.handleEdit);
+        window.removeEventListener("focus", this.handleFocus);
+        window.removeEventListener("loading", this.handleLoading);
+        window.removeEventListener("response", this.handleResponse);
+        window.removeEventListener("resize", this.handleResize);
+        window.removeEventListener("scroll", this.handleScroll);
         this.intervals.map(clearInterval);
     },
-    handleLoadingEvent: function () {
+    handleLoading: function () {
         this.setState(React.addons.update(this.state, {
             blog: {tagline: {$set: "Loading..."}}
         }));
     },
-    handleFocusEvent: function (evt) {
+    handleFocus: function (evt) {
         this.setState(React.addons.update(this.state, {
             focus: {$set: evt.detail}
         }));
     },
-    handleResponseEvent: function (evt) {
+    handleResponse: function (evt) {
         this.setState(React.addons.update(this.state, {
             blog: {tagline: {$set: _.pluck(evt.detail, "name").join(", ")}}
         }));
     },
-    handleEditEvent: function (evt) {
+    handleEdit: function (evt) {
         var id = this.state.focus.entry;
         var mutation = (id < 0) ? {title: {$set: evt.detail}} : {
             entries: {[id]: {text: {$set: evt.detail}}}
@@ -77,18 +74,17 @@ var Application = React.createClass({
             focus: {text: {$set: evt.detail}}
         }));
     },
-    updateScrollPosition: function () {
+    handleScroll: function () {
         this.setState(React.addons.update(this.state, {
             scroll: {$set: window.scrollY}
         }));
     },
-    updateTimestamp: function () {
-        return;
+    handleInterval: function () {
         this.setState(React.addons.update(this.state, {
             timestamp: {$set: Date.now()}
         }));
     },
-    updateWindowSize: function () {
+    handleResize: function () {
         this.setState(React.addons.update(this.state, {
             height: {$set: window.innerHeight},
             width: {$set: window.innerWidth}
@@ -98,8 +94,12 @@ var Application = React.createClass({
         var body = null;
 
         if (this.state.article) {
-            body = (<Document {...this.state.article} focus={this.state.focus} width={width}/>);
-        } else if (this.state.setting) {
+            body = (<Document {...this.state.article}
+                focus={this.state.focus}
+                timestamp={this.state.timestamp}
+                width={width}
+            />);
+        } else if (this.state.user && this.state.blog) {
             body = <Dashboard />;
         } else {
             body = (<div style={{color: "#FF0000"}}>
@@ -114,16 +114,19 @@ var Application = React.createClass({
         return (<div style={{
             fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', sans-serif",
             color: "#333333"}}>
-            <Header height={this.state.height} width={this.state.width}>
-                {this.state.blog}
-            </Header>
+            <Header
+                blog={this.state.blog}
+                height={this.state.height}
+                width={this.state.width}/>
             <div style={{
                 padding: "20px 10px 20px 10px",
                 margin: "0 auto 0 auto",
                 width: width}}>
                 {this.renderBody(width)}
             </div>
-            <Footer author={this.state.user.alias} timestamp={this.state.timestamp} />
+            <Footer
+                author={this.state.user.alias}
+                timestamp={this.state.timestamp}/>
         </div>);
     }
 });

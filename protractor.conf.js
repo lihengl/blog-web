@@ -1,13 +1,15 @@
-exports.config = {
-    seleniumAddress: 'http://127.0.0.1:4444/wd/hub',
+'use strict';
+var config = {
     cucumberOpts: {
         format: 'json',
-        steps: [
-            './steps/**/*.js'
+        require: [
+            './stepdefs/**/*.js'
         ]
     },
     framework: 'cucumber',
     specs: [
-        './specs/**/*.feature'
+        './features/**/*.feature'
     ]
 };
+
+exports.config = config;

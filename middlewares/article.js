@@ -27,18 +27,17 @@ var validate = Promise.promisify(function (response, callback) {
 });
 
 
-var middleware = function (req, res, next) {
+var article = function (req, res, next) {
     return query({
         mocking: req.app.get('mocking'),
         path: req.apihost + '/v1/articles/1'
     }).then(validate).then(function (result) {
-        res.locals.unmanaged.title = result.title;
-        res.locals.managed.article = result;
-        res.locals.managed.blog = {name: 'Bunkuro Zingdema', tagline: 'Hello'};
-        return req.app.render(res.locals);
+        var head = {title: result.title, og: {title: result.title}};
+        var body = Object.assign({article: result}, res.locals.props);
+        return req.app.render(head, body);
     }).then(function (html) {
         return res.status(200).type('text/html').send(html);
     }, next);
 };
 
-module.exports = middleware;
+module.exports = article;

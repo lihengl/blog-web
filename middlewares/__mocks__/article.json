@@ -12,7 +12,7 @@
         "text": "Should Improve Chinese Font",
         "type": "subtitle"
     }, {
-        "text": "Pellentesque 超級 sit amet euismod mauris. Mauris a eros orci. Nullam varius accumsan ultrices. Ut sit amet tempor risus, eu sagittis ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec lobortis lorem nunc, in tincidunt lectus fermentum at. Nullam sollicitudin lacus in venenatis dapibus. Nullam ac augue eget quam placerat laoreet ac eu urna. Suspendisse laoreet posuere posuere. Vivamus a nibh lorem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas sit amet mauris metus. Proin bibendum lectus sit amet dui semper, ac rutrum augue consectetur. Duis dignissim, justo eget eleifend porta, diam augue rutrum ipsum, vel lobortis est nunc eu massa. Cras faucibus odio sit amet commodo bibendum.",
+        "text": "如果說，身體是一間倉庫，而靈魂是它的管理員。如果說，在那些特別深、顏色特別暗的夜裡，在倉庫睡得很熟的時候，管理員會悄悄地換班。\n\n「喔喔！你來啦！」\n\n老管理員從掛著小燈泡的亭子走出來，迎接年輕的接班人。\n\n「唉呀～看到你這個樣子 好像就看到當年剛剛來到這邊的我呢～」\n「來，這份資料給你。這些啊～就是我們這間倉庫所有的資料，從第一任管理員開始就紀錄到現在喔！」\n「前後應該也經過十幾個跟你我一樣的傢伙了吧。我們每天工作的一部份就是要寫這個。」\n「你看，最新的這幾頁就是我寫的。」\n「今天倉庫在睡覺前彈了一下鋼琴，我剛剛才把他彈的東西寫進去呢！」\n\n年輕的管理員接過厚厚的一疊資料，用雙手感受了一下那個份量。",
         "format": {
             "strikethroughs": [],
             "underlines": [],
@@ -23,7 +23,7 @@
     }, {
         "orientation": "square",
         "text": "Binary number syntax uses a leading zero followed by a lowercase or uppercase Latin letter.",
-        "type": "photo",
+        "type": "image",
         "url": "/static_assets/square.jpg"
     }, {
         "text": "Aenean tincidunt sollicitudin interdum. Pellentesque purus ex, molestie eget diam quis, dictum ullamcorper sem. Maecenas ut interdum est. Integer porta pretium justo. Sed ut arcu posuere, convallis sapien eu, eleifend metus. Aenean ut mattis eros, quis elementum arcu. Maecenas viverra bibendum neque, a efficitur ipsum sodales eu. Proin a enim scelerisque, scelerisque arcu eget, tincidunt lorem. Mauris efficitur eros et sapien feugiat, dignissim aliquam nibh luctus. Nulla at ligula sapien. Donec eget vulputate tortor. Etiam a mattis lorem.\n\nDonec egestas leo non ligula varius, et congue ex varius. Quisque tempor maximus aliquet. Vivamus eleifend at lacus non sollicitudin. Sed nisi augue, mattis at dictum cursus, commodo non nulla. Proin dolor nibh, posuere eu leo non, dapibus faucibus odio. Nullam auctor nulla neque, id pellentesque tortor pulvinar at. Cras non erat diam. Duis erat odio, volutpat vel leo in, efficitur blandit augue. Nunc diam mi, accumsan sed enim at, auctor feugiat magna. Donec aliquam libero et sapien dignissim commodo.",
@@ -36,7 +36,7 @@
         "type": "paragraph"
     }, {
         "orientation": "portrait",
-        "type": "photo",
+        "type": "image",
         "url": "/static_assets/portrait.jpg"
     }, {
         "text": "The Inside Out",
@@ -44,7 +44,7 @@
     }, {
         "orientation": "landscape",
         "text": "The onMouseEnter and onMouseLeave events propagate from the component being left.",
-        "type": "photo",
+        "type": "image",
         "url": "/static_assets/landscape.jpg"
     }, {
         "text": "Vestibulum venenatis nisi ut sodales pretium. Curabitur pharetra mi vitae ex egestas porta. Maecenas id urna placerat, tristique leo nec, ultricies justo. Donec vitae sodales quam. Suspendisse aliquet ut mauris vel aliquam. Nullam a justo tincidunt, maximus massa ut, aliquet tortor. Sed pulvinar mauris felis, a vestibulum nisi ullamcorper dignissim. Curabitur nec dapibus dui. Etiam vitae enim tellus. Proin at nulla nec mauris aliquam pretium.\n\nPhasellus eleifend dui leo, nec rhoncus risus iaculis at. Integer pulvinar bibendum leo, egestas pulvinar nunc finibus ac. Ut facilisis dictum mi, vel interdum augue iaculis a. Vivamus volutpat maximus mauris non semper. Vivamus vel scelerisque ex. Maecenas non risus eu tortor volutpat interdum eu sit amet nunc. Vestibulum venenatis pretium vestibulum. Nullam eget auctor sem.",

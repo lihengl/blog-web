@@ -1,5 +1,6 @@
 npm-debug.log
 .validate.json
+.jshintrc
 
 static_assets
 node_modules

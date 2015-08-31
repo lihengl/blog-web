@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-require('babel/register')({extensions: ['.jsx']});
+require('babel/register')({extensions: ['.jsx', '.js']});
 var Promise = require('bluebird');
 
 var cookie = require('cookie-parser');
@@ -11,13 +11,13 @@ var robots = require('robots.txt');
 
 var React = require('react/addons');
 
-var middlewares = require('./middlewares');
+var middlewares = require('./middlewares/router');
 var pkg = require('./package.json');
 
-var Root = React.createFactory(require('./components/Root'));
+var Page = React.createFactory(require('./components/Page'));
 
-var port = process.env.PORT || 3000;
 var mode = process.env.MODE || 'test';
+var port = process.env.PORT || 3000;
 
 
 var bundle = [pkg.version, pkg.name].join('/');
@@ -42,14 +42,10 @@ var resources = (mode === 'local') ? [
 
 var server = express().disable('x-powered-by').enable('strict routing');
 
-server.render = Promise.promisify(function (initialData, callback) {
+server.render = Promise.promisify(function (head, body, callback) {
     var markup = '<!DOCTYPE html>';
-
-    initialData.managed.height = 900;
-    initialData.managed.width = 1440;
-    initialData.resources = resources;
-
-    markup += React.renderToStaticMarkup(Root(initialData));
+    var props = Object.assign(head, {resources: resources, client: body});
+    markup += React.renderToStaticMarkup(Page(props));
     return callback(null, markup);
 });
 
@@ -70,10 +66,7 @@ server.use(cookie());
 server.use(function (req, res, next) {
     var api = pkg.backend;
     req.apihost = (mode === 'production') ? api.production : api.staging;
-    res.locals = {managed: {}, unmanaged: {}};
-    res.locals.managed.height = 900;
-    res.locals.managed.scroll = 0;
-    res.locals.managed.width = 1440;
+    res.locals.props = {height: 900, scroll: 0, timestamp: 0, width: 1440};
     return next();
 });
 
