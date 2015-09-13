@@ -1,26 +1,27 @@
 "use strict";
-var React = require("react/addons");
+import React, { Component, PropTypes } from "react/addons";
+import Entry from "./Entry.jsx";
 
-var Entry = require("./Entry.jsx");
 
-
-var Document = React.createClass({
-    propTypes: {
-        entries: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-        focus: React.PropTypes.shape({
-            entry: React.PropTypes.number,
-            position: React.PropTypes.number,
-            text: React.PropTypes.string
+class Document extends Component {
+    static propTypes = {
+        entries: PropTypes.arrayOf(PropTypes.object).isRequired,
+        focus: PropTypes.shape({
+            entry: PropTypes.number,
+            position: PropTypes.number,
+            text: PropTypes.string
         }),
-        timestamp: React.PropTypes.number.isRequired,
-        title: React.PropTypes.string.isRequired,
-        width: React.PropTypes.number.isRequired
-    },
-    mixins: [React.addons.PureRenderMixin],
-    getDefaultProps: function () {
-        return {focus: null};
-    },
-    componentDidUpdate: function () {
+        timestamp: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        width: PropTypes.number.isRequired
+    }
+    static defaultProps = {
+        focus: null
+    }
+    shouldComponentUpdate () {
+        return false;
+    }
+    componentDidUpdate = () => {
         var textarea = React.findDOMNode(this.refs.textarea);
         var position = 0;
         if (!textarea) { return; }
@@ -28,12 +29,12 @@ var Document = React.createClass({
         position = this.props.focus.position;
         textarea.setSelectionRange(position, position);
         textarea.focus();
-    },
-    dispatchEditEvent: function (evt) {
+    }
+    dispatchEditEvent (evt) {
         var detail = evt.target.value;
         window.dispatchEvent(new CustomEvent("edit", {detail: detail}));
-    },
-    renderEntry: function (entry, index) {
+    }
+    renderEntry = (entry, index) => {
         var focus = this.props.focus;
         var active = (focus) ? (focus.entry === index) : false;
         return (<Entry
@@ -44,8 +45,8 @@ var Document = React.createClass({
             width={this.props.width}>
             {entry}
         </Entry>);
-    },
-    render: function () {
+    }
+    render () {
         var focus = this.props.focus;
         var active = (focus) ? (focus.entry === -1) : false;
         return (<div>
@@ -70,7 +71,7 @@ var Document = React.createClass({
             </div>
         </div>);
     }
-});
+}
 
 
-module.exports = Document;
+export default Document;

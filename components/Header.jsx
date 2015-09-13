@@ -1,18 +1,17 @@
 "use strict";
-var React = require("react/addons");
+import React, { Component, PropTypes } from "react/addons";
 
-var Header = React.createClass({
-    propTypes: {
-        blog: React.PropTypes.shape({
-            cover: React.PropTypes.string,
-            name: React.PropTypes.string,
-            tagline: React.PropTypes.string
+class Header extends Component {
+    static propTypes = {
+        blog: PropTypes.shape({
+            cover: PropTypes.string,
+            name: PropTypes.string,
+            tagline: PropTypes.string
         }).isRequired,
-        height: React.PropTypes.number.isRequired,
-        width: React.PropTypes.number.isRequired
-    },
-    mixins: [React.addons.PureRenderMixin],
-    render: function () {
+        height: PropTypes.number.isRequired,
+        width: PropTypes.number.isRequired
+    }
+    render () {
         var width = this.props.width;
         var aspect = (this.props.height > width) ? 1.0 : (9.0 / 16.0);
         var height = Math.min(600, (width * aspect));
@@ -38,6 +37,6 @@ var Header = React.createClass({
             </div>
         </div>);
     }
-});
+}
 
-module.exports = Header;
+export default Header;

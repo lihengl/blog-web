@@ -1,69 +1,63 @@
 "use strict";
-var React = require("react/addons");
-var Request = require("superagent");
+import React, { Component, PropTypes } from "react/addons";
+import ajax from "superagent";
 
 
 var EntryTypes = ["paragraph", "image", "subtitle"];
 
-var Entry = React.createClass({
-    propTypes: {
-        children: React.PropTypes.oneOfType([
-            React.PropTypes.string,
-            React.PropTypes.shape({
-                type: React.PropTypes.oneOf(EntryTypes),
-                text: React.PropTypes.string
+class Entry extends Component {
+    static propTypes = {
+        children: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.shape({
+                type: PropTypes.oneOf(EntryTypes),
+                text: PropTypes.string
             })
         ]).isRequired,
-        cursor: React.PropTypes.number.isRequired,
-        id: React.PropTypes.number.isRequired,
-        timestamp: React.PropTypes.number.isRequired,
-        width: React.PropTypes.number
-    },
-    mixins: [React.addons.PureRenderMixin],
-    dispatchResponse: function (err, response) {
+        cursor: PropTypes.number.isRequired,
+        id: PropTypes.number.isRequired,
+        timestamp: PropTypes.number.isRequired,
+        width: PropTypes.number
+    }
+    dispatchResponse (err, response) {
         response = err || JSON.parse(response.text);
         window.dispatchEvent(new CustomEvent("response", {detail: response}));
-    },
-    dispatchLoading: function () {
+    }
+    dispatchLoading = () => {
         var repositories = "https://api.github.com/users/lihengl/repos";
-        Request.get(repositories).end(this.dispatchResponse);
         window.dispatchEvent(new CustomEvent("loading"));
-    },
-    dispatchFocus: function (position) {
+        ajax.get(repositories).end(this.dispatchResponse);
+    }
+    dispatchFocus = (position) => {
         var children = this.props.children;
         var detail = {entry: this.props.id, position: position};
         detail.text = (this.props.id === -1) ? children : children.text;
         window.dispatchEvent(new CustomEvent("focus", {detail: detail}));
-    },
-    renderCharacter: function (character, index) {
+    }
+    renderCharacter = (character, index) => {
         var second = Math.round(this.props.timestamp / 1000.0);
         var pointed = (index === this.props.cursor) && (second % 2 === 0);
         var bdcolor = (pointed) ? "#000000" : "transparent";
+        console.info("PERFORMANCE HIT");
         return (<span key={index}
             onClick={this.dispatchFocus.bind(this, index)} style={{
             borderLeft: ["1px", "solid ", bdcolor].join(" "),
             borderRight: "1px solid transparent"}}>
             {character}
         </span>);
-    },
-    renderImage: function () {
+    }
+    renderImage = () => {
         var children = this.props.children;
-        var style = {display: "block", margin: "0 auto 0 auto"};
-
-        if (children.orientation === "portrait") {
-            style.height = this.props.width;
-            style.width = "auto";
-        } else {
-            style.height = "auto";
-            style.width = "100%";
-        }
-
         return (<div style={{marginTop: 56, width: this.props.width}}>
-            <div style={{backgroundColor: "#EFEFEF"}}><img
-                onClick={this.dispatchLoading}
-                src={children.url}
-                style={style}
-            /></div>
+            <div onClick={this.dispatchLoading} style={{
+                backgroundColor: "#EFEFEF",
+                backgroundImage: "url(" + children.url + ")",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "contain",
+                height: this.props.width,
+                margin: "0 auto 0 auto"}}>
+            </div>
             {(children.text && children.text.length > 0) ? <div style={{
                 fontSize: 14,
                 letterSpacing: "-0.1em",
@@ -74,8 +68,8 @@ var Entry = React.createClass({
                 {children.text.split("").map(this.renderCharacter)}
             </div> : false}
         </div>);
-    },
-    renderSubTitle: function () {
+    }
+    renderSubTitle = () => {
         return (<h2 style={{
             letterSpacing: "-0.03em",
             marginBottom: 0,
@@ -83,13 +77,13 @@ var Entry = React.createClass({
             fontSize: 42}}>
             {this.props.children.text.split("").map(this.renderCharacter)}
         </h2>);
-    },
-    renderMainTitle: function () {
+    }
+    renderMainTitle = () => {
         return (<h1 style={{fontSize: 60, letterSpacing: "-0.02em"}}>
             {this.props.children.split("").map(this.renderCharacter)}
         </h1>);
-    },
-    renderParagraph: function () {
+    }
+    renderParagraph = () => {
         var marginTop = 56;
         return (<p style={{
             fontFamily: "Georgia, serif",
@@ -103,8 +97,8 @@ var Entry = React.createClass({
             whiteSpace: "pre-wrap"}}>
             {this.props.children.text.split("").map(this.renderCharacter)}
         </p>);
-    },
-    render: function () {
+    }
+    render () {
         var children = this.props.children;
         if (this.props.id === -1) { return this.renderMainTitle(); }
         if (!children) { return false; }
@@ -113,6 +107,6 @@ var Entry = React.createClass({
         if (children.type === EntryTypes[2]) { return this.renderSubTitle(); }
         return false;
     }
-});
+}
 
-module.exports = Entry;
+export default Entry;

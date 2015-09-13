@@ -1,33 +1,32 @@
 "use strict";
-var React = require("react/addons");
+import React, { Component, PropTypes } from "react/addons";
 
 
-var Navbar = React.createClass({
-    propTypes: {
-        email: React.PropTypes.string.isRequired,
-        password: React.PropTypes.string.isRequired
-    },
-    mixins: [React.addons.PureRenderMixin],
-    updatePassword: function (evt) {
+class Navbar extends Component {
+    static propTypes = {
+        email: PropTypes.string.isRequired,
+        password: PropTypes.string.isRequired
+    }
+    updatePassword (evt) {
         var password = evt.target.value;
         window.dispatchEvent(new CustomEvent("password", {detail: password}));
-    },
-    updateEmail: function (evt) {
+    }
+    updateEmail (evt) {
         var email = evt.target.value;
         window.dispatchEvent(new CustomEvent("email", {detail: email}));
-    },
-    validatePassword: function () {
+    }
+    validatePassword = () => {
         if (/^[a-zA-Z0-9]{6,20}$/.test(this.props.password)) { return; }
         window.dispatchEvent(new CustomEvent("invalid", {detail: "email"}));
-    },
-    validateEmail: function (evt) {
+    }
+    validateEmail = (evt) => {
         if (/(@{1})(?=\w)/.test(this.props.email)) { return; }
         window.dispatchEvent(new CustomEvent("invalid", {detail: "password"}));
-    },
-    submitCredential: function () {
+    }
+    submitCredential () {
         window.dispatchEvent(new CustomEvent("submit"));
-    },
-    render: function () {
+    }
+    render () {
         return (<div style={{
             paddingTop: 6,
             position: "fixed",
@@ -53,6 +52,6 @@ var Navbar = React.createClass({
             </button>
         </div>);
     }
-});
+}
 
-module.exports = Navbar;
+export default Navbar;

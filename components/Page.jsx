@@ -1,21 +1,21 @@
 "use strict";
-var React = require("react/addons");
+import React, { Component, PropTypes } from "react/addons";
+import Application from "./Application";
 
-var Application = React.createFactory(require("./Application"));
-
-var Page = React.createClass({
-    propTypes: {
-        client: React.PropTypes.object.isRequired,
-        og: React.PropTypes.objectOf(React.PropTypes.string).isRequired,
-        resources: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-        title: React.PropTypes.string.isRequired
-    },
-    renderOg: function (name) {
+class Page extends Component {
+    static propTypes = {
+        client: PropTypes.object.isRequired,
+        og: PropTypes.objectOf(PropTypes.string).isRequired,
+        resources: PropTypes.arrayOf(PropTypes.string).isRequired,
+        title: PropTypes.string.isRequired
+    }
+    renderOg = (name) => {
         var content = this.props.og[name];
         if (!content) { return false; }
         return (<meta content={content} key={name} name={"og:" + name}/>);
-    },
-    render: function () {
+    }
+    render () {
+        var Main = React.createFactory(Application);
         return (<html lang="en-US">
             <head>
                 <meta charSet="UTF-8"/>
@@ -36,7 +36,7 @@ var Page = React.createClass({
             </head>
             <body style={{margin: 0}}>
                 <div dangerouslySetInnerHTML={{
-                    __html: React.renderToString(Application(this.props.client))
+                    __html: React.renderToString(Main(this.props.client))
                 }} id="application"></div>
                 <script dangerouslySetInnerHTML={{
                     __html: JSON.stringify(this.props.client)
@@ -49,6 +49,6 @@ var Page = React.createClass({
             </body>
         </html>);
     }
-});
+}
 
-module.exports = Page;
+export default Page;

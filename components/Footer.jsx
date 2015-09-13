@@ -1,13 +1,12 @@
 "use strict";
-var React = require("react/addons");
+import React, { Component, PropTypes } from "react/addons";
 
-var Footer = React.createClass({
-    propTypes: {
-        author: React.PropTypes.string.isRequired,
-        timestamp: React.PropTypes.number.isRequired
-    },
-    mixins: [React.addons.PureRenderMixin],
-    render: function () {
+class Footer extends Component {
+    static propTypes = {
+        author: PropTypes.string.isRequired,
+        timestamp: PropTypes.number.isRequired
+    }
+    render () {
         var year = (new Date(this.props.timestamp)).getFullYear();
         return (<div style={{
             borderTop: "1px solid #DDDDDD",
@@ -18,6 +17,6 @@ var Footer = React.createClass({
             <div>{[year, this.props.author].join(" © ")}</div>
         </div>);
     }
-});
+}
 
-module.exports = Footer;
+export default Footer;

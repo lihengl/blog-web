@@ -1,37 +1,36 @@
 "use strict";
-var React = require("react/addons");
-var _ = require("lodash");
+import React, { Component, PropTypes } from "react/addons";
+import _ from "lodash";
 
-var Dashboard = require("./Dashboard.jsx");
-var Document = require("./Document.jsx");
-var Footer = require("./Footer.jsx");
-var Header = require("./Header.jsx");
+import Dashboard from "./Dashboard.jsx";
+import Document from "./Document.jsx";
+import Footer from "./Footer.jsx";
+import Header from "./Header.jsx";
 
 
-var Application = React.createClass({
-    propTypes: {
-        blog: React.PropTypes.object.isRequired,
-        focus: React.PropTypes.object,
-        height: React.PropTypes.number.isRequired,
-        scroll: React.PropTypes.number.isRequired,
-        timestamp: React.PropTypes.number.isRequired,
-        user: React.PropTypes.shape({
-            alias: React.PropTypes.string.isRequired,
-            id: React.PropTypes.number
+class Application extends Component {
+    static propTypes = {
+        blog: PropTypes.object.isRequired,
+        focus: PropTypes.object,
+        height: PropTypes.number.isRequired,
+        scroll: PropTypes.number.isRequired,
+        timestamp: PropTypes.number.isRequired,
+        user: PropTypes.shape({
+            alias: PropTypes.string.isRequired,
+            id: PropTypes.number
         }).isRequired,
-        width: React.PropTypes.number.isRequired,
-    },
-    mixins: [React.addons.PureRenderMixin],
-    getDefaultProps: function () {
-        return {focus: null, timestamp: 0};
-    },
-    getInitialState: function () {
-        return this.props;
-    },
-    componentWillMount: function() {
+        width: PropTypes.number.isRequired
+    }
+    static defaultProps = {
+        focus: null,
+        timestamp: 0
+    }
+    constructor (props) {
+        super(props);
         this.intervals = [];
-    },
-    componentDidMount: function () {
+        this.state = this.props;
+    }
+    componentDidMount = () => {
         this.intervals.push(setInterval(this.handleInterval, 1000));
         window.addEventListener("scroll", this.handleScroll);
         window.addEventListener("resize", this.handleResize);
@@ -39,8 +38,8 @@ var Application = React.createClass({
         window.addEventListener("loading", this.handleLoading);
         window.addEventListener("focus", this.handleFocus);
         window.addEventListener("edit", this.handleEdit);
-    },
-    componentWillUnmount: function () {
+    }
+    componentWillUnmount = () => {
         window.removeEventListener("edit", this.handleEdit);
         window.removeEventListener("focus", this.handleFocus);
         window.removeEventListener("loading", this.handleLoading);
@@ -48,23 +47,23 @@ var Application = React.createClass({
         window.removeEventListener("resize", this.handleResize);
         window.removeEventListener("scroll", this.handleScroll);
         this.intervals.map(clearInterval);
-    },
-    handleLoading: function () {
+    }
+    handleLoading = () => {
         this.setState(React.addons.update(this.state, {
             blog: {tagline: {$set: "Loading..."}}
         }));
-    },
-    handleFocus: function (evt) {
+    }
+    handleFocus = (evt) => {
         this.setState(React.addons.update(this.state, {
             focus: {$set: evt.detail}
         }));
-    },
-    handleResponse: function (evt) {
+    }
+    handleResponse = (evt) => {
         this.setState(React.addons.update(this.state, {
             blog: {tagline: {$set: _.pluck(evt.detail, "name").join(", ")}}
         }));
-    },
-    handleEdit: function (evt) {
+    }
+    handleEdit = (evt) => {
         var id = this.state.focus.entry;
         var mutation = (id < 0) ? {title: {$set: evt.detail}} : {
             entries: {[id]: {text: {$set: evt.detail}}}
@@ -73,24 +72,24 @@ var Application = React.createClass({
             article: mutation,
             focus: {text: {$set: evt.detail}}
         }));
-    },
-    handleScroll: function () {
+    }
+    handleScroll = () => {
         this.setState(React.addons.update(this.state, {
             scroll: {$set: window.scrollY}
         }));
-    },
-    handleInterval: function () {
+    }
+    handleInterval = () => {
         this.setState(React.addons.update(this.state, {
             timestamp: {$set: Date.now()}
         }));
-    },
-    handleResize: function () {
+    }
+    handleResize = () => {
         this.setState(React.addons.update(this.state, {
             height: {$set: window.innerHeight},
             width: {$set: window.innerWidth}
         }));
-    },
-    renderBody: function (width) {
+    }
+    renderBody = (width) => {
         var body = null;
 
         if (this.state.article) {
@@ -108,8 +107,8 @@ var Application = React.createClass({
         }
 
         return body;
-    },
-    render: function () {
+    }
+    render () {
         var width = Math.min(680, this.state.width) - (10 * 2);
         return (<div style={{
             fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', sans-serif",
@@ -129,6 +128,6 @@ var Application = React.createClass({
                 timestamp={this.state.timestamp}/>
         </div>);
     }
-});
+}
 
-module.exports = Application;
+export default Application;
