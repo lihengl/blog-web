@@ -2,24 +2,21 @@
 var expect = require('chai').expect;
 var React = require('react/addons');
 
-var Footer =require('../components/Footer.jsx');
+var Footer = require('../components/Footer.jsx');
 
 
 
-describe('The Rendering of Footer Component', function () {
-    var ShallowRenderer = null, RenderOutput = null;
+describe('Footer Component', function () {
+    var ShallowRenderer = null;
 
-    beforeEach(function (done) {
+    beforeEach('initialize ShallowRenderer', function () {
         ShallowRenderer = React.addons.TestUtils.createRenderer();
-        done();
     });
 
-    it('should render to a <div> element at top level', function (done) {
+    it('should render to a <div> element at top level', function () {
         var TestProps = {author: 'blogger', timestamp: 0};
         ShallowRenderer.render(React.createElement(Footer, TestProps));
-        RenderOutput = ShallowRenderer.getRenderOutput();
-        expect(RenderOutput.type).to.equal('div');
-        done();
+        expect(ShallowRenderer.getRenderOutput().type).to.equal('div');
     });
 
 });
