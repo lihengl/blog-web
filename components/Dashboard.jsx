@@ -1,13 +1,10 @@
 "use strict";
-var React = require("react/addons");
+import React, { Component } from "react/addons";
 
-var Dashboard = React.createClass({
-    propTypes: {
-    },
-    mixins: [React.addons.PureRenderMixin],
-    render: function () {
+class Dashboard extends Component {
+    render () {
         return (<div>{"Not Implemented Yet."}</div>);
     }
-});
+}
 
-module.exports = Dashboard;
+export default Dashboard;

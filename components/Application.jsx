@@ -1,90 +1,104 @@
 "use strict";
-var React = require("react/addons");
-var _ = require("lodash");
+import React, { Component, PropTypes } from "react/addons";
+import _ from "lodash";
 
-var Dashboard = require("./Dashboard.jsx");
-var Document = require("./Document.jsx");
-var Footer = require("./Footer.jsx");
-var Header = require("./Header.jsx");
+import Dashboard from "./Dashboard.jsx";
+import Document from "./Document.jsx";
+import Footer from "./Footer.jsx";
+import Header from "./Header.jsx";
 
 
-var Application = React.createClass({
-    propTypes: {
-        height: React.PropTypes.number.isRequired,
-        scroll: React.PropTypes.number.isRequired,
-        tagline: React.PropTypes.string.isRequired,
-        title: React.PropTypes.string.isRequired,
-        width: React.PropTypes.number.isRequired,
-    },
-    mixins: [React.addons.PureRenderMixin],
-    getDefaultProps: function () {
-        return {timestamp: 0};
-    },
-    getInitialState: function () {
-        return this.props;
-    },
-    componentWillMount: function() {
+class Application extends Component {
+    static propTypes = {
+        blog: PropTypes.object.isRequired,
+        focus: PropTypes.object,
+        height: PropTypes.number.isRequired,
+        scroll: PropTypes.number.isRequired,
+        timestamp: PropTypes.number.isRequired,
+        user: PropTypes.shape({
+            alias: PropTypes.string.isRequired,
+            id: PropTypes.number
+        }).isRequired,
+        width: PropTypes.number.isRequired
+    }
+    static defaultProps = {
+        focus: null,
+        timestamp: 0
+    }
+    constructor (props) {
+        super(props);
         this.intervals = [];
-    },
-    componentDidMount: function () {
-        this.intervals.push(setInterval(this.updateTimestamp, 1000));
-        window.addEventListener("scroll", this.updateScrollPosition);
-        window.addEventListener("resize", this.updateWindowSize);
-        window.addEventListener("response", this.handleResponseEvent);
-        window.addEventListener("loading", this.handleLoadingEvent);
-        window.addEventListener("focus", this.handleFocusEvent);
-        window.addEventListener("text", this.handleTextEvent);
-    },
-    componentWillUnmount: function () {
-        window.removeEventListener("text", this.handleTextEvent);
-        window.removeEventListener("focus", this.handleFocusEvent);
-        window.removeEventListener("loading", this.handleLoadingEvent);
-        window.removeEventListener("response", this.handleResponseEvent);
-        window.removeEventListener("resize", this.updateWindowSize);
-        window.removeEventListener("scroll", this.updateScrollPosition);
+        this.state = this.props;
+    }
+    componentDidMount = () => {
+        this.intervals.push(setInterval(this.handleInterval, 1000));
+        window.addEventListener("scroll", this.handleScroll);
+        window.addEventListener("resize", this.handleResize);
+        window.addEventListener("response", this.handleResponse);
+        window.addEventListener("loading", this.handleLoading);
+        window.addEventListener("focus", this.handleFocus);
+        window.addEventListener("edit", this.handleEdit);
+    }
+    componentWillUnmount = () => {
+        window.removeEventListener("edit", this.handleEdit);
+        window.removeEventListener("focus", this.handleFocus);
+        window.removeEventListener("loading", this.handleLoading);
+        window.removeEventListener("response", this.handleResponse);
+        window.removeEventListener("resize", this.handleResize);
+        window.removeEventListener("scroll", this.handleScroll);
         this.intervals.map(clearInterval);
-    },
-    handleLoadingEvent: function () {
+    }
+    handleLoading = () => {
         this.setState(React.addons.update(this.state, {
-            tagline: {$set: "Loading..."}
+            blog: {tagline: {$set: "Loading..."}}
         }));
-    },
-    handleFocusEvent: function (evt) {
-        console.info(evt.detail);
-    },
-    handleResponseEvent: function (evt) {
+    }
+    handleFocus = (evt) => {
         this.setState(React.addons.update(this.state, {
-            tagline: {$set: _.pluck(evt.detail, "name").join(", ")}
+            focus: {$set: evt.detail}
         }));
-    },
-    handleTextEvent: function (evt) {
-        var mutation = {content: {$set: evt.detail.text}};
+    }
+    handleResponse = (evt) => {
         this.setState(React.addons.update(this.state, {
-            article: {entries: {[evt.detail.entryId]: mutation}}
+            blog: {tagline: {$set: _.pluck(evt.detail, "name").join(", ")}}
         }));
-    },
-    updateScrollPosition: function () {
+    }
+    handleEdit = (evt) => {
+        var id = this.state.focus.entry;
+        var mutation = (id < 0) ? {title: {$set: evt.detail}} : {
+            entries: {[id]: {text: {$set: evt.detail}}}
+        };
+        this.setState(React.addons.update(this.state, {
+            article: mutation,
+            focus: {text: {$set: evt.detail}}
+        }));
+    }
+    handleScroll = () => {
         this.setState(React.addons.update(this.state, {
             scroll: {$set: window.scrollY}
         }));
-    },
-    updateTimestamp: function () {
+    }
+    handleInterval = () => {
         this.setState(React.addons.update(this.state, {
-            timestamp: {$set: Math.floor(Date.now() / 1000.0)}
+            timestamp: {$set: Date.now()}
         }));
-    },
-    updateWindowSize: function () {
+    }
+    handleResize = () => {
         this.setState(React.addons.update(this.state, {
             height: {$set: window.innerHeight},
             width: {$set: window.innerWidth}
         }));
-    },
-    renderBody: function (width) {
+    }
+    renderBody = (width) => {
         var body = null;
 
         if (this.state.article) {
-            body = (<Document {...this.state.article} width={width} />);
-        } else if (this.state.setting) {
+            body = (<Document {...this.state.article}
+                focus={this.state.focus}
+                timestamp={this.state.timestamp}
+                width={width}
+            />);
+        } else if (this.state.user && this.state.blog) {
             body = <Dashboard />;
         } else {
             body = (<div style={{color: "#FF0000"}}>
@@ -93,24 +107,27 @@ var Application = React.createClass({
         }
 
         return body;
-    },
-    render: function () {
+    }
+    render () {
         var width = Math.min(680, this.state.width) - (10 * 2);
         return (<div style={{
             fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', sans-serif",
             color: "#333333"}}>
-            <Header height={this.state.height} tagline={this.state.tagline} width={this.state.width}>
-                {this.state.title}
-            </Header>
+            <Header
+                blog={this.state.blog}
+                height={this.state.height}
+                width={this.state.width}/>
             <div style={{
                 padding: "20px 10px 20px 10px",
                 margin: "0 auto 0 auto",
                 width: width}}>
                 {this.renderBody(width)}
             </div>
-            <Footer author={"liheng"} />
+            <Footer
+                author={this.state.user.alias}
+                timestamp={this.state.timestamp}/>
         </div>);
     }
-});
+}
 
-module.exports = Application;
+export default Application;

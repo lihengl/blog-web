@@ -1,20 +1,22 @@
 'use strict';
 var expect = require('chai').expect;
-
 var React = require('react/addons');
 
-var renderer = React.addons.TestUtils.createRenderer();
-var Footer = React.createFactory(require('../components/Footer.jsx'));
+var Footer = require('../components/Footer.jsx');
 
 
-describe('Footer component', function () {
-    renderer.render(Footer({
-        author: 'blogger'
-    }));
+
+describe('Footer Component', function () {
+    var ShallowRenderer = null;
+
+    beforeEach('initialize ShallowRenderer', function () {
+        ShallowRenderer = React.addons.TestUtils.createRenderer();
+    });
 
     it('should render to a <div> element at top level', function () {
-        var output = renderer.getRenderOutput();
-        expect(output.type).to.equal('div');
-        return;
+        var TestProps = {author: 'blogger', timestamp: 0};
+        ShallowRenderer.render(React.createElement(Footer, TestProps));
+        expect(ShallowRenderer.getRenderOutput().type).to.equal('div');
     });
+
 });

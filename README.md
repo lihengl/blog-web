@@ -9,11 +9,11 @@ Given the current state of web technology, this might be the time where that ove
 
 ## Getting Started
 
-This is a [Node.js](http://nodejs.org) project. After cloning the repository and execute a standard `npm install`, run `npm run hot` to start a hot-reload development server, then on a separate terminal session run `npm run develop` to start the actual application server.
+This is a [Node.js](http://nodejs.org) project. After cloning the repository and execute a standard `npm install`, run an additional `node_modules/.bin/webdriver-manager update --standalone` command to install [Selenium](http://www.seleniumhq.org) for the use of end-to-end testing. To start development, do `npm run selenium`, `npm run reload`, and `npm run develop` in three separate terminal sessions, then, in yet another terminal session, do `npm run demo` to see a Chrome browser fire up and demonstrates all the application's features.
 
 ## Directory Structure
 
-Development effort is either on [React](http://facebook.github.io/react/) in the `component` folder or on [Express](http://expressjs.com) in the `middlewares` folder. Directories with underscored names, namely `node_modules` and `static_assets`, will be populated by build steps and should always be kept out from version control.
+Development effort is either on [React](http://facebook.github.io/react/) in the `components` folder or on [Express](http://expressjs.com) in the `middlewares` folder. Folders with underscored names, namely `node_modules` and `static_assets`, will be populated by build steps and should always be kept out from version control.
 
 ## References
 

@@ -1,8 +1,13 @@
 'use strict';
-var middleware = function (req, res, next) {
-    res.locals.managed.user = req.cookies;
+var authenticate = function (req, res, next) {
+    res.locals.props.blog = {
+        cover: '/static_assets/cover.jpg',
+        name: 'Bunkuro Zingdema',
+        tagline: 'Hello'
+    };
+    res.locals.props.user = {alias: 'lihengl', id: 0};
     next();
 };
 
 
-module.exports = middleware;
+module.exports = authenticate;
