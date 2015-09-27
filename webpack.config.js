@@ -39,7 +39,9 @@ if (process.env.MODE === 'local') {
     config.externals['react/addons'] = 'React';
     config.output.filename += '.min.js';
     config.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
-    config.plugins.push(new webpack.optimize.UglifyJsPlugin());
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        output: {comments: false}
+    }));
     config.plugins.push(new webpack.DefinePlugin({
         'process.env': {'NODE_ENV': JSON.stringify('production')}
     }));
