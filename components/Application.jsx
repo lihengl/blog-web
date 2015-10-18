@@ -7,7 +7,6 @@ import Document from "./Document.jsx";
 import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 
-
 class Application extends Component {
   static propTypes = {
     blog: PropTypes.object.isRequired,
@@ -16,8 +15,8 @@ class Application extends Component {
     scroll: PropTypes.number.isRequired,
     timestamp: PropTypes.number.isRequired,
     user: PropTypes.shape({
-        alias: PropTypes.string.isRequired,
-        id: PropTypes.number
+      alias: PropTypes.string.isRequired,
+      id: PropTypes.number
     }).isRequired,
     width: PropTypes.number.isRequired
   }

@@ -73,9 +73,8 @@ server.use(function (req, res, next) {
 server.use(middlewares);
 
 server.use(function (err, req, res, next) {
-  console.error('where: ' + req.path);
-  console.error('state: ' + JSON.stringify(res.locals));
-  console.error('error: ' + err.stack);
+  console.error('State: ' + JSON.stringify(res.locals));
+  console.error(err.stack);
   res.status(500).type('text/plain').send(err.message);
   return next;
 });
