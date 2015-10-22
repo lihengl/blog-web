@@ -1,5 +1,5 @@
-"use strict";
-import React, { Component, PropTypes } from "react/addons";
+/* eslint-env browser */
+import React, { Component, PropTypes } from 'react/addons';
 
 class Header extends Component {
   static propTypes = {
@@ -17,17 +17,17 @@ class Header extends Component {
     var height = Math.min(600, (width * aspect));
 
     return (<div style={{
-      backgroundRepeat: "no-repeat",
-      backgroundImage: "url(" + this.props.blog.cover + ")",
-      backgroundSize: "cover",
+      backgroundRepeat: 'no-repeat',
+      backgroundImage: 'url(' + this.props.blog.cover + ')',
+      backgroundSize: 'cover',
       paddingTop: Math.round(height / 3.0),
-      textShadow: "0 1px 2px rgba(0,0,0,.5)",
-      textAlign: "center",
+      textShadow: '0 1px 2px rgba(0,0,0,.5)',
+      textAlign: 'center',
       height: Math.floor(height * (2.0 / 3.0)),
-      color: "#FFFFFF"}}>
+      color: '#FFFFFF'}}>
       <div style={{
         fontSize: Math.floor((3.0 * width + 12280.0) / 260.0),
-        fontWeight: "bold",
+        fontWeight: 'bold',
         marginBottom: 0,
         marginTop: 0}}>
         {this.props.blog.name}

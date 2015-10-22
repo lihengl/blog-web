@@ -1,4 +1,5 @@
-'use strict';
+/* eslint-env protractor */
+
 var config = {
   baseUrl: 'http://localhost:3000',
   cucumberOpts: {

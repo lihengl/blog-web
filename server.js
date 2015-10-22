@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-'use strict';
 require('babel/register')({extensions: ['.jsx', '.js']});
 var Promise = require('bluebird');
 

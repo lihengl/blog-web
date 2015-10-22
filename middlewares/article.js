@@ -1,4 +1,3 @@
-'use strict';
 var Promise = require('bluebird');
 
 var __article__ = require('./__mocks__/article.json');

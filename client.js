@@ -1,4 +1,4 @@
-'use strict';
+/* eslint-env browser */
 require('babel/polyfill');
 var React = require('react/addons');
 

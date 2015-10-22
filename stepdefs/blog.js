@@ -1,4 +1,4 @@
-'use strict';
+/* eslint-env protractor */
 var expect = require('chai').expect;
 
 
