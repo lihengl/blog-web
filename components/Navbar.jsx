@@ -1,5 +1,5 @@
 /* eslint-env browser */
-import React, { Component, PropTypes } from 'react/addons';
+import React, { Component, PropTypes } from 'react';
 
 
 class Navbar extends Component {
@@ -7,11 +7,11 @@ class Navbar extends Component {
     email: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired
   }
-  updatePassword (evt) {
+  updatePassword = (evt) => {
     var password = evt.target.value;
     window.dispatchEvent(new CustomEvent('password', {detail: password}));
   }
-  updateEmail (evt) {
+  updateEmail = (evt) => {
     var email = evt.target.value;
     window.dispatchEvent(new CustomEvent('email', {detail: email}));
   }
@@ -23,7 +23,7 @@ class Navbar extends Component {
     if (/(@{1})(?=\w)/.test(this.props.email)) { return; }
     window.dispatchEvent(new CustomEvent('invalid', {detail: 'password'}));
   }
-  submitCredential () {
+  submitCredential = () => {
     window.dispatchEvent(new CustomEvent('submit'));
   }
   render () {

@@ -1,5 +1,5 @@
 /* eslint-env browser */
-import React, { Component } from 'react/addons';
+import React, { Component } from 'react';
 
 class Dashboard extends Component {
   render () {

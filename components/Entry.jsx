@@ -1,5 +1,5 @@
 /* eslint-env browser */
-import React, { Component, PropTypes } from 'react/addons';
+import React, { Component, PropTypes } from 'react';
 import ajax from 'superagent';
 
 
@@ -19,7 +19,7 @@ class Entry extends Component {
     timestamp: PropTypes.number.isRequired,
     width: PropTypes.number
   }
-  dispatchResponse (err, response) {
+  dispatchResponse = (err, response) => {
     response = err || JSON.parse(response.text);
     window.dispatchEvent(new CustomEvent('response', {detail: response}));
   }
@@ -41,8 +41,8 @@ class Entry extends Component {
     console.info('PERFORMANCE HIT');
     return (<span key={index}
       onClick={this.dispatchFocus.bind(this, index)} style={{
-      borderLeft: ['1px', 'solid ', bdcolor].join(' '),
-      borderRight: '1px solid transparent'}}>
+        borderLeft: ['1px', 'solid ', bdcolor].join(' '),
+        borderRight: '1px solid transparent'}}>
       {character}
     </span>);
   }

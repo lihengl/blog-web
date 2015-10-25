@@ -35,8 +35,6 @@ if (process.env.MODE === 'local') {
   config.plugins.push(new webpack.NoErrorsPlugin());
 } else {
   config.externals.lodash = '_';
-  config.externals.superagent = 'ajax';
-  config.externals['react/addons'] = 'React';
   config.output.filename += '.min.js';
   config.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
   config.plugins.push(new webpack.optimize.UglifyJsPlugin({

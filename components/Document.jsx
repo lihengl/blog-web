@@ -1,5 +1,6 @@
 /* eslint-env browser */
-import React, { Component, PropTypes } from 'react/addons';
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import Entry from './Entry.jsx';
 
 
@@ -22,7 +23,7 @@ class Document extends Component {
     return false;
   }
   componentDidUpdate = () => {
-    var textarea = React.findDOMNode(this.refs.textarea);
+    var textarea = ReactDOM.findDOMNode(this.refs.textarea);
     var position = 0;
     if (!textarea) { return; }
     if (textarea === document.activeElement) { return; }
@@ -30,7 +31,7 @@ class Document extends Component {
     textarea.setSelectionRange(position, position);
     textarea.focus();
   }
-  dispatchEditEvent (evt) {
+  dispatchEditEvent = (evt) => {
     var detail = evt.target.value;
     window.dispatchEvent(new CustomEvent('edit', {detail: detail}));
   }

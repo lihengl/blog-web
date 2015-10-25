@@ -1,5 +1,5 @@
 /* eslint-env browser */
-import React, { Component, PropTypes } from 'react/addons';
+import React, { Component, PropTypes } from 'react';
 
 class Header extends Component {
   static propTypes = {

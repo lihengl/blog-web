@@ -8,9 +8,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var robots = require('robots.txt');
 
-var React = require('react/addons');
+var React = require('react');
+var ReactDOMServer = require('react-dom/server');
 
-var middlewares = require('./middlewares/router');
+var routes = require('./handlers/router');
 var pkg = require('./package.json');
 
 var Page = React.createFactory(require('./components/Page'));
@@ -30,8 +31,6 @@ var resources = (mode === 'local') ? [
   'es5-shim/' + pkg.devDependencies['es5-shim'] + '/es5-shim.min.js',
   'es5-shim/' + pkg.devDependencies['es5-shim'] + '/es5-sham.min.js',
   'lodash.js/' + pkg.dependencies.lodash + '/lodash.min.js',
-  'superagent/' + pkg.dependencies.superagent + '/superagent.min.js',
-  'react/' + pkg.dependencies.react + '/react-with-addons.min.js',
   bundle + '.min.js'
 ].map(function (resource, index, resources) {
   var last = (index === (resources.length - 1));
@@ -44,7 +43,7 @@ var server = express().disable('x-powered-by').enable('strict routing');
 server.render = Promise.promisify(function (head, body, callback) {
   var markup = '<!DOCTYPE html>';
   var props = Object.assign(head, {resources: resources, client: body});
-  markup += React.renderToStaticMarkup(Page(props));
+  markup += ReactDOMServer.renderToStaticMarkup(Page(props));
   return callback(null, markup);
 });
 
@@ -69,7 +68,7 @@ server.use(function (req, res, next) {
   return next();
 });
 
-server.use(middlewares);
+server.use(routes);
 
 server.use(function (err, req, res, next) {
   console.error('State: ' + JSON.stringify(res.locals));
