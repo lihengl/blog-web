@@ -1,12 +1,12 @@
-"use strict";
-import React, { Component, PropTypes } from "react/addons";
-import _ from "lodash";
+/* eslint-env browser */
+import React, { Component, PropTypes } from 'react';
+import update from 'react-addons-update';
+import _ from 'lodash';
 
-import Dashboard from "./Dashboard.jsx";
-import Document from "./Document.jsx";
-import Footer from "./Footer.jsx";
-import Header from "./Header.jsx";
-
+import Dashboard from './Dashboard.jsx';
+import Document from './Document.jsx';
+import Footer from './Footer.jsx';
+import Header from './Header.jsx';
 
 class Application extends Component {
   static propTypes = {
@@ -16,8 +16,8 @@ class Application extends Component {
     scroll: PropTypes.number.isRequired,
     timestamp: PropTypes.number.isRequired,
     user: PropTypes.shape({
-        alias: PropTypes.string.isRequired,
-        id: PropTypes.number
+      alias: PropTypes.string.isRequired,
+      id: PropTypes.number
     }).isRequired,
     width: PropTypes.number.isRequired
   }
@@ -32,35 +32,35 @@ class Application extends Component {
   }
   componentDidMount = () => {
     this.intervals.push(setInterval(this.handleInterval, 1000));
-    window.addEventListener("scroll", this.handleScroll);
-    window.addEventListener("resize", this.handleResize);
-    window.addEventListener("response", this.handleResponse);
-    window.addEventListener("loading", this.handleLoading);
-    window.addEventListener("focus", this.handleFocus);
-    window.addEventListener("edit", this.handleEdit);
+    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('resize', this.handleResize);
+    window.addEventListener('response', this.handleResponse);
+    window.addEventListener('loading', this.handleLoading);
+    window.addEventListener('focus', this.handleFocus);
+    window.addEventListener('edit', this.handleEdit);
   }
   componentWillUnmount = () => {
-    window.removeEventListener("edit", this.handleEdit);
-    window.removeEventListener("focus", this.handleFocus);
-    window.removeEventListener("loading", this.handleLoading);
-    window.removeEventListener("response", this.handleResponse);
-    window.removeEventListener("resize", this.handleResize);
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener('edit', this.handleEdit);
+    window.removeEventListener('focus', this.handleFocus);
+    window.removeEventListener('loading', this.handleLoading);
+    window.removeEventListener('response', this.handleResponse);
+    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('scroll', this.handleScroll);
     this.intervals.map(clearInterval);
   }
   handleLoading = () => {
-    this.setState(React.addons.update(this.state, {
-      blog: {tagline: {$set: "Loading..."}}
+    this.setState(update(this.state, {
+      blog: {tagline: {$set: 'Loading...'}}
     }));
   }
   handleFocus = (evt) => {
-    this.setState(React.addons.update(this.state, {
+    this.setState(update(this.state, {
       focus: {$set: evt.detail}
     }));
   }
   handleResponse = (evt) => {
-    this.setState(React.addons.update(this.state, {
-      blog: {tagline: {$set: _.pluck(evt.detail, "name").join(", ")}}
+    this.setState(update(this.state, {
+      blog: {tagline: {$set: _.pluck(evt.detail, 'name').join(', ')}}
     }));
   }
   handleEdit = (evt) => {
@@ -68,23 +68,23 @@ class Application extends Component {
     var mutation = (id < 0) ? {title: {$set: evt.detail}} : {
       entries: {[id]: {text: {$set: evt.detail}}}
     };
-    this.setState(React.addons.update(this.state, {
+    this.setState(update(this.state, {
       article: mutation,
       focus: {text: {$set: evt.detail}}
     }));
   }
   handleScroll = () => {
-    this.setState(React.addons.update(this.state, {
+    this.setState(update(this.state, {
       scroll: {$set: window.scrollY}
     }));
   }
   handleInterval = () => {
-    this.setState(React.addons.update(this.state, {
+    this.setState(update(this.state, {
       timestamp: {$set: Date.now()}
     }));
   }
   handleResize = () => {
-    this.setState(React.addons.update(this.state, {
+    this.setState(update(this.state, {
       height: {$set: window.innerHeight},
       width: {$set: window.innerWidth}
     }));
@@ -101,8 +101,8 @@ class Application extends Component {
     } else if (this.state.user && this.state.blog) {
       body = <Dashboard />;
     } else {
-      body = (<div style={{color: "#FF0000"}}>
-        {"Unexpected Application state: " + this.state}
+      body = (<div style={{color: '#FF0000'}}>
+        {'Unexpected Application state: ' + this.state}
       </div>);
     }
 
@@ -111,15 +111,15 @@ class Application extends Component {
   render () {
     var width = Math.min(680, this.state.width) - (10 * 2);
     return (<div style={{
-      fontFamily: "'Helvetica Neue', Helvetica, 'Segoe UI', sans-serif",
-      color: "#333333"}}>
+      fontFamily: '"Helvetica Neue", Helvetica, "Segoe UI", sans-serif',
+      color: '#333333'}}>
       <Header
         blog={this.state.blog}
         height={this.state.height}
         width={this.state.width}/>
       <div style={{
-        padding: "20px 10px 20px 10px",
-        margin: "0 auto 0 auto",
+        padding: '20px 10px 20px 10px',
+        margin: '0 auto 0 auto',
         width: width}}>
         {this.renderBody(width)}
       </div>

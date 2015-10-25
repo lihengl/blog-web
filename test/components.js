@@ -1,4 +1,4 @@
-'use strict';
+/* eslint-env mocha */
 var expect = require('chai').expect;
 var React = require('react/addons');
 

@@ -1,6 +1,7 @@
-"use strict";
-import React, { Component, PropTypes } from "react/addons";
-import Application from "./Application";
+/* eslint-env browser */
+import React, { Component, PropTypes } from 'react';
+import ReactDOMServer from 'react-dom/server';
+import Application from './Application';
 
 class Page extends Component {
   static propTypes = {
@@ -9,26 +10,29 @@ class Page extends Component {
     resources: PropTypes.arrayOf(PropTypes.string).isRequired,
     title: PropTypes.string.isRequired
   }
-  renderOg = (name) => {
+  renderOG = (name) => {
     var content = this.props.og[name];
     if (!content) { return false; }
-    return (<meta content={content} key={name} name={"og:" + name}/>);
+    return (<meta content={content} key={name} name={'og:' + name}/>);
+  }
+  renderScript = (resource, index) => {
+    return (<script key={index} src={resource}></script>);
   }
   render () {
     var Main = React.createFactory(Application);
     return (<html lang="en-US">
       <head>
         <meta charSet="UTF-8"/>
-        <meta content="IE=edge" httpEquiv="X-UA-Compatible"/>
+        <meta content="IE=edge,chrome=1" httpEquiv="X-UA-Compatible"/>
         <meta content="telephone=no" name="format-detection"/>
         <meta content={[
-          "width=device-width",
-          "initial-scale=1.0",
-          "minimum-scale=1.0",
-          "maximum-scale=1.0",
-          "user-scalable=no"].join(",")}
+          'width=device-width',
+          'initial-scale=1.0',
+          'minimum-scale=1.0',
+          'maximum-scale=1.0',
+          'user-scalable=no'].join(',')}
           name="viewport"/>
-        {["description", "image", "title", "type", "url"].map(this.renderOg)}
+        {['description', 'image', 'title', 'type', 'url'].map(this.renderOG)}
         <meta name="google" value="notranslate"/>
         <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
         <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
@@ -36,16 +40,14 @@ class Page extends Component {
       </head>
       <body style={{margin: 0}}>
         <div dangerouslySetInnerHTML={{
-          __html: React.renderToString(Main(this.props.client))
+          __html: ReactDOMServer.renderToString(Main(this.props.client))
         }} id="application"></div>
         <script dangerouslySetInnerHTML={{
           __html: JSON.stringify(this.props.client)
-          .replace(/<\/script/g, "<\\/script")
-          .replace(/<!--/g, "<\\!--")
+          .replace(/<\/script/g, '<\\/script')
+          .replace(/<!--/g, '<\\!--')
         }} id="state" type="application/json"></script>
-        {this.props.resources.map(function (resource, index) {
-          return <script key={index} src={resource}></script>;
-        })}
+        {this.props.resources.map(this.renderScript)}
       </body>
     </html>);
   }

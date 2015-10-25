@@ -1,6 +1,7 @@
-"use strict";
-import React, { Component, PropTypes } from "react/addons";
-import Entry from "./Entry.jsx";
+/* eslint-env browser */
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import Entry from './Entry.jsx';
 
 
 class Document extends Component {
@@ -22,7 +23,7 @@ class Document extends Component {
     return false;
   }
   componentDidUpdate = () => {
-    var textarea = React.findDOMNode(this.refs.textarea);
+    var textarea = ReactDOM.findDOMNode(this.refs.textarea);
     var position = 0;
     if (!textarea) { return; }
     if (textarea === document.activeElement) { return; }
@@ -30,9 +31,9 @@ class Document extends Component {
     textarea.setSelectionRange(position, position);
     textarea.focus();
   }
-  dispatchEditEvent (evt) {
+  dispatchEditEvent = (evt) => {
     var detail = evt.target.value;
-    window.dispatchEvent(new CustomEvent("edit", {detail: detail}));
+    window.dispatchEvent(new CustomEvent('edit', {detail: detail}));
   }
   renderEntry = (entry, index) => {
     var focus = this.props.focus;
@@ -58,14 +59,14 @@ class Document extends Component {
       </Entry>
       {this.props.entries.map(this.renderEntry)}
       <div style={{
-        overflow: "hidden",
-        position: "fixed",
+        overflow: 'hidden',
+        position: 'fixed',
         height: 0,
         top: 0}}>
         {(this.props.focus) ? <textarea
           onChange={this.dispatchEditEvent}
           ref="textarea"
-          style={{outline: "none", width: "100%"}}
+          style={{outline: 'none', width: '100%'}}
           value={this.props.focus.text}>
         </textarea> : false}
       </div>
