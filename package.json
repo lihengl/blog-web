@@ -72,7 +72,7 @@
     "develop": "MODE=local nodemon --watch handlers server.js",
     "functional": "protractor",
     "reload": "MODE=local webpack-dev-server --hot --inline --host localhost",
-    "lint": "eslint .",
+    "lint": "eslint . components/*.jsx",
     "selenium": "webdriver-manager start",
     "test": "istanbul cover _mocha -- --compilers js:babel/register --reporter dot",
     "validate": "travis-lint"

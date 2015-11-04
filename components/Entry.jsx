@@ -1,4 +1,3 @@
-/* eslint-env browser */
 import React, { Component, PropTypes } from 'react';
 import ajax from 'superagent';
 

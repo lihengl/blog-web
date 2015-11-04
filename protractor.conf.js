@@ -1,6 +1,7 @@
 /* eslint-env protractor */
+'use strict';
 
-var config = {
+var protractorConfig = {
   baseUrl: 'http://localhost:3000',
   cucumberOpts: {
     format: 'json',
@@ -14,8 +15,8 @@ var config = {
   ]
 };
 
-config.onPrepare = function () {
+protractorConfig.onPrepare = function () {
   browser.ignoreSynchronization = true;
 };
 
-exports.config = config;
+exports.config = protractorConfig;

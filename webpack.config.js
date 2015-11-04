@@ -1,3 +1,4 @@
+'use strict';
 var webpack = require('webpack');
 
 var pkg = require('./package.json');

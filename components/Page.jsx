@@ -1,4 +1,3 @@
-/* eslint-env browser */
 import React, { Component, PropTypes } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Application from './Application';

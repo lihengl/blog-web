@@ -1,4 +1,3 @@
-/* eslint-env browser */
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Entry from './Entry.jsx';

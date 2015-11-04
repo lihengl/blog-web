@@ -1,3 +1,4 @@
+'use strict';
 var profile = function (req, res, next) {
   var head = {title: 'Settings Dashboard', og: {}};
   var body = Object.assign({}, res.locals.props);

@@ -1,4 +1,3 @@
-/* eslint-env browser */
 import React, { Component, PropTypes } from 'react';
 import ReactUpdate from 'react-addons-update';
 import _ from 'lodash';
