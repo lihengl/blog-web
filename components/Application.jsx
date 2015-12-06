@@ -1,6 +1,5 @@
-/* eslint-env browser */
 import React, { Component, PropTypes } from 'react';
-import update from 'react-addons-update';
+import ReactUpdate from 'react-addons-update';
 import _ from 'lodash';
 
 import Dashboard from './Dashboard.jsx';
@@ -49,17 +48,17 @@ class Application extends Component {
     this.intervals.map(clearInterval);
   }
   handleLoading = () => {
-    this.setState(update(this.state, {
+    this.setState(ReactUpdate(this.state, {
       blog: {tagline: {$set: 'Loading...'}}
     }));
   }
   handleFocus = (evt) => {
-    this.setState(update(this.state, {
+    this.setState(ReactUpdate(this.state, {
       focus: {$set: evt.detail}
     }));
   }
   handleResponse = (evt) => {
-    this.setState(update(this.state, {
+    this.setState(ReactUpdate(this.state, {
       blog: {tagline: {$set: _.pluck(evt.detail, 'name').join(', ')}}
     }));
   }
@@ -68,23 +67,23 @@ class Application extends Component {
     var mutation = (id < 0) ? {title: {$set: evt.detail}} : {
       entries: {[id]: {text: {$set: evt.detail}}}
     };
-    this.setState(update(this.state, {
+    this.setState(ReactUpdate(this.state, {
       article: mutation,
       focus: {text: {$set: evt.detail}}
     }));
   }
   handleScroll = () => {
-    this.setState(update(this.state, {
+    this.setState(ReactUpdate(this.state, {
       scroll: {$set: window.scrollY}
     }));
   }
   handleInterval = () => {
-    this.setState(update(this.state, {
+    this.setState(ReactUpdate(this.state, {
       timestamp: {$set: Date.now()}
     }));
   }
   handleResize = () => {
-    this.setState(update(this.state, {
+    this.setState(ReactUpdate(this.state, {
       height: {$set: window.innerHeight},
       width: {$set: window.innerWidth}
     }));

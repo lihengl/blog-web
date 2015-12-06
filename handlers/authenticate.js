@@ -1,3 +1,4 @@
+'use strict';
 var authenticate = function (req, res, next) {
   res.locals.props.blog = {
     cover: '/static_assets/cover.jpg',

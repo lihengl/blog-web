@@ -1,18 +1,8 @@
 {
-  "ecmaFeatures": {
-    "arrowFunctions": true,
-    "classes": true,
-    "modules": true,
-    "objectLiteralComputedProperties": true,
-    "jsx": true
-  },
   "env": {
     "node": true
   },
   "parser": "babel-eslint",
-  "plugins": [
-    "react"
-  ],
   "rules": {
     "camelcase": 2,
     "comma-dangle": [2, "never"],
@@ -21,7 +11,6 @@
     "dot-notation": 2,
     "eqeqeq": 2,
     "indent": [2, 2, {"SwitchCase": 0}],
-    "jsx-quotes": [2, "prefer-double"],
     "no-fallthrough": 2,
     "no-else-return": 2,
     "no-eq-null": 2,
@@ -34,23 +23,6 @@
     "quotes": [2, "single"],
     "quote-props": [2, "as-needed"],
     "radix": 2,
-    "react/jsx-boolean-value": 2,
-    "react/jsx-no-duplicate-props": 2,
-    "react/jsx-no-undef": 2,
-    "react/jsx-sort-prop-types": 2,
-    "react/jsx-sort-props": 2,
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2,
-    "react/no-did-mount-set-state": 2,
-    "react/no-did-update-set-state": 2,
-    "react/no-multi-comp": 2,
-    "react/no-unknown-property": 2,
-    "react/prop-types": 2,
-    "react/react-in-jsx-scope": 2,
-    "react/require-extension": [2, {"extensions": [".js"]}],
-    "react/self-closing-comp": 2,
-    "react/sort-comp": 2,
-    "react/wrap-multilines": 2,
     "semi": [2, "always"],
     "strict": [2, "global"]
   }

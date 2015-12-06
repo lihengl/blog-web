@@ -1,3 +1,4 @@
+'use strict';
 var router = require('express').Router({caseSensitive: true, strict: true});
 
 var article = require('./article');

@@ -1,6 +1,7 @@
-/* eslint-env mocha */
+'use strict';
 var expect = require('chai').expect;
-var React = require('react/addons');
+var React = require('react');
+var ReactTestUtils = require('react-addons-test-utils');
 
 var Footer = require('../components/Footer.jsx');
 
@@ -9,7 +10,7 @@ describe('Footer Component', function () {
   var ShallowRenderer = null;
 
   beforeEach('initialize ShallowRenderer', function () {
-    ShallowRenderer = React.addons.TestUtils.createRenderer();
+    ShallowRenderer = ReactTestUtils.createRenderer();
   });
 
   it('should render to a <div> element at top level', function () {
