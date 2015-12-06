@@ -4,7 +4,7 @@ Given the current state of web technology, this might be the time where that ove
 
 ## Getting Started
 
-This is a [Node.js](http://nodejs.org) codebase. After cloning the repository and execute a standard `npm install`, run an additional `node_modules/.bin/webdriver-manager update --standalone` command to install [Selenium](http://www.seleniumhq.org) for the use of [Protractor](http://angular.github.io/protractor/#/) testing. To begin development, do `npm run selenium`, `npm run reload`, and `npm run develop` in three separate terminal sessions. Then, in yet another terminal session, do `npm run demo` and you should be seeing a Chrome browser fire up and demonstrates the application's features.
+This is a [Node.js](http://nodejs.org) codebase. After cloning the repository and execute a standard `npm install`, run an additional `node_modules/.bin/webdriver-manager update --standalone` command to install [Selenium](http://www.seleniumhq.org) for the use of [Protractor](http://angular.github.io/protractor/#/) testing. To begin development, do `npm run selenium`, `npm run hot-reload`, and `npm run dev-server` in three separate terminal sessions. Then, in yet another terminal session, do `npm run demo` and you should be seeing a Chrome browser fire up and demonstrates the application's features.
 
 ## Directory Structure
 

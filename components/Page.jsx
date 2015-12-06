@@ -9,34 +9,37 @@ class Page extends Component {
     resources: PropTypes.arrayOf(PropTypes.string).isRequired,
     title: PropTypes.string.isRequired
   }
-  renderOG = (name) => {
+  renderHead = () => {
+    return (<head>
+      <meta charSet="UTF-8"/>
+      <meta content="IE=edge,chrome=1" httpEquiv="X-UA-Compatible"/>
+      <meta content="telephone=no" name="format-detection"/>
+      <meta content={[
+        'width=device-width',
+        'initial-scale=1.0',
+        'minimum-scale=1.0',
+        'maximum-scale=1.0',
+        'user-scalable=no'].join(',')}
+        name="viewport"/>
+      {['description', 'image', 'title', 'type', 'url'].map(this.renderOg)}
+      <meta name="google" value="notranslate"/>
+      <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+      <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+      <title>{this.props.title}</title>
+    </head>);
+  }
+  renderOg = (name) => {
     var content = this.props.og[name];
     if (!content) { return false; }
     return (<meta content={content} key={name} name={'og:' + name}/>);
   }
-  renderScript = (resource, index) => {
-    return (<script key={index} src={resource}></script>);
+  renderScript = (sourceUrl, index) => {
+    return (<script key={index} src={sourceUrl}></script>);
   }
   render () {
     var Main = React.createFactory(Application);
     return (<html lang="en-US">
-      <head>
-        <meta charSet="UTF-8"/>
-        <meta content="IE=edge,chrome=1" httpEquiv="X-UA-Compatible"/>
-        <meta content="telephone=no" name="format-detection"/>
-        <meta content={[
-          'width=device-width',
-          'initial-scale=1.0',
-          'minimum-scale=1.0',
-          'maximum-scale=1.0',
-          'user-scalable=no'].join(',')}
-          name="viewport"/>
-        {['description', 'image', 'title', 'type', 'url'].map(this.renderOG)}
-        <meta name="google" value="notranslate"/>
-        <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-        <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
-        <title>{this.props.title}</title>
-      </head>
+      {this.renderHead()}
       <body style={{margin: 0}}>
         <div dangerouslySetInnerHTML={{
           __html: ReactDOMServer.renderToString(Main(this.props.client))
