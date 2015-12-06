@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Application from './Application';
 
-class Page extends Component {
+class HtmlDocument extends Component {
   static propTypes = {
     client: PropTypes.object.isRequired,
     og: PropTypes.objectOf(PropTypes.string).isRequired,
@@ -55,4 +55,4 @@ class Page extends Component {
   }
 }
 
-export default Page;
+export default HtmlDocument;

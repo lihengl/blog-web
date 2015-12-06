@@ -14,7 +14,7 @@ var ReactDOMServer = require('react-dom/server');
 var routes = require('./handlers/router');
 var pkg = require('./package.json');
 
-var Page = React.createFactory(require('./components/Page'));
+var HtmlDocument = React.createFactory(require('./components/HtmlDocument'));
 
 var mode = process.env.MODE || 'test';
 var port = process.env.PORT || 3000;
@@ -43,7 +43,7 @@ var server = express().disable('x-powered-by').enable('strict routing');
 server.render = Promise.promisify(function (head, body, callback) {
   var markup = '<!DOCTYPE html>';
   var props = Object.assign(head, {resources: resources, client: body});
-  markup += ReactDOMServer.renderToStaticMarkup(Page(props));
+  markup += ReactDOMServer.renderToStaticMarkup(HtmlDocument(props));
   return callback(null, markup);
 });
 
