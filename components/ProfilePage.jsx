@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-class Dashboard extends Component {
+class ProfilePage extends Component {
   render () {
     return (<div>{'Not Implemented Yet.'}</div>);
   }
 }
 
-export default Dashboard;
+export default ProfilePage;

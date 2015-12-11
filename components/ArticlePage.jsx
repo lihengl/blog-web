@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Entry from './Entry.jsx';
 
 
-class Document extends Component {
+class ArticlePage extends Component {
   static propTypes = {
     entries: PropTypes.arrayOf(PropTypes.object).isRequired,
     focus: PropTypes.shape({
@@ -74,4 +74,4 @@ class Document extends Component {
 }
 
 
-export default Document;
+export default ArticlePage;

@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import ReactUpdate from 'react-addons-update';
 import _ from 'lodash';
 
-import Dashboard from './Dashboard.jsx';
-import Document from './Document.jsx';
+import ArticlePage from './ArticlePage.jsx';
+import ProfilePage from './ProfilePage.jsx';
 import Footer from './Footer.jsx';
 import Header from './Header.jsx';
 
@@ -92,13 +92,13 @@ class Application extends Component {
     var body = null;
 
     if (this.state.article) {
-      body = (<Document {...this.state.article}
+      body = (<ArticlePage {...this.state.article}
         focus={this.state.focus}
         timestamp={this.state.timestamp}
         width={width}
       />);
     } else if (this.state.user && this.state.blog) {
-      body = <Dashboard />;
+      body = <ProfilePage />;
     } else {
       body = (<div style={{color: '#FF0000'}}>
         {'Unexpected Application state: ' + this.state}
