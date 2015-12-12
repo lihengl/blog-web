@@ -59,8 +59,7 @@
   "pre-commit": [
     "validate",
     "lint",
-    "build",
-    "test"
+    "unit-test"
   ],
   "repository": {
     "type": "git",
@@ -76,6 +75,7 @@
     "lint": "eslint . components/*.jsx",
     "selenium": "webdriver-manager start",
     "test": "istanbul cover _mocha -- --compilers js:babel/register --reporter dot",
+    "unit-test": "_mocha --compilers js:babel/register",
     "validate": "travis-lint"
   },
   "version": "0.7.1"
