@@ -1,6 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Entry from './Entry.jsx';
+
+import PageFooter from './PageFooter.jsx';
+import PageHeader from './PageHeader.jsx';
+
+import ContentEntry from './ContentEntry.jsx';
 
 
 class ArticlePage extends Component {
@@ -18,8 +22,12 @@ class ArticlePage extends Component {
   static defaultProps = {
     focus: null
   }
-  shouldComponentUpdate () {
-    return false;
+  constructor (props) {
+    super(props);
+    this.state = this.props;
+  }
+  componentDidMount = () => {
+    window.addEventListener('resize', this.handleResize);
   }
   componentDidUpdate = () => {
     var textarea = ReactDOM.findDOMNode(this.refs.textarea);
@@ -30,45 +38,66 @@ class ArticlePage extends Component {
     textarea.setSelectionRange(position, position);
     textarea.focus();
   }
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.handleResize);
+  }
   dispatchEditEvent = (evt) => {
     var detail = evt.target.value;
     window.dispatchEvent(new CustomEvent('edit', {detail: detail}));
   }
-  renderEntry = (entry, index) => {
+  renderContentEntry = (entry, index) => {
     var focus = this.props.focus;
     var active = (focus) ? (focus.entry === index) : false;
-    return (<Entry
+    var width = Math.min(680, this.state.width) - (10 * 2);
+
+    return (<ContentEntry
       cursor={(active) ? focus.position : -1}
       id={index}
       key={index}
-      timestamp={this.props.timestamp}
-      width={this.props.width}>
+      timestamp={this.state.timestamp}
+      width={width}>
       {entry}
-    </Entry>);
+    </ContentEntry>);
   }
   render () {
-    var focus = this.props.focus;
+    var focus = this.state.focus;
     var active = (focus) ? (focus.entry === -1) : false;
+    var width = Math.min(680, this.state.width) - (10 * 2);
+
     return (<div>
-      <Entry
-        cursor={(active) ? focus.position : -1}
-        id={-1}
-        timestamp={this.props.timestamp}>
-        {this.props.title}
-      </Entry>
-      {this.props.entries.map(this.renderEntry)}
+      <PageHeader
+        backgroundImageUrl={this.state.blog.cover}
+        height={this.state.height}
+        subtitle={this.state.blog.tagline}
+        title={this.state.blog.name}
+        width={this.state.width}/>
       <div style={{
-        overflow: 'hidden',
-        position: 'fixed',
-        height: 0,
-        top: 0}}>
-        {(this.props.focus) ? <textarea
-          onChange={this.dispatchEditEvent}
-          ref="textarea"
-          style={{outline: 'none', width: '100%'}}
-          value={this.props.focus.text}>
-        </textarea> : false}
+        padding: '20px 10px 20px 10px',
+        margin: '0 auto 0 auto',
+        width: width}}>
+        <ContentEntry
+          cursor={(active) ? focus.position : -1}
+          id={-1}
+          timestamp={this.state.timestamp}>
+          {this.state.title}
+        </ContentEntry>
+        {this.state.entries.map(this.renderContentEntry)}
+        <div style={{
+          overflow: 'hidden',
+          position: 'fixed',
+          height: 0,
+          top: 0}}>
+          {(this.state.focus) ? <textarea
+            onChange={this.dispatchEditEvent}
+            ref="textarea"
+            style={{outline: 'none', width: '100%'}}
+            value={this.state.focus.text}>
+          </textarea> : false}
+        </div>
       </div>
+      <PageFooter
+        userName={this.state.user.alias}
+        yearNumber={2015}/>
     </div>);
   }
 }

@@ -1,5 +1,5 @@
 'use strict';
-var authenticate = function (req, res, next) {
+var middleware = function (req, res, next) {
   res.locals.props.blog = {
     cover: '/static_assets/cover.jpg',
     name: 'Bunkuro Zingdema',
@@ -10,4 +10,4 @@ var authenticate = function (req, res, next) {
 };
 
 
-module.exports = authenticate;
+module.exports = middleware;

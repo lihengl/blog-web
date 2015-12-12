@@ -1,13 +1,38 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOMServer from 'react-dom/server';
-import Application from './Application';
+import _ from 'lodash';
+
+import ArticlePage from './ArticlePage.jsx';
+import ProfilePage from './ProfilePage.jsx';
+
 
 class HtmlDocument extends Component {
   static propTypes = {
-    client: PropTypes.object.isRequired,
+    initialState: PropTypes.object.isRequired,
     og: PropTypes.objectOf(PropTypes.string).isRequired,
+    pageName: React.PropTypes.oneOf([
+      'ARTICLE',
+      'PROFILE'
+    ]).isRequired,
     resources: PropTypes.arrayOf(PropTypes.string).isRequired,
     title: PropTypes.string.isRequired
+  }
+  getPageComponent = () => {
+    var pageComponent = null;
+
+    switch (this.props.pageName) {
+      case 'ARTICLE':
+        pageComponent = ArticlePage;
+        break;
+      case 'PROFILE':
+        pageComponent = ProfilePage;
+        break;
+      default:
+        pageComponent = ProfilePage;
+    }
+
+    pageComponent = React.createFactory(pageComponent);
+    return pageComponent(this.props.initialState);
   }
   renderHead = () => {
     return (<head>
@@ -28,31 +53,36 @@ class HtmlDocument extends Component {
       <title>{this.props.title}</title>
     </head>);
   }
-  renderOg = (name) => {
-    var content = this.props.og[name];
-    if (!content) { return false; }
-    return (<meta content={content} key={name} name={'og:' + name}/>);
+  renderOg = (fieldName) => {
+    return ((_.has(this.props.og, fieldName)) ? (<meta
+      content={this.props.og[fieldName]}
+      key={fieldName}
+      name={'og:' + fieldName}
+    />) : false);
   }
   renderScript = (sourceUrl, index) => {
     return (<script key={index} src={sourceUrl}></script>);
   }
   render () {
-    var Main = React.createFactory(Application);
     return (<html lang="en-US">
       {this.renderHead()}
-      <body style={{margin: 0}}>
-        <div dangerouslySetInnerHTML={{
-          __html: ReactDOMServer.renderToString(Main(this.props.client))
-        }} id="application"></div>
+      <body style={{
+        fontFamily: '"Helvetica Neue", Helvetica, "Segoe UI", sans-serif',
+        margin: 0}}>
+        <div className={this.props.pageName.toLowerCase()}
+          dangerouslySetInnerHTML={{
+            __html: ReactDOMServer.renderToString(this.getPageComponent())
+          }} id="application"></div>
         <script dangerouslySetInnerHTML={{
-          __html: JSON.stringify(this.props.client)
+          __html: JSON.stringify(this.props.initialState)
           .replace(/<\/script/g, '<\\/script')
           .replace(/<!--/g, '<\\!--')
-        }} id="state" type="application/json"></script>
+        }} id="initial-state" type="application/json"></script>
         {this.props.resources.map(this.renderScript)}
       </body>
     </html>);
   }
 }
+
 
 export default HtmlDocument;

@@ -1,10 +1,13 @@
 'use strict';
-var router = require('express').Router({caseSensitive: true, strict: true});
+var express = require('express');
+
+var authenticate = require('./middlewares/authenticate');
 
 var article = require('./article');
-var authenticate = require('./authenticate');
 var profile = require('./profile');
 
+
+var router = express.Router({caseSensitive: true, strict: true});
 
 router.use(authenticate);
 

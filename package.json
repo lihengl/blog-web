@@ -68,8 +68,8 @@
   "scripts": {
     "build": "webpack",
     "clean": "rm -r static_assets coverage && npm prune",
-    "demo": "protractor --seleniumAddress=$SELENIUM --cucumberOpts.format=pretty",
     "dev-server": "MODE=local nodemon --watch handlers server.js",
+    "e2e-test": "protractor --seleniumAddress=$SELENIUM --cucumberOpts.format=pretty",
     "functional": "protractor",
     "hot-reload": "MODE=local webpack-dev-server --hot --inline --host localhost",
     "lint": "eslint . --ext .js --ext .jsx",
@@ -78,5 +78,5 @@
     "unit-test": "_mocha --compilers js:babel/register",
     "validate": "travis-lint"
   },
-  "version": "0.7.1"
+  "version": "0.8.0"
 }

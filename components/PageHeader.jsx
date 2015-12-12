@@ -1,13 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 
-class Header extends Component {
+class PageHeader extends Component {
   static propTypes = {
-    blog: PropTypes.shape({
-      cover: PropTypes.string,
-      name: PropTypes.string,
-      tagline: PropTypes.string
-    }).isRequired,
+    backgroundImageUrl: PropTypes.string.isRequired,
     height: PropTypes.number.isRequired,
+    subtitle: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired
   }
   render () {
@@ -17,7 +15,7 @@ class Header extends Component {
 
     return (<div style={{
       backgroundRepeat: 'no-repeat',
-      backgroundImage: 'url(' + this.props.blog.cover + ')',
+      backgroundImage: 'url(' + this.props.backgroundImageUrl + ')',
       backgroundSize: 'cover',
       paddingTop: Math.round(height / 3.0),
       textShadow: '0 1px 2px rgba(0,0,0,.5)',
@@ -29,13 +27,13 @@ class Header extends Component {
         fontWeight: 'bold',
         marginBottom: 0,
         marginTop: 0}}>
-        {this.props.blog.name}
+        {this.props.title}
       </div>
       <div style={{fontSize: Math.round((width + 3760.0) / 260.0)}}>
-        {this.props.blog.tagline}
+        {this.props.subtitle}
       </div>
     </div>);
   }
 }
 
-export default Header;
+export default PageHeader;

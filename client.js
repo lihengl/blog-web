@@ -4,9 +4,25 @@ require('babel/polyfill');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Application = React.createFactory(require('./components/Application.jsx'));
+var ArticlePage = require('./components/ArticlePage.jsx');
+var ProfilePage = require('./components/ProfilePage.jsx');
 
-var initialData = document.getElementById('state').innerHTML;
+
+var initialData = document.getElementById('initial-state').innerHTML;
 var rootElement = document.getElementById('application');
+var pageComponent = null;
 
-ReactDOM.render(Application(JSON.parse(initialData)), rootElement);
+switch (rootElement.className.toUpperCase()) {
+  case 'ARTICLE':
+    pageComponent = ArticlePage;
+    break;
+  case 'PROFILE':
+    pageComponent = ProfilePage;
+    break;
+  default:
+    pageComponent = ProfilePage;
+}
+
+pageComponent = React.createFactory(pageComponent);
+
+ReactDOM.render(pageComponent(JSON.parse(initialData)), rootElement);

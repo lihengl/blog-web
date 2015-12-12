@@ -40,11 +40,11 @@ var resources = (mode === 'local') ? [
 
 var server = express().disable('x-powered-by').enable('strict routing');
 
-server.render = Promise.promisify(function (head, body, callback) {
-  var markup = '<!DOCTYPE html>';
-  var props = Object.assign(head, {resources: resources, client: body});
-  markup += ReactDOMServer.renderToStaticMarkup(HtmlDocument(props));
-  return callback(null, markup);
+server.render = Promise.promisify(function (pageData, callback) {
+  var initialProps = Object.assign(pageData, {resources: resources});
+  var pageComponent = HtmlDocument(initialProps);
+  var renderOutput = ReactDOMServer.renderToStaticMarkup(pageComponent);
+  return callback(null, '<!DOCTYPE html>' + renderOutput);
 });
 
 

@@ -4,7 +4,7 @@ import ajax from 'superagent';
 
 var EntryTypes = ['paragraph', 'image', 'subtitle'];
 
-class Entry extends Component {
+class ContentEntry extends Component {
   static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.string,
@@ -108,4 +108,4 @@ class Entry extends Component {
   }
 }
 
-export default Entry;
+export default ContentEntry;

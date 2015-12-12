@@ -27,17 +27,25 @@ var validate = Promise.promisify(function (response, callback) {
 });
 
 
-var article = function (req, res, next) {
+var handler = function (req, res, next) {
   return query({
     mocking: req.app.get('mocking'),
     path: req.apihost + '/v1/articles/1'
-  }).then(validate).then(function (result) {
-    var head = {title: result.title, og: {title: result.title}};
-    var body = Object.assign({article: result}, res.locals.props);
-    return req.app.render(head, body);
+  }).then(validate).then(function (article) {
+    return req.app.render({
+      initialState: Object.assign({
+        entries: article.entries,
+        title: article.title
+      }, res.locals.props),
+      og: {
+        title: article.title
+      },
+      pageName: 'ARTICLE',
+      title: article.title
+    });
   }).then(function (html) {
     return res.status(200).type('text/html').send(html);
   }, next);
 };
 
-module.exports = article;
+module.exports = handler;
