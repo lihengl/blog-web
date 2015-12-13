@@ -4,7 +4,7 @@ import ReactUpdate from 'react-addons-update';
 import PageFooter from './PageFooter.jsx';
 import PageHeader from './PageHeader.jsx';
 
-import LineGraph from './LineGraph.jsx';
+import LineChart from './charts/LineChart.jsx';
 
 
 class ProfilePage extends Component {
@@ -48,7 +48,7 @@ class ProfilePage extends Component {
         padding: '20px 10px 20px 10px',
         margin: '0 auto 0 auto',
         width: width}}>
-        <LineGraph/>
+        <LineChart/>
       </div>
       <PageFooter
         userName={this.state.user.alias}

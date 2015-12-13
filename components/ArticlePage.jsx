@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import PageFooter from './PageFooter.jsx';
 import PageHeader from './PageHeader.jsx';
 
-import ContentEntry from './ContentEntry.jsx';
+import ContentEntry from './items/ContentEntry.jsx';
 
 
 class ArticlePage extends Component {

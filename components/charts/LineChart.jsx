@@ -3,7 +3,7 @@ import ReactShallowCompare from 'react-addons-shallow-compare';
 import _ from 'lodash';
 
 
-class LineGraph extends Component {
+class LineChart extends Component {
   static propTypes = {
     size: PropTypes.shape({
       height: PropTypes.number.isRequired,
@@ -30,4 +30,4 @@ class LineGraph extends Component {
 }
 
 
-export default LineGraph;
+export default LineChart;
