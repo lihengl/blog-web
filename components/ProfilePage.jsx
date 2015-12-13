@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactUpdate from 'react-addons-update';
+import _ from 'lodash';
 
 import PageFooter from './PageFooter.jsx';
 import PageHeader from './PageHeader.jsx';
@@ -35,6 +36,8 @@ class ProfilePage extends Component {
     this.setState(ReactUpdate(this.state, stateDiff));
   }
   render () {
+    var gmvPoints = _.range(250, 260, 0).map(seed => (Math.random() * seed));
+    var smtPoints = _.range(250, 260, 0).map(seed => (Math.random() * seed));
     var width = Math.min(680, this.state.width) - (10 * 2);
 
     return (<div>
@@ -48,7 +51,11 @@ class ProfilePage extends Component {
         padding: '20px 10px 20px 10px',
         margin: '0 auto 0 auto',
         width: width}}>
-        <LineChart/>
+        <LineChart
+          canvasHeight={320}
+          canvasWidth={width}
+          gmvPoints={gmvPoints}
+          smtPoints={smtPoints}/>
       </div>
       <PageFooter
         userName={this.state.user.alias}
