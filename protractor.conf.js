@@ -9,7 +9,8 @@ var protractorConfig = {
       'stepdefs/**/*.js'
     ]
   },
-  framework: 'cucumber',
+  framework: 'custom',
+  frameworkPath: 'node_modules/protractor-cucumber-framework',
   specs: [
     'features/**/*.feature'
   ]
