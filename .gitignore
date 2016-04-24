@@ -1,7 +1,9 @@
 npm-debug.log
 .validate.json
+.jshintignore
 .jshintrc
 
 static_assets
 node_modules
 coverage
+

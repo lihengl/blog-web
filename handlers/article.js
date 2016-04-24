@@ -1,5 +1,5 @@
-'use strict';
 var Promise = require('bluebird');
+var _ = require('lodash');
 
 var __article__ = require('./__mocks__/article.json');
 var superagent = require('superagent');
@@ -33,7 +33,7 @@ var handler = function (req, res, next) {
     path: req.apihost + '/v1/articles/1'
   }).then(validate).then(function (article) {
     return req.app.render({
-      initialState: Object.assign({
+      initialState: _.assign({
         entries: article.entries,
         title: article.title
       }, res.locals.props),

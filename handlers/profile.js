@@ -1,4 +1,3 @@
-'use strict';
 var DASHBOARD_TITLE = 'Blogger Dashboard';
 
 

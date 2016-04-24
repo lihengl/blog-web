@@ -1,6 +1,6 @@
-'use strict';
-require('babel/register')({extensions: ['.jsx', '.js']});
+require('babel-register')({extensions: ['.jsx', '.js']});
 var Promise = require('bluebird');
+var _ = require('lodash');
 
 var cookie = require('cookie-parser');
 var express = require('express');
@@ -14,7 +14,7 @@ var ReactDOMServer = require('react-dom/server');
 var routes = require('./handlers/router');
 var pkg = require('./package.json');
 
-var HtmlDocument = React.createFactory(require('./components/HtmlDocument'));
+var HtmlDocument = React.createFactory(require('./components/HtmlDocument').default);
 
 var mode = process.env.MODE || 'test';
 var port = process.env.PORT || 3000;
@@ -41,7 +41,7 @@ var resources = (mode === 'local') ? [
 var server = express().disable('x-powered-by').enable('strict routing');
 
 server.render = Promise.promisify(function (pageData, callback) {
-  var initialProps = Object.assign(pageData, {resources: resources});
+  var initialProps = _.assign(pageData, {resources: resources});
   var pageComponent = HtmlDocument(initialProps);
   var renderOutput = ReactDOMServer.renderToStaticMarkup(pageComponent);
   return callback(null, '<!DOCTYPE html>' + renderOutput);

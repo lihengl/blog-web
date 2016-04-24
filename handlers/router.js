@@ -1,4 +1,3 @@
-'use strict';
 var express = require('express');
 
 var authenticate = require('./middlewares/authenticate');

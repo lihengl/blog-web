@@ -1,4 +1,3 @@
-'use strict';
 var webpack = require('webpack');
 
 var pkg = require('./package.json');
@@ -16,7 +15,7 @@ var config = {
       test: /\.json$/
     }, {
       exclude: /node_modules/,
-      loaders: ['babel-loader'],
+      loaders: ['babel?cacheDirectory=true,presets[]=es2015,presets[]=react,presets[]=stage-1'],
       test: /\.jsx$/
     }]
   },

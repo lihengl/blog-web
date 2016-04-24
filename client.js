@@ -1,11 +1,10 @@
 /* eslint-env browser */
-'use strict';
-require('babel/polyfill');
+require('babel-polyfill');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var ArticlePage = require('./components/ArticlePage.jsx');
-var ProfilePage = require('./components/ProfilePage.jsx');
+var ArticlePage = require('./components/ArticlePage.jsx').default;
+var ProfilePage = require('./components/ProfilePage.jsx').default;
 
 
 var initialData = document.getElementById('initial-state').innerHTML;

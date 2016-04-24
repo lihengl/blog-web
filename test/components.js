@@ -1,9 +1,8 @@
-'use strict';
 var expect = require('chai').expect;
 var React = require('react');
 var ReactTestUtils = require('react-addons-test-utils');
 
-var PageFooter = require('../components/PageFooter.jsx');
+var PageFooter = require('../components/PageFooter.jsx').default;
 
 
 describe('PageFooter component', function () {
