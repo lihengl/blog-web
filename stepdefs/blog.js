@@ -13,7 +13,7 @@ var friday = function (done) {
 };
 
 var stepdefs = function () {
-  this.When(/^this is a Friday night$/, friday);
+  this.When(/^this is a Friday night$/, {timeout: 10 * 1000}, friday);
   this.When(/^there should be (.*)$/, drink);
 };
 
