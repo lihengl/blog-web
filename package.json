@@ -75,7 +75,8 @@
     "functional": "protractor",
     "hot-reload": "MODE=local webpack-dev-server --hot --inline --host localhost",
     "lint": "eslint . --ext .js --ext .jsx",
-    "selenium": "webdriver-manager start",
+    "selenium-server": "webdriver-manager start",
+    "selenium-update": "webdriver-manager update --stanealone",
     "test": "istanbul cover _mocha -- --compilers js:babel-register --reporter dot",
     "unit-test": "_mocha --compilers js:babel-register",
     "validate": "travis lint .travis.yml"
